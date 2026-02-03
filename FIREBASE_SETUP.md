@@ -33,8 +33,7 @@ Diese Anleitung hilft Ihnen, Firebase Firestore für die Cross-Device-Synchronis
 ### Option 1: Environment Variables (Empfohlen für Produktion)
 
 1. Erstellen Sie eine `.env.local` Datei im Root-Verzeichnis des Projekts
-2. Kopieren Sie die `.env.example` Datei als Vorlage
-3. Fügen Sie Ihre Firebase-Konfiguration ein:
+2. Fügen Sie Ihre Firebase-Konfiguration ein:
 
 ```env
 NEXT_PUBLIC_FIREBASE_API_KEY=IHRE_API_KEY
