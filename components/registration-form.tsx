@@ -115,31 +115,21 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     let savedToFirebase = false
     let timeoutId: ReturnType<typeof setTimeout> | null = null
     let timeoutOccurred = false
-    let timeoutResolved = false
     const timeoutError = new Error("firebase-timeout")
-    try {
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        timeoutId = setTimeout(() => {
-          timeoutOccurred = true
-          reject(timeoutError)
-        }, FIREBASE_TIMEOUT_MS)
-      })
-      const firebasePromise = addParticipant(participant)
-        .then(() => {
-          if (timeoutResolved || timeoutOccurred) {
-            setSaveStatus("✅ Anmeldung in der Datenbank gespeichert (nachträglich)")
-          }
-        })
-        .finally(() => {
-          if (timeoutId) {
-            clearTimeout(timeoutId)
-            timeoutId = null
-          }
-        })
-      await Promise.race([firebasePromise, timeoutPromise])
-      if (timeoutOccurred) {
-        timeoutResolved = true
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timeoutId = setTimeout(() => {
+        timeoutOccurred = true
+        reject(timeoutError)
+      }, FIREBASE_TIMEOUT_MS)
+    })
+    const firebasePromise = addParticipant(participant).finally(() => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
       }
+    })
+    try {
+      await Promise.race([firebasePromise, timeoutPromise])
       if (!timeoutOccurred) {
         savedToFirebase = true
         setSaveStatus("✅ Anmeldung in der Datenbank gespeichert")
@@ -153,6 +143,15 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         ? "Zeitüberschreitung bei der Datenbankverbindung"
         : "Datenbank nicht erreichbar"
       setSaveStatus(`⚠️ ${firebaseError} – nur lokal gespeichert`)
+    }
+    if (timeoutOccurred) {
+      firebasePromise
+        .then(() => {
+          setSaveStatus("✅ Anmeldung in der Datenbank gespeichert (nachträglich)")
+        })
+        .catch(() => {
+          /* no-op: keep local-only status */
+        })
     }
 
     if (!savedToLocal && !savedToFirebase) {
