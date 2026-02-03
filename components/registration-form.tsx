@@ -57,6 +57,8 @@ const generateParticipantId = () => {
   return `${Date.now().toString(36)}-${performanceStamp}-${randomStamp}`
 }
 
+const FIREBASE_TIMEOUT_MS = 5000
+
 export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -73,6 +75,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   const [submitted, setSubmitted] = useState(false)
   const [emailStatus, setEmailStatus] = useState<string>("")
+  const [saveStatus, setSaveStatus] = useState<string>("")
   // Initialize EmailJS
   useEffect(() => {
     emailjs.init("ukCJVevtRBgZ-Dr1B")
@@ -93,6 +96,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     // Show success message immediately
     setSubmitted(true)
     setEmailStatus("E-Mail wird versendet...")
+    setSaveStatus("Speichere Anmeldung...")
 
     // Save to localStorage as a fallback/cache
     let savedToLocal = false
@@ -109,13 +113,45 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
     // PRIMARY: Save to Firebase for cross-device sync
     let savedToFirebase = false
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+    let timeoutOccurred = false
+    const timeoutError = new Error("firebase-timeout")
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timeoutId = setTimeout(() => {
+        timeoutOccurred = true
+        reject(timeoutError)
+      }, FIREBASE_TIMEOUT_MS)
+    })
+    const firebasePromise = addParticipant(participant).finally(() => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
+      }
+    })
     try {
-      await addParticipant(participant)
-      savedToFirebase = true
-      console.log("[Storage] Participant data saved successfully to Firebase")
+      await Promise.race([firebasePromise, timeoutPromise])
+      if (!timeoutOccurred) {
+        savedToFirebase = true
+        setSaveStatus("✅ Anmeldung in der Datenbank gespeichert")
+        console.log("[Storage] Participant data saved successfully to Firebase")
+      }
     } catch (error) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
       console.warn("[Storage] Using localStorage only - data will not sync across devices")
+      const isTimeout = timeoutOccurred || (error instanceof Error && error.message === "firebase-timeout")
+      const firebaseError = isTimeout
+        ? "Zeitüberschreitung bei der Datenbankverbindung"
+        : "Datenbank nicht erreichbar"
+      setSaveStatus(`⚠️ ${firebaseError} – nur lokal gespeichert`)
+    }
+    if (timeoutOccurred) {
+      firebasePromise
+        .then(() => {
+          setSaveStatus("✅ Anmeldung in der Datenbank gespeichert (nachträglich)")
+        })
+        .catch(() => {
+          /* no-op: keep local-only status */
+        })
     }
 
     if (!savedToLocal && !savedToFirebase) {
@@ -124,10 +160,10 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       setTimeout(() => {
         setSubmitted(false)
         setEmailStatus("")
+        setSaveStatus("")
       }, 4000)
       return
     }
-
     // Send email using EmailJS - this is secondary and can fail without breaking the flow
     try {
       const durationText = formData.sessionType === "Aufgeteilt" && formData.sessionDuration
@@ -181,6 +217,7 @@ Diese E-Mail dient nur zur Bestätigung. Deine Daten werden ausschließlich für
     setTimeout(() => {
       setSubmitted(false)
       setEmailStatus("")
+      setSaveStatus("")
       setFormData({
         name: "",
         email: "",
@@ -206,6 +243,11 @@ Diese E-Mail dient nur zur Bestätigung. Deine Daten werden ausschließlich für
           <p className="text-gray-600 mb-2">
             Deine Anmeldung wurde erfolgreich registriert.
           </p>
+          {saveStatus && (
+            <p className="text-sm text-gray-600 font-medium">
+              {saveStatus}
+            </p>
+          )}
           {emailStatus && (
             <p className="text-sm text-blue-600 font-medium">
               {emailStatus}

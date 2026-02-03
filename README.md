@@ -20,7 +20,7 @@ This application uses Firebase Firestore to synchronize form entries across all 
 
 1. Follow the detailed instructions in [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
 2. Create a Firebase project and enable Firestore
-3. Update the Firebase configuration in `lib/firebase.ts` with your project credentials
+3. Provide your Firebase credentials via `.env.local` (recommended)
 4. Configure Firestore security rules as described in the setup guide
 
 **Note:** Without Firebase configuration, the app will still work but entries will only be stored locally on each device.
