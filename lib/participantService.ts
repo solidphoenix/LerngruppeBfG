@@ -18,7 +18,7 @@ import type { Participant } from '@/components/registration-form'
 const COLLECTION_NAME = 'participants'
 
 // Helper to convert Firestore timestamp to ISO string
-const convertTimestamp = (data: any): Participant => {
+const convertTimestamp = (data: DocumentData): Participant => {
   return {
     ...data,
     timestamp: data.timestamp?.toDate?.()?.toISOString() || data.timestamp
