@@ -31,6 +31,32 @@ export interface Participant {
   deleteToken?: string
 }
 
+/** Convert a byte array to a hex string for ID generation. */
+const bytesToHexString = (bytes: Uint8Array) =>
+  Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("")
+
+/**
+ * Generate a unique identifier for participants using:
+ * 1) crypto.randomUUID when available
+ * 2) crypto.getRandomValues bytes + timestamp
+ * 3) timestamp + performance/random fallback
+ */
+const generateParticipantId = () => {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID()
+  }
+  if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
+    const bytes = new Uint8Array(16)
+    crypto.getRandomValues(bytes)
+    return bytesToHexString(bytes)
+  }
+  const performanceStamp = typeof performance !== "undefined"
+    ? performance.now().toString(36)
+    : Math.random().toString(36).slice(2, 8)
+  const randomStamp = Math.random().toString(36).slice(2, 8)
+  return `${Date.now().toString(36)}-${performanceStamp}-${randomStamp}`
+}
+
 export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -47,7 +73,6 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   const [submitted, setSubmitted] = useState(false)
   const [emailStatus, setEmailStatus] = useState<string>("")
-
   // Initialize EmailJS
   useEffect(() => {
     emailjs.init("ukCJVevtRBgZ-Dr1B")
@@ -56,37 +81,52 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const deleteToken = crypto.randomUUID()
+    const participantId = generateParticipantId()
+    const deleteToken = generateParticipantId()
     const participant: Participant = {
-      id: crypto.randomUUID(),
+      id: participantId,
       ...formData,
       timestamp: new Date().toISOString(),
       deleteToken: deleteToken,
     }
 
+    // Show success message immediately
+    setSubmitted(true)
+    setEmailStatus("E-Mail wird versendet...")
+
     // Save to localStorage as a fallback/cache
+    let savedToLocal = false
     try {
       const existing = localStorage.getItem("participants")
       const participants: Participant[] = existing ? JSON.parse(existing) : []
       participants.push(participant)
       localStorage.setItem("participants", JSON.stringify(participants))
+      savedToLocal = true
       console.log("[Storage] Participant data saved to localStorage as cache")
     } catch (error) {
       console.error("[Storage] Warning: Failed to save to localStorage cache:", error)
     }
 
     // PRIMARY: Save to Firebase for cross-device sync
+    let savedToFirebase = false
     try {
       await addParticipant(participant)
+      savedToFirebase = true
       console.log("[Storage] Participant data saved successfully to Firebase")
     } catch (error) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
       console.warn("[Storage] Using localStorage only - data will not sync across devices")
     }
 
-    // Show success message
-    setSubmitted(true)
-    setEmailStatus("E-Mail wird versendet...")
+    if (!savedToLocal && !savedToFirebase) {
+      console.error("[Storage] Registration could not be saved locally or in Firebase")
+      setEmailStatus("Fehler: Anmeldung konnte nicht gespeichert werden.")
+      setTimeout(() => {
+        setSubmitted(false)
+        setEmailStatus("")
+      }, 4000)
+      return
+    }
 
     // Send email using EmailJS - this is secondary and can fail without breaking the flow
     try {
