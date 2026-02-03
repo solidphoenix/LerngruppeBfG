@@ -13,7 +13,7 @@ import { Trash2, Lock, LogOut, Calendar, Clock, Timer, User, Mail } from "lucide
 import type { Participant } from "@/components/registration-form"
 
 export default function AdminPage() {
-  const [isLocal, setIsLocal] = useState(true)
+  const [isLocal, setIsLocal] = useState<boolean | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState("")
   const [participants, setParticipants] = useState<Participant[]>([])
@@ -32,7 +32,6 @@ export default function AdminPage() {
     const adminAuth = sessionStorage.getItem("adminAuth")
     if (adminAuth === "true") {
       setIsAuthenticated(true)
-      loadParticipants()
     }
   }, [])
 
@@ -79,6 +78,19 @@ export default function AdminPage() {
     const [local, domain] = email.split("@")
     if (local.length <= 2) return `${local[0]}***@${domain}`
     return `${local.substring(0, 2)}***@${domain}`
+  }
+
+  if (isLocal === null) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full p-8 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">Admin-Bereich</h1>
+          <p className="text-sm text-gray-600">
+            Lädt...
+          </p>
+        </Card>
+      </div>
+    )
   }
 
   if (!isLocal) {
