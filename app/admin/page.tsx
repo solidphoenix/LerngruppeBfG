@@ -172,21 +172,27 @@ export default function AdminPage() {
         </div>
 
         {/* Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <Card className="p-6">
             <div className="text-sm text-gray-600">Gesamt Anmeldungen</div>
             <div className="text-3xl font-bold text-primary mt-2">{participants.length}</div>
           </Card>
           <Card className="p-6">
-            <div className="text-sm text-gray-600">Sonntag (09.02.)</div>
+            <div className="text-sm text-gray-600">Sonntag (08.02.)</div>
             <div className="text-3xl font-bold text-blue-600 mt-2">
+              {participants.filter(p => p.day === "08.02.2026").length}
+            </div>
+          </Card>
+          <Card className="p-6">
+            <div className="text-sm text-gray-600">Montag (09.02.)</div>
+            <div className="text-3xl font-bold text-indigo-600 mt-2">
               {participants.filter(p => p.day === "09.02.2026").length}
             </div>
           </Card>
           <Card className="p-6">
-            <div className="text-sm text-gray-600">Montag (10.02.)</div>
-            <div className="text-3xl font-bold text-indigo-600 mt-2">
-              {participants.filter(p => p.day === "10.02.2026").length}
+            <div className="text-sm text-gray-600">Mittwoch (11.02.)</div>
+            <div className="text-3xl font-bold text-sky-600 mt-2">
+              {participants.filter(p => p.day === "11.02.2026").length}
             </div>
           </Card>
         </div>
