@@ -1,1 +1,1 @@
-Platzhalter für Utilities und Hilfsfunktionen.
+Placeholder for utilities and helper functions.

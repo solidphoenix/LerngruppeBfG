@@ -1,1 +1,1 @@
-Platzhalter für wiederverwendbare React-Komponenten.
+Placeholder for reusable React components.
