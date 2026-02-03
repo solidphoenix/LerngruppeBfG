@@ -1,10 +1,10 @@
-import { initializeApp, getApps, FirebaseApp } from 'firebase/app'
+import { initializeApp, getApps, FirebaseApp, type FirebaseOptions } from 'firebase/app'
 import { getFirestore, Firestore } from 'firebase/firestore'
 
 // Firebase configuration
 // These values should be set via environment variables for production
 // Copy .env.example to .env.local and fill in your Firebase project values
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -20,26 +20,19 @@ let db: Firestore | null = null
 if (typeof window !== 'undefined') {
   // Only initialize on client side
   const isDevelopment = process.env.NODE_ENV === 'development'
-  const hasConfig = Boolean(
-    firebaseConfig.apiKey &&
-    firebaseConfig.projectId &&
-    firebaseConfig.authDomain &&
-    firebaseConfig.appId &&
-    firebaseConfig.storageBucket &&
-    firebaseConfig.messagingSenderId
-  )
+  const hasConfig = (config: FirebaseOptions): config is Required<FirebaseOptions> =>
+    Boolean(
+      config.apiKey &&
+      config.projectId &&
+      config.authDomain &&
+      config.appId &&
+      config.storageBucket &&
+      config.messagingSenderId
+    )
 
-  if (hasConfig) {
-    const resolvedConfig = {
-      apiKey: firebaseConfig.apiKey!,
-      authDomain: firebaseConfig.authDomain!,
-      projectId: firebaseConfig.projectId!,
-      storageBucket: firebaseConfig.storageBucket!,
-      messagingSenderId: firebaseConfig.messagingSenderId!,
-      appId: firebaseConfig.appId!
-    }
+  if (hasConfig(firebaseConfig)) {
     if (!getApps().length) {
-      app = initializeApp(resolvedConfig)
+      app = initializeApp(firebaseConfig)
     } else {
       app = getApps()[0]
     }
