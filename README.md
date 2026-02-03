@@ -51,7 +51,7 @@ https://<your-username>.github.io/Lerngruppe26/
 
 If you rename the repository, update `basePath` and `assetPrefix` in `next.config.js`.
 
-Note: The admin view is meant for local use only. It is intentionally hidden on GitHub Pages because client-side passwords are not secure on static sites.
+Note: The admin view is meant for local use only. It is disabled on GitHub Pages because client-side passwords are not secure on static sites.
 
 ---
 

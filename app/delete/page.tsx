@@ -60,7 +60,7 @@ function DeleteContent() {
       setStatus("deleted")
 
       setTimeout(() => {
-        router.push("../")
+        router.push("/")
       }, 3000)
     } catch (error) {
       console.error("[v0] Error deleting participant:", error)
@@ -91,7 +91,7 @@ function DeleteContent() {
             <p className="text-gray-600 mb-6">
               Diese Anmeldung existiert nicht oder wurde bereits gelöscht.
             </p>
-            <Button onClick={() => router.push("../")} className="bg-primary hover:bg-primary/90">
+            <Button onClick={() => router.push("/")} className="bg-primary hover:bg-primary/90">
               Zurück zur Startseite
             </Button>
           </Card>
@@ -104,7 +104,7 @@ function DeleteContent() {
             <p className="text-gray-600 mb-6">
               Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.
             </p>
-            <Button onClick={() => router.push("../")} className="bg-primary hover:bg-primary/90">
+            <Button onClick={() => router.push("/")} className="bg-primary hover:bg-primary/90">
               Zurück zur Startseite
             </Button>
           </Card>
@@ -139,7 +139,7 @@ function DeleteContent() {
 
             <div className="flex gap-3 justify-center">
               <Button
-                onClick={() => router.push("../")}
+                onClick={() => router.push("/")}
                 variant="outline"
                 className="bg-transparent"
               >
