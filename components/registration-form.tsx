@@ -58,6 +58,7 @@ const generateParticipantId = () => {
 }
 
 export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
+  const FIREBASE_TIMEOUT_MS = 5000
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -113,12 +114,14 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     let savedToFirebase = false
     let firebaseError: string | null = null
     try {
-      await Promise.race([
-        addParticipant(participant),
-        new Promise<never>((_, reject) => {
-          setTimeout(() => reject(new Error("timeout")), 5000)
-        })
-      ])
+      let timeoutId: ReturnType<typeof setTimeout> | null = null
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        timeoutId = setTimeout(() => reject(new Error("timeout")), FIREBASE_TIMEOUT_MS)
+      })
+      await Promise.race([addParticipant(participant), timeoutPromise])
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
       savedToFirebase = true
       setSaveStatus("✅ Anmeldung in der Datenbank gespeichert")
       console.log("[Storage] Participant data saved successfully to Firebase")
@@ -143,7 +146,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       return
     }
     if (!savedToFirebase && savedToLocal && firebaseError) {
-      setEmailStatus(`Hinweis: ${firebaseError}.`)
+      setSaveStatus(`⚠️ ${firebaseError} – nur lokal gespeichert`)
     }
 
     // Send email using EmailJS - this is secondary and can fail without breaking the flow
