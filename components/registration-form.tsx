@@ -113,14 +113,12 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
     // PRIMARY: Save to Firebase for cross-device sync
     let savedToFirebase = false
-    let firebaseError: string | null = null
     let timeoutId: ReturnType<typeof setTimeout> | null = null
-    let didTimeout = false
-    let didSaveToFirebase = false
+    let timeoutOccurred = false
     try {
       const timeoutPromise = new Promise<never>((_, reject) => {
         timeoutId = setTimeout(() => {
-          didTimeout = true
+          timeoutOccurred = true
           reject(new Error("timeout"))
         }, FIREBASE_TIMEOUT_MS)
       })
@@ -131,25 +129,21 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
         }
       })
       await Promise.race([firebasePromise, timeoutPromise])
-      if (!didTimeout) {
+      if (!timeoutOccurred) {
         savedToFirebase = true
-        didSaveToFirebase = true
         setSaveStatus("✅ Anmeldung in der Datenbank gespeichert")
         console.log("[Storage] Participant data saved successfully to Firebase")
       }
     } catch (error) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
       console.warn("[Storage] Using localStorage only - data will not sync across devices")
+      let firebaseError: string | null = null
       const message = error instanceof Error ? error.message.toLowerCase() : ""
-      const isTimeout = didTimeout || message.includes("timeout")
+      const isTimeout = timeoutOccurred || message.includes("timeout")
       firebaseError = isTimeout
         ? "Zeitüberschreitung bei der Datenbankverbindung"
         : "Datenbank nicht erreichbar"
       setSaveStatus(`⚠️ ${firebaseError} – nur lokal gespeichert`)
-    } finally {
-      if (!didSaveToFirebase && didTimeout) {
-        setSaveStatus(`⚠️ ${firebaseError ?? "Datenbank nicht erreichbar"} – nur lokal gespeichert`)
-      }
     }
 
     if (!savedToLocal && !savedToFirebase) {
