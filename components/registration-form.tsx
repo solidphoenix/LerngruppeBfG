@@ -73,6 +73,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
   const [submitted, setSubmitted] = useState(false)
   const [emailStatus, setEmailStatus] = useState<string>("")
+  const [saveStatus, setSaveStatus] = useState<string>("")
   // Initialize EmailJS
   useEffect(() => {
     emailjs.init("ukCJVevtRBgZ-Dr1B")
@@ -93,6 +94,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     // Show success message immediately
     setSubmitted(true)
     setEmailStatus("E-Mail wird versendet...")
+    setSaveStatus("Speichere Anmeldung...")
 
     // Save to localStorage as a fallback/cache
     let savedToLocal = false
@@ -109,13 +111,25 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
     // PRIMARY: Save to Firebase for cross-device sync
     let savedToFirebase = false
+    let firebaseError: string | null = null
     try {
-      await addParticipant(participant)
+      await Promise.race([
+        addParticipant(participant),
+        new Promise<never>((_, reject) => {
+          setTimeout(() => reject(new Error("timeout")), 5000)
+        })
+      ])
       savedToFirebase = true
+      setSaveStatus("✅ Anmeldung in der Datenbank gespeichert")
       console.log("[Storage] Participant data saved successfully to Firebase")
     } catch (error) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
       console.warn("[Storage] Using localStorage only - data will not sync across devices")
+      const message = error instanceof Error ? error.message : ""
+      firebaseError = message === "timeout"
+        ? "Zeitüberschreitung bei der Datenbankverbindung"
+        : "Datenbank nicht erreichbar"
+      setSaveStatus(`⚠️ ${firebaseError} – nur lokal gespeichert`)
     }
 
     if (!savedToLocal && !savedToFirebase) {
@@ -124,8 +138,12 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       setTimeout(() => {
         setSubmitted(false)
         setEmailStatus("")
+        setSaveStatus("")
       }, 4000)
       return
+    }
+    if (!savedToFirebase && savedToLocal && firebaseError) {
+      setEmailStatus(`Hinweis: ${firebaseError}.`)
     }
 
     // Send email using EmailJS - this is secondary and can fail without breaking the flow
@@ -181,6 +199,7 @@ Diese E-Mail dient nur zur Bestätigung. Deine Daten werden ausschließlich für
     setTimeout(() => {
       setSubmitted(false)
       setEmailStatus("")
+      setSaveStatus("")
       setFormData({
         name: "",
         email: "",
@@ -206,6 +225,11 @@ Diese E-Mail dient nur zur Bestätigung. Deine Daten werden ausschließlich für
           <p className="text-gray-600 mb-2">
             Deine Anmeldung wurde erfolgreich registriert.
           </p>
+          {saveStatus && (
+            <p className="text-sm text-gray-600 font-medium">
+              {saveStatus}
+            </p>
+          )}
           {emailStatus && (
             <p className="text-sm text-blue-600 font-medium">
               {emailStatus}
