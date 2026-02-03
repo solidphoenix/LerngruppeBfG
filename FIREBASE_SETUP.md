@@ -46,7 +46,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=IHRE_APP_ID
 
 ### Option 2: Direkte Konfiguration (Nicht empfohlen)
 
-Aus Sicherheitsgründen sollten Firebase-Zugangsdaten nicht im Quellcode hinterlegt werden. Nutzen Sie stattdessen `.env.local`, damit keine Zugangsdaten versioniert werden.
+Aus Sicherheitsgründen sollten Firebase-Zugangsdaten nicht im Quellcode hinterlegt werden. Nutzen Sie stattdessen `.env.local`, damit keine Zugangsdaten versioniert werden. Verwenden Sie diese Option nur, wenn Sie die Anwendung ausschließlich lokal testen und keine Konfigurationsdateien nutzen können.
 
 ## Schritt 5: Firestore-Sicherheitsregeln einrichten
 

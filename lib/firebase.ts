@@ -3,8 +3,10 @@ import { getFirestore, Firestore } from 'firebase/firestore'
 
 // Firebase configuration
 // These values should be set via environment variables for production
-// Copy .env.example to .env.local and fill in your Firebase project values
-const firebaseConfig: Partial<FirebaseOptions> = {
+// Add your Firebase project values to .env.local
+type FirebaseConfig = Required<Pick<FirebaseOptions, 'apiKey' | 'authDomain' | 'projectId' | 'storageBucket' | 'messagingSenderId' | 'appId'>>
+
+const firebaseConfig: Partial<FirebaseConfig> = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
@@ -20,7 +22,7 @@ let db: Firestore | null = null
 if (typeof window !== 'undefined') {
   // Only initialize on client side
   const isDevelopment = process.env.NODE_ENV === 'development'
-  const isCompleteConfig = (config: Partial<FirebaseOptions>): config is Required<FirebaseOptions> =>
+  const isCompleteConfig = (config: Partial<FirebaseConfig>): config is FirebaseConfig =>
     Boolean(
       config.apiKey &&
       config.projectId &&
