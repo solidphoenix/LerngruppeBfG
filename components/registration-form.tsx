@@ -115,19 +115,32 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     let savedToFirebase = false
     let firebaseError: string | null = null
     let timeoutId: ReturnType<typeof setTimeout> | null = null
+    let didTimeout = false
     try {
       const timeoutPromise = new Promise<never>((_, reject) => {
-        timeoutId = setTimeout(() => reject(new Error("timeout")), FIREBASE_TIMEOUT_MS)
+        timeoutId = setTimeout(() => {
+          didTimeout = true
+          reject(new Error("timeout"))
+        }, FIREBASE_TIMEOUT_MS)
       })
-      await Promise.race([addParticipant(participant), timeoutPromise])
-      savedToFirebase = true
-      setSaveStatus("✅ Anmeldung in der Datenbank gespeichert")
-      console.log("[Storage] Participant data saved successfully to Firebase")
+      const firebasePromise = addParticipant(participant).finally(() => {
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+          timeoutId = null
+        }
+      })
+      await Promise.race([firebasePromise, timeoutPromise])
+      if (!didTimeout) {
+        savedToFirebase = true
+        setSaveStatus("✅ Anmeldung in der Datenbank gespeichert")
+        console.log("[Storage] Participant data saved successfully to Firebase")
+      }
     } catch (error) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
       console.warn("[Storage] Using localStorage only - data will not sync across devices")
-      const message = error instanceof Error ? error.message : ""
-      firebaseError = message === "timeout"
+      const message = error instanceof Error ? error.message.toLowerCase() : ""
+      const isTimeout = didTimeout || message.includes("timeout")
+      firebaseError = isTimeout
         ? "Zeitüberschreitung bei der Datenbankverbindung"
         : "Datenbank nicht erreichbar"
       setSaveStatus(`⚠️ ${firebaseError} – nur lokal gespeichert`)
