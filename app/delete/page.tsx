@@ -24,28 +24,14 @@ function DeleteContent() {
           return
         }
 
-        // Try to load from Firebase first
+        let participants: Participant[] = []
         try {
-          const participants = await getParticipants()
-          const found = participants.find(p => p.deleteToken === token)
-          
-          if (found) {
-            setParticipant(found)
-            setStatus("found")
-            return
-          }
+          participants = await getParticipants()
         } catch (error) {
-          console.error("[Storage] Failed to load from Firebase, trying localStorage:", error)
-        }
-
-        // Fallback to localStorage
-        const existing = localStorage.getItem("participants")
-        if (!existing) {
-          setStatus("notfound")
+          console.error("[Storage] Error loading participant:", error)
+          setStatus("error")
           return
         }
-
-        const participants: Participant[] = JSON.parse(existing)
         const found = participants.find(p => p.deleteToken === token)
 
         if (found) {
@@ -65,28 +51,11 @@ function DeleteContent() {
 
   const handleDelete = async () => {
     try {
-      // Delete from Firebase
-      try {
-        const deleted = await deleteParticipantByToken(token)
-        if (deleted) {
-          console.log("[Storage] Participant deleted from Firebase")
-        } else {
-          console.warn("[Storage] Participant not found in Firebase")
-        }
-      } catch (error) {
-        console.error("[Storage] Failed to delete from Firebase:", error)
-      }
-
-      // Also delete from localStorage
-      try {
-        const existing = localStorage.getItem("participants")
-        if (existing) {
-          const participants: Participant[] = JSON.parse(existing)
-          const filtered = participants.filter(p => p.deleteToken !== token)
-          localStorage.setItem("participants", JSON.stringify(filtered))
-        }
-      } catch (error) {
-        console.error("[Storage] Failed to delete from localStorage:", error)
+      const deleted = await deleteParticipantByToken(token)
+      if (deleted) {
+        console.log("[Storage] Participant deleted from Firebase")
+      } else {
+        console.warn("[Storage] Participant not found in Firebase")
       }
       
       console.log("[Storage] Participant deleted successfully")

@@ -14,16 +14,16 @@ npm install
 yarn install
 ```
 
-### Firebase Setup (Required for Cross-Device Sync)
+### Firebase Setup (Required)
 
-This application uses Firebase Firestore to synchronize form entries across all devices. To enable this feature:
+This application uses Firebase Firestore to store form entries. To enable this feature:
 
 1. Follow the detailed instructions in [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
 2. Create a Firebase project and enable Firestore
 3. Provide your Firebase credentials via `.env.local` (recommended)
 4. Configure Firestore security rules as described in the setup guide
 
-**Note:** Without Firebase configuration, the app will still work but entries will only be stored locally on each device.
+**Note:** Without Firebase configuration, registrations cannot be stored.
 
 Then, run the development server:
 
@@ -53,8 +53,6 @@ This project uses:
 - ✅ Real-time synchronization across all devices
 - ✅ Email confirmations with cancellation links
 - ✅ Admin dashboard (local only)
-- ✅ Offline support with localStorage fallback
-- ✅ Automatic data migration from localStorage to Firebase
 
 ## Learn More
 

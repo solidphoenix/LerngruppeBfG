@@ -120,10 +120,6 @@ service cloud.firestore {
 - Überprüfen Sie, ob Firebase korrekt initialisiert wurde
 - Stellen Sie sicher, dass Sie mit dem Internet verbunden sind
 
-### Migration von localStorage-Daten
-- Beim ersten Laden der Teilnehmerliste werden automatisch alle vorhandenen localStorage-Daten zu Firebase migriert
-- Dies geschieht nur einmal und vermeidet Duplikate
-
 ## Wichtige Hinweise
 
 - **Öffentliche Konfiguration**: Die Firebase-Konfigurationswerte (apiKey, projectId, etc.) sind öffentlich und können sicher im Client-Code gespeichert werden. Sie sind durch Firebase-Sicherheitsregeln geschützt.
@@ -132,7 +128,6 @@ service cloud.firestore {
   - 20.000 Schreibvorgänge/Tag
   - 20.000 Löschvorgänge/Tag
   - 1 GB Speicher
-- **Offline-Support**: Die Anwendung speichert Daten weiterhin in localStorage als Fallback/Cache
 - **Real-Time**: Änderungen werden in Echtzeit auf allen verbundenen Geräten synchronisiert
 
 ## Support

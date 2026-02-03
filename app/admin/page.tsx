@@ -43,13 +43,9 @@ export default function AdminPage() {
       try {
         unsubscribe = subscribeToParticipants((updatedParticipants) => {
           setParticipants(updatedParticipants)
-          // Also update localStorage as cache
-          localStorage.setItem("participants", JSON.stringify(updatedParticipants))
         })
       } catch (error) {
-        console.error('[Storage] Failed to subscribe to Firebase, using localStorage:', error)
-        // Fallback to localStorage
-        loadParticipants()
+        console.error('[Storage] Failed to subscribe to Firebase:', error)
       }
 
       return () => {
@@ -60,20 +56,12 @@ export default function AdminPage() {
     }
   }, [isAuthenticated])
 
-  const loadParticipants = () => {
-    const data = localStorage.getItem("participants")
-    if (data) {
-      setParticipants(JSON.parse(data))
-    }
-  }
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true)
       sessionStorage.setItem("adminAuth", "true")
       setError("")
-      loadParticipants()
     } else {
       setError("Falsches Passwort")
     }
@@ -91,17 +79,8 @@ export default function AdminPage() {
         // Delete from Firebase
         await deleteParticipantById(id)
         console.log('[Storage] Participant deleted from Firebase')
-        
-        // Also delete from localStorage cache
-        const updated = participants.filter(p => p.id !== id)
-        localStorage.setItem("participants", JSON.stringify(updated))
-        setParticipants(updated)
       } catch (error) {
         console.error('[Storage] Error deleting participant:', error)
-        // Fallback to localStorage only
-        const updated = participants.filter(p => p.id !== id)
-        localStorage.setItem("participants", JSON.stringify(updated))
-        setParticipants(updated)
       }
     }
   }

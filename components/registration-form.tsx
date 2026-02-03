@@ -95,21 +95,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
 
     // Show success message immediately
     setSubmitted(true)
-    setEmailStatus("E-Mail wird versendet...")
     setSaveStatus("Speichere Anmeldung...")
-
-    // Save to localStorage as a fallback/cache
-    let savedToLocal = false
-    try {
-      const existing = localStorage.getItem("participants")
-      const participants: Participant[] = existing ? JSON.parse(existing) : []
-      participants.push(participant)
-      localStorage.setItem("participants", JSON.stringify(participants))
-      savedToLocal = true
-      console.log("[Storage] Participant data saved to localStorage as cache")
-    } catch (error) {
-      console.error("[Storage] Warning: Failed to save to localStorage cache:", error)
-    }
 
     // PRIMARY: Save to Firebase for cross-device sync
     let savedToFirebase = false
@@ -137,26 +123,25 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       }
     } catch (error) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
-      console.warn("[Storage] Using localStorage only - data will not sync across devices")
       const isTimeout = timeoutOccurred || (error instanceof Error && error.message === "firebase-timeout")
       const firebaseError = isTimeout
         ? "Zeitüberschreitung bei der Datenbankverbindung"
         : "Datenbank nicht erreichbar"
-      setSaveStatus(`⚠️ ${firebaseError} – nur lokal gespeichert`)
+      setSaveStatus(`⚠️ ${firebaseError} – Anmeldung nicht gespeichert`)
     }
     if (timeoutOccurred) {
-      firebasePromise
-        .then(() => {
-          setSaveStatus("✅ Anmeldung in der Datenbank gespeichert (nachträglich)")
-        })
-        .catch(() => {
-          /* no-op: keep local-only status */
-        })
+      try {
+        await firebasePromise
+        savedToFirebase = true
+        setSaveStatus("✅ Anmeldung in der Datenbank gespeichert (nachträglich)")
+      } catch {
+        /* no-op: keep error status */
+      }
     }
 
-    if (!savedToLocal && !savedToFirebase) {
-      console.error("[Storage] Registration could not be saved locally or in Firebase")
-      setEmailStatus("Fehler: Anmeldung konnte nicht gespeichert werden.")
+    if (!savedToFirebase) {
+      console.error("[Storage] Registration could not be saved in Firebase")
+      setSaveStatus("Fehler: Anmeldung konnte nicht gespeichert werden.")
       setTimeout(() => {
         setSubmitted(false)
         setEmailStatus("")
@@ -165,6 +150,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       return
     }
     // Send email using EmailJS - this is secondary and can fail without breaking the flow
+    setEmailStatus("E-Mail wird versendet...")
     try {
       const durationText = formData.sessionType === "Aufgeteilt" && formData.sessionDuration
         ? `${formData.numberOfSessions}× ${formData.sessionDuration} Min. + Pausen (${formData.breakDuration} Min.)`
