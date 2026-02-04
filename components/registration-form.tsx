@@ -130,7 +130,8 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
       setSaveStatus("⚠️ Datenbank nicht erreichbar – Anmeldung nicht gespeichert")
     }
-    if (!savedToFirebase && timeoutOccurred && !firebaseFailed) {
+    const shouldRetryAfterTimeout = !savedToFirebase && timeoutOccurred && !firebaseFailed
+    if (shouldRetryAfterTimeout) {
       try {
         await firebasePromise
         savedToFirebase = true
