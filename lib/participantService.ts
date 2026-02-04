@@ -1,142 +1,125 @@
-import {
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-  query,
-  where,
-  onSnapshot,
-  Timestamp,
-  QuerySnapshot,
-  DocumentData,
-  setDoc
-} from 'firebase/firestore'
-import { db } from './firebase'
+import { supabase } from './supabaseClient'
 import type { Participant } from '@/components/registration-form'
 
-const COLLECTION_NAME = 'participants'
+const TABLE_NAME = 'participants'
 
-// Helper to convert Firestore timestamp to ISO string
-const convertTimestamp = (data: DocumentData): Participant => {
+const tryParseInteger = (value?: string) => {
+  if (!value) return null
+  const parsed = Number.parseInt(value, 10)
+  return Number.isNaN(parsed) ? null : parsed
+}
+
+const ensureSupabase = () => {
+  if (!supabase) {
+    throw new Error('Supabase not initialized')
+  }
+}
+
+const toParticipant = (row: unknown): Participant => {
+  const participant = row as Participant
   return {
-    ...data,
-    timestamp: data.timestamp?.toDate?.()?.toISOString() || data.timestamp
-  } as Participant
+    ...participant,
+    timestamp: participant.timestamp ? new Date(participant.timestamp).toISOString() : ''
+  }
 }
 
-/**
- * Add a new participant to Firestore
- * Uses the participant's ID as the document ID to avoid mismatches
- */
+const normalizeParticipant = (participant: Participant): Participant => {
+  const normalizeOptionalNumberToString = (value?: string) => {
+    if (!value) return undefined
+    // Fall back to the original string when parsing fails (e.g., imported records).
+    return String(tryParseInteger(value) ?? value)
+  }
+  return {
+    ...participant,
+    numberOfSessions: normalizeOptionalNumberToString(participant.numberOfSessions),
+    sessionDuration: normalizeOptionalNumberToString(participant.sessionDuration),
+    breakDuration: normalizeOptionalNumberToString(participant.breakDuration)
+  }
+}
+
 export const addParticipant = async (participant: Participant): Promise<string> => {
-  try {
-    if (!db) {
-      throw new Error('Firestore not initialized')
-    }
-    // Use setDoc with the participant's ID as the document ID
-    await setDoc(doc(db, COLLECTION_NAME, participant.id), {
-      ...participant,
-      timestamp: Timestamp.fromDate(new Date(participant.timestamp))
-    })
-    console.log('[Firebase] Participant added with ID:', participant.id)
-    return participant.id
-  } catch (error) {
-    console.error('[Firebase] Error adding participant:', error)
+  ensureSupabase()
+  const payload = normalizeParticipant(participant)
+  const { error } = await supabase!
+    .from(TABLE_NAME)
+    .insert(payload)
+  if (error) {
+    console.error('[Supabase] Error adding participant:', error)
     throw error
   }
+  console.log('[Supabase] Participant added with ID:', participant.id)
+  return participant.id
 }
 
-/**
- * Get all participants from Firestore
- */
 export const getParticipants = async (): Promise<Participant[]> => {
-  try {
-    if (!db) {
-      throw new Error('Firestore not initialized')
-    }
-    const querySnapshot = await getDocs(collection(db, COLLECTION_NAME))
-    const participants: Participant[] = []
-    
-    querySnapshot.forEach((doc) => {
-      participants.push(convertTimestamp({ id: doc.id, ...doc.data() }))
-    })
-    
-    console.log('[Firebase] Loaded participants:', participants.length)
-    return participants
-  } catch (error) {
-    console.error('[Firebase] Error getting participants:', error)
+  ensureSupabase()
+  const { data, error } = await supabase!
+    .from(TABLE_NAME)
+    .select('*')
+    .order('timestamp', { ascending: true })
+  if (error) {
+    console.error('[Supabase] Error getting participants:', error)
     throw error
   }
+  // Convert timestamps to ISO strings for UI usage.
+  const participants = (data ?? []).map((row) => toParticipant(row))
+  console.log('[Supabase] Loaded participants:', participants.length)
+  return participants
 }
 
-/**
- * Delete a participant by delete token
- * Uses a query to efficiently find the document by deleteToken
- */
 export const deleteParticipantByToken = async (deleteToken: string): Promise<boolean> => {
-  try {
-    if (!db) {
-      throw new Error('Firestore not initialized')
-    }
-    const q = query(collection(db, COLLECTION_NAME), where('deleteToken', '==', deleteToken))
-    const querySnapshot = await getDocs(q)
-    
-    if (querySnapshot.empty) {
-      console.log('[Firebase] No participant found with token:', deleteToken)
-      return false
-    }
-    
-    // Delete the first matching document (should only be one)
-    await deleteDoc(querySnapshot.docs[0].ref)
-    console.log('[Firebase] Participant deleted with token:', deleteToken)
-    return true
-  } catch (error) {
-    console.error('[Firebase] Error deleting participant:', error)
+  ensureSupabase()
+  const { data, error } = await supabase!
+    .from(TABLE_NAME)
+    .delete()
+    .eq('deleteToken', deleteToken)
+    .select('id')
+  if (error) {
+    console.error('[Supabase] Error deleting participant:', error)
     throw error
   }
+  if (!data || data.length === 0) {
+    console.log('[Supabase] No participant found with token:', deleteToken)
+    return false
+  }
+  console.log('[Supabase] Participant deleted with token:', deleteToken)
+  return true
 }
 
-/**
- * Delete a participant by ID
- * Directly uses the participant ID as the document ID
- */
 export const deleteParticipantById = async (id: string): Promise<void> => {
-  try {
-    if (!db) {
-      throw new Error('Firestore not initialized')
-    }
-    await deleteDoc(doc(db, COLLECTION_NAME, id))
-    console.log('[Firebase] Participant deleted with ID:', id)
-  } catch (error) {
-    console.error('[Firebase] Error deleting participant by ID:', error)
+  ensureSupabase()
+  const { error } = await supabase!
+    .from(TABLE_NAME)
+    .delete()
+    .eq('id', id)
+  if (error) {
+    console.error('[Supabase] Error deleting participant by ID:', error)
     throw error
   }
+  console.log('[Supabase] Participant deleted with ID:', id)
 }
 
-/**
- * Subscribe to real-time updates for participants
- */
 export const subscribeToParticipants = (
   callback: (participants: Participant[]) => void
 ): (() => void) => {
-  try {
-    if (!db) {
-      throw new Error('Firestore not initialized')
-    }
-    const q = query(collection(db, COLLECTION_NAME))
-    
-    const unsubscribe = onSnapshot(q, (querySnapshot: QuerySnapshot<DocumentData>) => {
-      const participants: Participant[] = []
-      querySnapshot.forEach((doc) => {
-        participants.push(convertTimestamp({ id: doc.id, ...doc.data() }))
-      })
-      console.log('[Firebase] Real-time update received:', participants.length, 'participants')
-      callback(participants)
-    })
-    
-    return unsubscribe
-  } catch (error) {
-    console.error('[Firebase] Error subscribing to participants:', error)
-    throw error
+  ensureSupabase()
+  const channel = supabase!
+    .channel('participants')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: TABLE_NAME },
+      async () => {
+        try {
+          const updatedParticipants = await getParticipants()
+          callback(updatedParticipants)
+        } catch (error) {
+          console.error('[Supabase] Error refreshing participants:', error)
+        }
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabase!.removeChannel(channel)
   }
 }

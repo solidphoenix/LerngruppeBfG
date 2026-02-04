@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Trash2, Lock, LogOut, Calendar, Clock, Timer, User, Mail } from "lucide-react"
 import type { Participant } from "@/components/registration-form"
-import { subscribeToParticipants, deleteParticipantById } from '@/lib/participantService'
+import { subscribeToParticipants, deleteParticipantById, getParticipants } from '@/lib/participantService'
 
 export default function AdminPage() {
   const [isLocal, setIsLocal] = useState<boolean | null>(null)
@@ -38,14 +38,23 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Subscribe to real-time updates from Firebase
+      // Subscribe to real-time updates from Supabase
       let unsubscribe: (() => void) | null = null
       try {
+        const loadParticipants = async () => {
+          try {
+            const storedParticipants = await getParticipants()
+            setParticipants(storedParticipants)
+          } catch (error) {
+            console.error('[Storage] Failed to load participants from Firebase:', error)
+          }
+        }
+        loadParticipants()
         unsubscribe = subscribeToParticipants((updatedParticipants) => {
           setParticipants(updatedParticipants)
         })
       } catch (error) {
-        console.error('[Storage] Failed to subscribe to Firebase:', error)
+        console.error('[Storage] Failed to subscribe to Supabase:', error)
       }
 
       return () => {
@@ -78,7 +87,7 @@ export default function AdminPage() {
       try {
         // Delete from Firebase
         await deleteParticipantById(id)
-        console.log('[Storage] Participant deleted from Firebase')
+        console.log('[Storage] Participant deleted from Supabase')
       } catch (error) {
         console.error('[Storage] Error deleting participant:', error)
       }

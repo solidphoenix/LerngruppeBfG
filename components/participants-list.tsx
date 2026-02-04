@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Calendar, Clock, Timer, BookOpen, Mail, Trash2, X } from "lucide-react"
 import emailjs from '@emailjs/browser'
 import type { Participant } from "./registration-form"
-import { subscribeToParticipants } from '@/lib/participantService'
+import { subscribeToParticipants, getParticipants } from '@/lib/participantService'
 
 export function ParticipantsList() {
   const [participants, setParticipants] = useState<Participant[]>([])
@@ -21,17 +21,26 @@ export function ParticipantsList() {
   const [cancelStatus, setCancelStatus] = useState("")
 
   useEffect(() => {
+    const loadParticipants = async () => {
+      try {
+        const storedParticipants = await getParticipants()
+        setParticipants(storedParticipants)
+      } catch (error) {
+        console.error('[Storage] Failed to load participants from Firebase:', error)
+      }
+    }
     // Initialize EmailJS
     emailjs.init("ukCJVevtRBgZ-Dr1B")
 
     // Subscribe to real-time updates from Firebase
     let unsubscribe: (() => void) | null = null
     try {
+      loadParticipants()
       unsubscribe = subscribeToParticipants((updatedParticipants) => {
         setParticipants(updatedParticipants)
       })
     } catch (error) {
-      console.error('[Storage] Failed to subscribe to Firebase:', error)
+      console.error('[Storage] Failed to subscribe to Supabase:', error)
     }
 
     return () => {
