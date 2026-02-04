@@ -45,15 +45,17 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 3. Add policies:
    - **Select**: allow all (read for everyone).
    - **Insert**: allow all (anyone can register).
-   - **Delete**: restrict to requests that match `deleteToken` (or keep open during testing).
+   - **Delete**: restrict to requests that match `deleteToken` via an authenticated token.
 
-Example policy for delete with token (adjust to your auth strategy):
+Example policy for delete with token (requires auth; adjust to your auth strategy):
 ```sql
 create policy "delete by token"
 on public.participants
 for delete
 using (deleteToken = auth.jwt() ->> 'deleteToken');
 ```
+
+If you do not plan to use authentication, consider removing the delete feature or using a secured backend endpoint that validates the deleteToken server-side.
 
 ## 6) Test locally
 1. Start the dev server: `npm run dev`
