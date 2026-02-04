@@ -16,6 +16,7 @@ import { db } from './firebase'
 import type { Participant } from '@/components/registration-form'
 
 const COLLECTION_NAME = 'participants'
+const VERIFICATION_RETRY_DELAY_MS = 250
 
 // Helper to convert Firestore timestamp to ISO string
 const convertTimestamp = (data: DocumentData): Participant => {
@@ -42,7 +43,7 @@ export const addParticipant = async (participant: Participant): Promise<string> 
     })
     let savedSnapshot = await getDoc(participantRef)
     if (!savedSnapshot.exists()) {
-      await new Promise((resolve) => setTimeout(resolve, 250))
+      await new Promise((resolve) => setTimeout(resolve, VERIFICATION_RETRY_DELAY_MS))
       savedSnapshot = await getDoc(participantRef)
     }
     if (!savedSnapshot.exists()) {
