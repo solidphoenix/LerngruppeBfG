@@ -15,15 +15,15 @@ const normalizeParticipant = (participant: Participant): Participant => {
     const parsed = Number.parseInt(value, 10)
     return Number.isNaN(parsed) ? null : parsed
   }
-  const normalizeOptionalNumber = (value?: string) => {
+  const normalizeOptionalNumberToString = (value?: string) => {
     if (!value) return undefined
     return String(parseNumberOrNull(value) ?? value)
   }
   return {
     ...participant,
-    numberOfSessions: normalizeOptionalNumber(participant.numberOfSessions),
-    sessionDuration: normalizeOptionalNumber(participant.sessionDuration),
-    breakDuration: normalizeOptionalNumber(participant.breakDuration)
+    numberOfSessions: normalizeOptionalNumberToString(participant.numberOfSessions),
+    sessionDuration: normalizeOptionalNumberToString(participant.sessionDuration),
+    breakDuration: normalizeOptionalNumberToString(participant.breakDuration)
   }
 }
 
@@ -54,6 +54,7 @@ export const getParticipants = async (): Promise<Participant[]> => {
     console.error('[Supabase] Error getting participants:', error)
     throw error
   }
+  // Rehydrate timestamps to ISO strings for UI usage.
   const participants = (data ?? []).map((row) => ({
     ...(row as Participant),
     timestamp: row?.timestamp ? new Date(row.timestamp).toISOString() : ''
