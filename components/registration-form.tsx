@@ -103,6 +103,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
     let savedToFirebase = false
     let timeoutId: ReturnType<typeof setTimeout> | null = null
     let timeoutOccurred = false
+    // Resolve with a timeout marker so slow saves don't trigger an error state.
     const timeoutPromise = new Promise<typeof FIREBASE_TIMEOUT_RESULT>((resolve) => {
       timeoutId = setTimeout(() => {
         timeoutOccurred = true
@@ -130,6 +131,7 @@ export function RegistrationForm({ onSuccess }: RegistrationFormProps) {
       console.error("[Storage] Warning: Failed to save to Firebase:", error)
       setSaveStatus("⚠️ Datenbank nicht erreichbar – Anmeldung nicht gespeichert")
     }
+    // Retry only when the save is still pending after the timeout without a hard failure.
     const shouldRetryAfterTimeout = !savedToFirebase && timeoutOccurred && !firebaseFailed
     if (shouldRetryAfterTimeout) {
       try {
