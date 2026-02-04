@@ -14,16 +14,15 @@ npm install
 yarn install
 ```
 
-### Firebase Setup (Required)
+### Supabase Setup (Required for cross-device sync)
 
-This application uses Firebase Firestore to store form entries. To enable this feature:
+This application supports cross-device synchronization via Supabase. To enable this feature:
 
-1. Follow the detailed instructions in [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
-2. Create a Firebase project and enable Firestore
-3. Provide your Firebase credentials via `.env.local` (recommended)
-4. Configure Firestore security rules as described in the setup guide
+1. Follow the detailed instructions in [SUPABASE_SETUP.md](SUPABASE_SETUP.md)
+2. Create a Supabase project and table
+3. Provide your Supabase credentials via `.env.local`
 
-**Note:** Without Firebase configuration, registrations cannot be stored.
+**Note:** Without Supabase configuration, registrations cannot be stored.
 
 Then, run the development server:
 
@@ -44,7 +43,7 @@ This project uses:
 - **React** - UI library
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
-- **Firebase Firestore** - Real-time database for cross-device synchronization
+- **Supabase** - Hosted database for cross-device synchronization
 - **EmailJS** - Email notification service
 
 ## Features
