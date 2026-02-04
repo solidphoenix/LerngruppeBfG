@@ -18,7 +18,7 @@ import type { Participant } from '@/components/registration-form'
 const COLLECTION_NAME = 'participants'
 // Firestore writes can take a short moment to propagate; retry once with a small linear backoff.
 const VERIFICATION_RETRY_DELAY_MS = 250
-const VERIFICATION_RETRY_ATTEMPTS = 1
+const VERIFICATION_RETRY_COUNT = 1
 
 // Helper to convert Firestore timestamp to ISO string
 const convertTimestamp = (data: DocumentData): Participant => {
@@ -44,8 +44,8 @@ export const addParticipant = async (participant: Participant): Promise<string> 
       timestamp: Timestamp.fromDate(new Date(participant.timestamp))
     })
     let savedSnapshot = await getDoc(participantRef)
-    for (let retryAttempt = 1; retryAttempt <= VERIFICATION_RETRY_ATTEMPTS && !savedSnapshot.exists(); retryAttempt += 1) {
-      const delay = VERIFICATION_RETRY_DELAY_MS * retryAttempt
+    for (let retryCount = 0; retryCount < VERIFICATION_RETRY_COUNT && !savedSnapshot.exists(); retryCount += 1) {
+      const delay = VERIFICATION_RETRY_DELAY_MS * (retryCount + 1)
       await new Promise((resolve) => setTimeout(resolve, delay))
       savedSnapshot = await getDoc(participantRef)
     }
