@@ -8,7 +8,7 @@ This guide shows where to get the Supabase credentials needed for cross-device s
 3. Choose an organization, name the project, select a region, and create a database password.
 
 ## 2) Create the `participants` table
-1. Open **Database → Table Editor**.
+1. Open **Database > Table Editor**.
 2. Click **New table** and name it `participants`.
 3. Add the following columns:
    - `id` (text, primary key)
@@ -26,7 +26,7 @@ This guide shows where to get the Supabase credentials needed for cross-device s
    - `deleteToken` (text)
 
 ## 3) Get your Supabase URL + anon key
-1. Open **Project Settings → API**.
+1. Open **Project Settings > API**.
 2. Copy:
    - **Project URL**
    - **anon public key**
@@ -40,7 +40,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 ```
 
 ## 5) Configure Row Level Security (RLS)
-1. Open **Authentication → Policies**.
+1. Open **Authentication > Policies**.
 2. Enable **RLS** on the `participants` table.
 3. Add policies:
    - **Select**: allow all (read for everyone).
