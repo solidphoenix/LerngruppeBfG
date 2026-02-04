@@ -10,22 +10,20 @@ const ensureSupabase = () => {
 }
 
 const normalizeParticipant = (participant: Participant): Participant => {
-  const parseNumber = (value?: string) => {
+  const parseNumberOrNull = (value?: string) => {
     if (!value) return null
     const parsed = Number.parseInt(value, 10)
     return Number.isNaN(parsed) ? null : parsed
   }
+  const normalizeOptionalNumber = (value?: string) => {
+    if (!value) return undefined
+    return String(parseNumberOrNull(value) ?? value)
+  }
   return {
     ...participant,
-    numberOfSessions: participant.numberOfSessions
-      ? String(parseNumber(participant.numberOfSessions) ?? participant.numberOfSessions)
-      : undefined,
-    sessionDuration: participant.sessionDuration
-      ? String(parseNumber(participant.sessionDuration) ?? participant.sessionDuration)
-      : undefined,
-    breakDuration: participant.breakDuration
-      ? String(parseNumber(participant.breakDuration) ?? participant.breakDuration)
-      : undefined
+    numberOfSessions: normalizeOptionalNumber(participant.numberOfSessions),
+    sessionDuration: normalizeOptionalNumber(participant.sessionDuration),
+    breakDuration: normalizeOptionalNumber(participant.breakDuration)
   }
 }
 
