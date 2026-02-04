@@ -20,9 +20,9 @@ This guide shows where to get the Supabase credentials needed for cross-device s
    - `sessionType` (text)
    - `learningPreferences` (text)
    - `timestamp` (timestamptz)
-   - `numberOfSessions` (integer, nullable)
-   - `sessionDuration` (integer, nullable)
-   - `breakDuration` (integer, nullable)
+   - `numberOfSessions` (integer, nullable) — optional fields for split sessions
+   - `sessionDuration` (integer, nullable) — optional fields for split sessions
+   - `breakDuration` (integer, nullable) — optional fields for split sessions
    - `deleteToken` (text)
 
 ## 3) Get your Supabase URL + anon key
@@ -47,7 +47,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
    - **Insert**: allow all (anyone can register).
    - **Delete**: restrict to requests that match `deleteToken` via an authenticated token.
 
-Example policy for delete with token (requires auth; adjust to your auth strategy):
+Example policy for delete with token (requires Supabase Auth JWT; adjust to your auth strategy):
 ```sql
 create policy "delete by token"
 on public.participants
