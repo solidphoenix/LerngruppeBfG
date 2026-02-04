@@ -56,7 +56,7 @@ for delete
 using (deleteToken = auth.jwt() ->> 'deleteToken');
 ```
 
-If you do not plan to use authentication, do not expose delete from the client. Instead, use a secured backend endpoint or Supabase Edge Function that validates the deleteToken server-side with the service role key.
+If you do not plan to use authentication, do not expose delete from the client. Instead, use a secured backend endpoint or Supabase Edge Function. Validate the deleteToken server-side with the service role key.
 
 ## 6) Test locally
 1. Start the dev server: `npm run dev`
