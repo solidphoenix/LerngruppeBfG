@@ -10,14 +10,15 @@ const ensureSupabase = () => {
 }
 
 const normalizeParticipant = (participant: Participant): Participant => {
-  const parseNumberOrNull = (value?: string) => {
+  const parseIntegerOrNull = (value?: string) => {
     if (!value) return null
     const parsed = Number.parseInt(value, 10)
     return Number.isNaN(parsed) ? null : parsed
   }
   const normalizeOptionalNumberToString = (value?: string) => {
     if (!value) return undefined
-    return String(parseNumberOrNull(value) ?? value)
+    // Fall back to the original string when parsing fails (e.g., legacy data).
+    return String(parseIntegerOrNull(value) ?? value)
   }
   return {
     ...participant,
@@ -33,8 +34,7 @@ export const addParticipant = async (participant: Participant): Promise<string> 
   const { error } = await supabase!
     .from(TABLE_NAME)
     .insert({
-      ...payload,
-      timestamp: payload.timestamp
+      ...payload
     })
   if (error) {
     console.error('[Supabase] Error adding participant:', error)
@@ -55,10 +55,13 @@ export const getParticipants = async (): Promise<Participant[]> => {
     throw error
   }
   // Rehydrate timestamps to ISO strings for UI usage.
-  const participants = (data ?? []).map((row) => ({
-    ...(row as Participant),
-    timestamp: row?.timestamp ? new Date(row.timestamp).toISOString() : ''
-  }))
+  const participants = (data ?? []).map((row) => {
+    const participant = row as Participant
+    return {
+      ...participant,
+      timestamp: participant.timestamp ? new Date(participant.timestamp).toISOString() : ''
+    }
+  })
   console.log('[Supabase] Loaded participants:', participants.length)
   return participants
 }
