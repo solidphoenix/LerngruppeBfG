@@ -42,7 +42,7 @@ export const addParticipant = async (participant: Participant): Promise<string> 
     })
     const savedSnapshot = await getDoc(participantRef)
     if (!savedSnapshot.exists()) {
-      throw new Error('Firestore write did not persist')
+      throw new Error(`Failed to verify participant registration for ID: ${participant.id}`)
     }
     console.log('[Firebase] Participant added with ID:', participant.id)
     return participant.id
