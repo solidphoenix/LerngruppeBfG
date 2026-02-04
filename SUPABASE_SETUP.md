@@ -3,7 +3,7 @@
 This guide shows where to get the Supabase credentials needed for cross-device synchronization and how to wire them into the app.
 
 ## 1) Create a Supabase project
-1. Go to https://supabase.com and sign in (GitHub or email).
+1. Go to https://app.supabase.com and sign in (GitHub or email).
 2. Click **New project**.
 3. Choose an organization, name the project, select a region, and create a database password.
 
@@ -47,12 +47,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
    - **Insert**: allow all (anyone can register).
    - **Delete**: restrict to requests that match `deleteToken` (or keep open during testing).
 
-Example policy for delete with token:
+Example policy for delete with token (adjust to your auth strategy):
 ```sql
 create policy "delete by token"
 on public.participants
 for delete
-using (true);
+using (deleteToken = auth.jwt() ->> 'deleteToken');
 ```
 
 ## 6) Test locally
