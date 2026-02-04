@@ -3,7 +3,7 @@ import type { Participant } from '@/components/registration-form'
 
 const TABLE_NAME = 'participants'
 
-const parseIntegerOrNull = (value?: string) => {
+const tryParseInteger = (value?: string) => {
   if (!value) return null
   const parsed = Number.parseInt(value, 10)
   return Number.isNaN(parsed) ? null : parsed
@@ -27,7 +27,7 @@ const normalizeParticipant = (participant: Participant): Participant => {
   const normalizeOptionalNumberToString = (value?: string) => {
     if (!value) return undefined
     // Fall back to the original string when parsing fails (e.g., imported records).
-    return String(parseIntegerOrNull(value) ?? value)
+    return String(tryParseInteger(value) ?? value)
   }
   return {
     ...participant,

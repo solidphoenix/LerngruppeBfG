@@ -38,7 +38,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Subscribe to real-time updates from Firebase
+      // Subscribe to real-time updates from Supabase
       let unsubscribe: (() => void) | null = null
       try {
         const loadParticipants = async () => {
