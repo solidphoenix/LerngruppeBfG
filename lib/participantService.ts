@@ -45,12 +45,12 @@ export const addParticipant = async (participant: Participant): Promise<string> 
       timestamp: Timestamp.fromDate(new Date(participant.timestamp))
     })
     let verifiedSnapshot: DocumentSnapshot<DocumentData> | null = null
-    for (let attempt = 0; attempt <= VERIFICATION_RETRY_COUNT; attempt++) {
-      if (attempt > 0) {
+    for (let verificationAttempt = 0; verificationAttempt <= VERIFICATION_RETRY_COUNT; verificationAttempt++) {
+      if (verificationAttempt > 0) {
         await new Promise((resolve) => setTimeout(resolve, VERIFICATION_RETRY_DELAY_MS))
       }
       const snapshot = await getDoc(participantRef)
-      if (snapshot.exists()) {
+      if (snapshot.exists() && snapshot.data()?.id === participant.id) {
         verifiedSnapshot = snapshot
         break
       }
