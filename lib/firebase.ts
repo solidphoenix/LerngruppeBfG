@@ -1,5 +1,5 @@
 import { initializeApp, getApps, FirebaseApp, type FirebaseOptions } from 'firebase/app'
-import { getFirestore, Firestore } from 'firebase/firestore'
+import { getFirestore, Firestore, enableIndexedDbPersistence } from 'firebase/firestore'
 
 // Firebase configuration
 // These values should be set via environment variables for production
@@ -39,6 +39,16 @@ if (typeof window !== 'undefined') {
       app = getApps()[0]
     }
     db = getFirestore(app)
+    enableIndexedDbPersistence(db).catch((error) => {
+      const errorCode = (error as { code?: string } | null)?.code
+      if (errorCode === 'failed-precondition') {
+        console.warn('[Firebase] Persistence disabled: multiple tabs open.')
+      } else if (errorCode === 'unimplemented') {
+        console.warn('[Firebase] Persistence not supported by this browser.')
+      } else {
+        console.warn('[Firebase] Failed to enable persistence.', error)
+      }
+    })
   } else if (isDevelopment) {
     console.warn('[Firebase] Missing configuration. Firestore sync disabled.', {
       apiKey: Boolean(firebaseConfig.apiKey),
