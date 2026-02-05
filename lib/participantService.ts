@@ -72,11 +72,17 @@ const deleteParticipantByTokenViaApi = async (deleteToken: string): Promise<bool
     ? ''
     : window.location.pathname.replace(/\/delete\/?$/, '')
   const apiUrl = `${basePath || ''}/api/delete`
-  const response = await fetch(apiUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ deleteToken })
-  })
+  let response: Response
+  try {
+    response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deleteToken })
+    })
+  } catch (error) {
+    console.warn('[Supabase] Delete API unreachable, falling back to client delete.', error)
+    return null
+  }
   if (!response.ok) {
     const contentType = response.headers.get('content-type') ?? ''
     if (!contentType.includes('application/json')) {
