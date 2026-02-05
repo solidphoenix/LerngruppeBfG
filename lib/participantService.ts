@@ -70,8 +70,8 @@ export const getParticipants = async (): Promise<Participant[]> => {
 const deleteParticipantByTokenViaApi = async (deleteToken: string): Promise<boolean | null> => {
   const basePath = typeof window === 'undefined'
     ? ''
-    : window.location.pathname.replace(/\/delete\/?$/, '')
-  const apiUrl = `${basePath || ''}/api/delete`
+    : window.location.pathname.replace(/\/delete\/?$/, '').replace(/\/$/, '')
+  const apiUrl = `${basePath}/api/delete`
   let response: Response
   try {
     response = await fetch(apiUrl, {
