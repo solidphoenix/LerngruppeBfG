@@ -146,7 +146,7 @@ const deleteParticipantByTokenViaClient = async (deleteToken: string): Promise<b
     console.error('[Supabase] Error deleting participant:', error)
     throw error
   }
-  if (count === 0) {
+  if (count === null || count === 0) {
     console.log('[Supabase] No participant found with token:', deleteToken)
     return false
   }
