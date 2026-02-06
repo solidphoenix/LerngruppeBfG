@@ -138,16 +138,15 @@ const ensureDeleteTokenSession = async (deleteToken: string) => {
 
 const deleteParticipantByTokenViaClient = async (deleteToken: string): Promise<boolean> => {
   await ensureDeleteTokenSession(deleteToken)
-  const { data, error } = await supabase!
+  const { error, count } = await supabase!
     .from(TABLE_NAME)
-    .delete()
+    .delete({ count: 'exact' })
     .eq('deleteToken', deleteToken)
-    .select('id')
   if (error) {
     console.error('[Supabase] Error deleting participant:', error)
     throw error
   }
-  if (!data || data.length === 0) {
+  if (count === 0) {
     console.log('[Supabase] No participant found with token:', deleteToken)
     return false
   }
