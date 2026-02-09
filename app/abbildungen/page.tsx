@@ -209,6 +209,8 @@ export default function AbbildungenPage() {
                       <img
                         src={figure.image}
                         alt={`Abbildung ${figure.name}`}
+                        width={640}
+                        height={360}
                         className="w-full rounded-lg border border-indigo-100 bg-white p-4"
                       />
                       <div>
