@@ -60,6 +60,32 @@ const quizSections = [
         explanation: "Die Exsudationsphase ist die erste Phase der Wundheilung.",
         source: "04a AB Wundheilung",
       },
+      {
+        question: "Welche Angabe gehört zur Wunddokumentation?",
+        options: [
+          "Wundgröße und Exsudatmenge",
+          "Lieblingsessen der Patientin",
+          "Raumtemperatur im Zimmer",
+          "Dienstplan der Woche",
+        ],
+        answer: "A",
+        explanation:
+          "Wundgröße, Exsudat, Geruch und Schmerzen sind Pflichtangaben.",
+        source: "04 Wunden & Wundversorgung",
+      },
+      {
+        question: "Was passt zur Non-Touch-Technik?",
+        options: [
+          "Sterile Wundauflage mit den Fingern anfassen",
+          "Sterile Pinzette verwenden und Fläche nicht berühren",
+          "Wunde mit ungewaschenen Händen abtasten",
+          "Verband ohne Desinfektion wechseln",
+        ],
+        answer: "B",
+        explanation:
+          "Bei der Non-Touch-Technik werden sterile Instrumente genutzt.",
+        source: "04b Literatur Wunden und Drainagen",
+      },
     ],
   },
   {
@@ -84,6 +110,31 @@ const quizSections = [
         answer: "B",
         explanation:
           "Bei < 50 mg/dl sofort Glukose geben und den Arzt informieren.",
+        source: "1. Diabetes Präsentation",
+      },
+      {
+        question: "Welche Empfehlung gehört zu den DGE-Regeln?",
+        options: [
+          "5 Portionen Obst und Gemüse pro Tag",
+          "Kein Wasser trinken",
+          "Nur Fleisch essen",
+          "Zuckerfreie Getränke vermeiden",
+        ],
+        answer: "A",
+        explanation: "Die DGE empfiehlt 5 Portionen Obst und Gemüse täglich.",
+        source: "2.Die 10-Regeln-der-DGE",
+      },
+      {
+        question: "Was beschreibt der oGTT?",
+        options: [
+          "Zuckertest nach Glukosegabe",
+          "Röntgenaufnahme der Beine",
+          "Messung der Körpertemperatur",
+          "Test zur Lungenfunktion",
+        ],
+        answer: "A",
+        explanation:
+          "Beim oralen Glukosetoleranztest wird der BZ nach Glukosegabe gemessen.",
         source: "1. Diabetes Präsentation",
       },
     ],
@@ -117,6 +168,32 @@ const quizSections = [
         explanation: "Virchow-Trias = Blutströmung, Gefäßwand, Gerinnung.",
         source: "2. Übersicht Virchow Trias",
       },
+      {
+        question: "Welches Symptom passt zur Beinvenenthrombose?",
+        options: [
+          "Beidseitige kalte Füße",
+          "Einseitige Schwellung und Wadenschmerz",
+          "Trockener Husten ohne Fieber",
+          "Niedriger Blutzucker",
+        ],
+        answer: "B",
+        explanation:
+          "Schwellung, Wärmegefühl und Wadenschmerz sind typische Symptome.",
+        source: "1. Definition Thrombose",
+      },
+      {
+        question: "Was ist bei Verdacht auf Thrombose zu tun?",
+        options: [
+          "Patient sofort laufen lassen",
+          "Arzt informieren und Bettruhe einhalten",
+          "Beine tief lagern",
+          "Kompression ohne Anordnung starten",
+        ],
+        answer: "B",
+        explanation:
+          "Bei Verdacht gilt: Arzt informieren und Bettruhe einhalten.",
+        source: "1. Definition Thrombose",
+      },
     ],
   },
   {
@@ -141,6 +218,26 @@ const quizSections = [
         answer: "C",
         explanation:
           "In der Höhephase sind Ruhe und engmaschige Vitalzeichenkontrolle wichtig.",
+        source: "Fieber",
+      },
+      {
+        question: "In welcher Phase tritt meist Schüttelfrost auf?",
+        options: ["Fieberanstieg", "Fieberhöhe", "Fieberabfall", "Erschöpfung"],
+        answer: "A",
+        explanation: "Schüttelfrost tritt typisch im Fieberanstieg auf.",
+        source: "Fieber",
+      },
+      {
+        question: "Welche Maßnahme passt zum Fieberabfall?",
+        options: [
+          "Schwitzen abtrocknen und Flüssigkeit anbieten",
+          "Patient kalt duschen",
+          "Keine Vitalzeichenkontrolle",
+          "Vollständig zudecken",
+        ],
+        answer: "A",
+        explanation:
+          "Beim Fieberabfall ist Flüssigkeitsausgleich und Beobachtung wichtig.",
         source: "Fieber",
       },
     ],

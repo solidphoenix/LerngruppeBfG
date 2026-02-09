@@ -65,6 +65,20 @@ const flashcardSets = [
         tip: "Kontamination vermeiden – sterile Fläche bleibt steril.",
         source: "04b Literatur Wunden und Drainagen",
       },
+      {
+        question: "Welche Wundarten werden unterschieden?",
+        answer:
+          "Mechanische, chemische, thermische und strahlenbedingte Wunden.",
+        tip: "Merke: M-C-T-S = mechanisch, chemisch, thermisch, Strahlen.",
+        source: "04 Wunden & Wundversorgung",
+      },
+      {
+        question: "Was gehört in die Wunddokumentation?",
+        answer:
+          "Datum/Zeit, Wundgröße, Exsudat, Geruch, Schmerzen, Wundrand und verwendetes Material.",
+        tip: "Kurz prüfen: Größe, Sekret, Rand, Schmerz.",
+        source: "04 Wunden & Wundversorgung",
+      },
     ],
   },
   {
@@ -96,6 +110,19 @@ const flashcardSets = [
           "Nadel aufsetzen, Dosis einstellen, Injektionsstelle desinfizieren, injizieren, 10 Sekunden warten.",
         tip: "Injektionsstelle regelmäßig wechseln.",
         source: "5. Insulinspritzen mit dem PEN",
+      },
+      {
+        question: "Welche Anzeichen sprechen für eine Hyperglykämie?",
+        answer:
+          "Starker Durst, häufiges Wasserlassen, Müdigkeit und erhöhte BZ-Werte.",
+        tip: "BZ messen und ärztliche Anordnung prüfen.",
+        source: "1. Diabetes Präsentation",
+      },
+      {
+        question: "Wie hoch ist die empfohlene Flüssigkeitsmenge pro Tag?",
+        answer: "Etwa 1,5 Liter Wasser oder ungesüßte Getränke pro Tag.",
+        tip: "6–8 Gläser über den Tag verteilen.",
+        source: "2.Die 10-Regeln-der-DGE",
       },
     ],
   },
@@ -130,6 +157,20 @@ const flashcardSets = [
         tip: "Druck von distal nach proximal aufbauen.",
         source: "Text - Kompressionsverband",
       },
+      {
+        question: "Was ist die Sofortmaßnahme bei Thromboseverdacht?",
+        answer:
+          "Arzt verständigen, absolute Bettruhe einhalten und den Oberkörper hochlagern.",
+        tip: "Keine aktive Mobilisation ohne ärztliche Anordnung.",
+        source: "1. Definition Thrombose",
+      },
+      {
+        question: "Nenne typische Risikofaktoren für eine Thrombose.",
+        answer:
+          "Immobilität, Operationen, Dehydratation, Gefäßschäden und Gerinnungsstörungen.",
+        tip: "Risikofaktoren gezielt in der Pflegeanamnese erfragen.",
+        source: "3. Risikofaktoren einer Thrombose",
+      },
     ],
   },
   {
@@ -153,6 +194,19 @@ const flashcardSets = [
         answer:
           "Wadenwickel, Waschungen, Flüssigkeit anbieten, ggf. Paracetamol/Ibuprofen nach ärztlicher Anordnung.",
         tip: "Vitalzeichen engmaschig dokumentieren.",
+        source: "Fieber",
+      },
+      {
+        question: "Wie häufig sollten Vitalzeichen bei Fieber kontrolliert werden?",
+        answer: "Mindestens 2× täglich und bei Veränderungen zusätzlich.",
+        tip: "Fieberkurve immer aktualisieren.",
+        source: "Fieber",
+      },
+      {
+        question: "Was ist bei Fieberabfall besonders wichtig?",
+        answer:
+          "Flüssigkeit ausgleichen, verschwitzte Kleidung wechseln und den Kreislauf beobachten.",
+        tip: "Temperatur nach 30–60 Minuten erneut prüfen.",
         source: "Fieber",
       },
     ],

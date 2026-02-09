@@ -18,6 +18,7 @@ const figureSections = [
         caption:
           "Übersicht über Exsudation, Proliferation und Regeneration mit Zeitachsen.",
         source: "04a AB Wundheilung",
+        image: "/figures/wundheilung.svg",
         highlights: [
           "Zeitliche Abfolge der Phasen",
           "Wichtige Pflegeinterventionen pro Phase",
@@ -29,10 +30,23 @@ const figureSections = [
         caption:
           "Schema zur Unterscheidung von Infektionszeichen und Wundrandbeurteilung.",
         source: "04 Wunden & Wundversorgung",
+        image: "/figures/aseptisch-septisch.svg",
         highlights: [
           "Infektionszeichen erkennen",
           "Dokumentationsfelder im Wundbogen",
           "Beispiele für aseptische Wunden",
+        ],
+      },
+      {
+        name: "Wunddokumentation",
+        caption:
+          "Checkliste mit den wichtigsten Dokumentationsfeldern und Zeitpunkten.",
+        source: "04 Wunden & Wundversorgung",
+        image: "/figures/wunddokumentation.svg",
+        highlights: [
+          "Größe, Exsudat und Wundrand im Blick",
+          "Schmerzskala festhalten",
+          "Material und Zeitpunkt dokumentieren",
         ],
       },
     ],
@@ -46,6 +60,7 @@ const figureSections = [
         caption:
           "Grafik zur Glukoseaufnahme in Muskel- und Fettzellen mit Insulin.",
         source: "1. Diabetes Präsentation",
+        image: "/figures/insulinwirkung.svg",
         highlights: [
           "Transport von Glukose in die Zelle",
           "Speicherung als Glykogen",
@@ -57,10 +72,23 @@ const figureSections = [
         caption:
           "Bildsequenz zur Vorbereitung und Anwendung des Insulin-PEN.",
         source: "5. Insulinspritzen mit dem PEN",
+        image: "/figures/insulin-pen.svg",
         highlights: [
           "Dosis einstellen",
           "Desinfektion der Einstichstelle",
           "Injektionsdauer 10 Sekunden",
+        ],
+      },
+      {
+        name: "DGE-Ernährungsteller",
+        caption:
+          "Visualisierung der DGE-Regeln für ausgewogene Mahlzeiten bei Diabetes.",
+        source: "2.Die 10-Regeln-der-DGE",
+        image: "/figures/dge-teller.svg",
+        highlights: [
+          "Gemüse/Obst als größte Fläche",
+          "Vollkorn und Eiweiß ausgewogen",
+          "Zucker und Fett begrenzen",
         ],
       },
     ],
@@ -74,6 +102,7 @@ const figureSections = [
         caption:
           "Dreiecksgrafik zu Blutströmung, Gefäßwand und Gerinnungsneigung.",
         source: "2. Übersicht Virchow Trias",
+        image: "/figures/virchow-trias.svg",
         highlights: [
           "Risikofaktoren zuordnen",
           "Zusammenhang der drei Ursachen",
@@ -85,10 +114,23 @@ const figureSections = [
         caption:
           "Verlauf mit Anstieg, Höhe, Abfall – inklusive Pflegemaßnahmen je Phase.",
         source: "Fieber",
+        image: "/figures/fieberkurve.svg",
         highlights: [
           "Schüttelfrost im Anstieg",
           "Überwachung der Vitalzeichen",
           "Flüssigkeitsbilanz nach Fieberabfall",
+        ],
+      },
+      {
+        name: "Kompressionsverband",
+        caption:
+          "Darstellung der Wickelrichtung mit gleichmäßigem Druckverlauf.",
+        source: "Text - Kompressionsverband",
+        image: "/figures/kompression.svg",
+        highlights: [
+          "Druck von distal nach proximal",
+          "Faltenfreie Anlage",
+          "Regelmäßige Kontrolle der Haut",
         ],
       },
     ],
@@ -164,9 +206,11 @@ export default function AbbildungenPage() {
                       <CardDescription>{figure.caption}</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                      <div className="flex items-center justify-center rounded-lg border border-dashed border-indigo-200 bg-indigo-50/70 p-6 text-xs font-medium text-indigo-700">
-                        Vorschau-Platzhalter für Abbildung
-                      </div>
+                      <img
+                        src={figure.image}
+                        alt={`Abbildung ${figure.name}`}
+                        className="w-full rounded-lg border border-indigo-100 bg-white p-4"
+                      />
                       <div>
                         <p className="text-sm font-medium text-gray-700">Highlights</p>
                         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-600">

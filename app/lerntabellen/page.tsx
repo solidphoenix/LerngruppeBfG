@@ -24,8 +24,10 @@ const miniTables = [
     headers: ["Messung", "Normal", "Kritisch"],
     rows: [
       ["Nüchtern-BZ", "80–100 mg/dl", "< 50 mg/dl = Hypoglykämie"],
+      ["Postprandial (2h)", "< 140 mg/dl", "≥ 200 mg/dl = Hyperglykämie"],
       ["HbA1c", "< 6,5%", "≥ 6,5% = Diagnosegrenze"],
       ["oGTT", "< 140 mg/dl", "≥ 200 mg/dl = Diabetes"],
+      ["BZ-Tagesziel", "90–180 mg/dl", "Unter- oder Überzuckerung"],
     ],
   },
   {
@@ -34,6 +36,8 @@ const miniTables = [
     headers: ["Maßnahme", "Ziel", "Hinweis"],
     rows: [
       ["Bewegungsübungen", "Muskelpumpe aktivieren", "Mehrmals täglich anleiten"],
+      ["Atemübungen", "Lungenbelüftung fördern", "Tiefes Ein- und Ausatmen"],
+      ["Beinvenen ausstreichen", "Venösen Rückfluss unterstützen", "Immer herzaufwärts"],
       ["Hochlagerung", "Venösen Rückfluss fördern", "Beine leicht erhöht"],
       ["Kompression", "Ödeme verhindern", "Druck von distal nach proximal"],
     ],
@@ -46,6 +50,31 @@ const miniTables = [
       ["Anstieg", "Schüttelfrost", "Warm halten, Flüssigkeit anbieten"],
       ["Höhe", "Heiß, trocken", "Ruhe sichern, Vitalzeichen kontrollieren"],
       ["Abfall", "Schwitzen", "Kühle Tücher, Flüssigkeit ausgleichen"],
+      ["Erschöpfung", "Müdigkeit, Kreislauf schwach", "Schonung, Flüssigkeit, Kontrolle"],
+    ],
+  },
+  {
+    title: "Wunddokumentation",
+    description: "Wichtige Angaben für eine vollständige Dokumentation.",
+    headers: ["Parameter", "Beispiel", "Hinweis"],
+    rows: [
+      ["Wundgröße", "Länge × Breite", "Immer in cm angeben"],
+      ["Exsudat", "gering/mittel/stark", "Farbe und Geruch ergänzen"],
+      ["Wundrand", "gerötet/mazeriert", "Randveränderungen notieren"],
+      ["Schmerz", "Skala 0–10", "Bei Zunahme Arzt informieren"],
+    ],
+  },
+  {
+    title: "Hypo- vs. Hyperglykämie",
+    description: "Schnellvergleich für Notfallsituationen.",
+    headers: ["Situation", "Anzeichen", "Sofortmaßnahme"],
+    rows: [
+      ["Hypoglykämie", "Zittern, Schwitzen, Unruhe", "Glukose geben, BZ prüfen"],
+      [
+        "Hyperglykämie",
+        "Durst, Müdigkeit, trockene Haut",
+        "BZ messen, Arzt informieren",
+      ],
     ],
   },
 ]
