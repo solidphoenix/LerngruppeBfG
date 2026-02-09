@@ -77,7 +77,7 @@ const learningFields = [
     goals: [
       "Definition Thrombose + Gefahr der Lungenembolie verinnerlichen.",
       "Virchow-Trias: Blutströmung, Gefäßwand, Gerinnungsneigung.",
-      "Symptome: Schweregefühl, warme Extremität, Schwellung, Waden-Schmerz.",
+      "Symptome: Schweregefühl, warme Extremität, Schwellung, Wadenschmerz.",
       "Prophylaxe: Bewegung, Atemübungen, Hochlagerung, Kompression.",
     ],
     documents: pdfSources.thrombosis,
@@ -103,7 +103,7 @@ const learningMethods = [
   {
     title: "Thrombose-Symptom-Scan",
     description:
-      "Schweregefühl, warme Extremität, Schwellung und Waden-Schmerz als Alarmzeichen merken.",
+      "Schweregefühl, warme Extremität, Schwellung und Wadenschmerz als Alarmzeichen merken.",
   },
   {
     title: "Atem- & Bewegungsübungen",
@@ -181,7 +181,7 @@ const dataBacktests = [
     topic: "Thrombose",
     question: "Nenne typische Symptome einer tiefen Beinvenenthrombose.",
     answer:
-      "Einseitiges Schweregefühl, warme Extremität, Schwellung, Waden-Schmerz und bläulich-rote Haut.",
+      "Einseitiges Schweregefühl, warme Extremität, Schwellung, Wadenschmerz und bläulich-rote Haut.",
     source: "1. Definition Thrombose",
   },
   {
@@ -284,16 +284,15 @@ const flashcards = [
   {
     title: "Thrombose-Warnzeichen",
     question: "Nenne zwei Alarmzeichen einer Beinvenenthrombose.",
-    answer: "Einseitige Schwellung, warme Extremität, Waden-Schmerz.",
+    answer: "Einseitige Schwellung, warme Extremität, Wadenschmerz.",
     tip: "Bei Verdacht: Arzt informieren, Bettruhe.",
     source: "1. Definition Thrombose",
   },
   {
     title: "Hypoglykämie-Alarm",
     question: "Ab welchem Wert beginnt eine Hypoglykämie?",
-    answer:
-      "Unter 50 mg/dl: Blutzucker (BZ) messen, Glukose geben, Arzt informieren.",
-    tip: "Bei Bewusstlosigkeit: stabile Seitenlage.",
+    answer: "Unter 50 mg/dl.",
+    tip: "Blutzucker (BZ) messen, Glukose geben, Arzt informieren; bei Bewusstlosigkeit stabile Seitenlage.",
     source: "1. Diabetes Präsentation",
   },
   {
@@ -361,7 +360,8 @@ const quickQuestions = [
   },
   {
     question: "Welche DGE-Regel ist bei Diabetes besonders wichtig?",
-    answer: "Zucker sparen, Vollkorn bevorzugen und 5 Portionen Obst/Gemüse.",
+    answer:
+      "Zucker sparen, Vollkorn bevorzugen und 5 Portionen Obst/Gemüse am Tag.",
   },
   {
     question: "Was ist die erste Maßnahme bei Verdacht auf Thrombose?",
