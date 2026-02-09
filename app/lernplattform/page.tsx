@@ -9,46 +9,38 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+const uploadGoals = [
+  "Lernkarten werden aus deinen PDF-Uploads generiert",
+  "Quizfragen basieren ausschließlich auf deinen Unterlagen",
+  "Zusammenfassungen bleiben klausurrelevant",
+]
+
+const defaultDocuments = ["Noch keine PDFs hochgeladen"]
+
 const learningFields = [
   {
     title: "Wunden",
     subtitle: "Wundheilung, Assessment & Verbandwechsel",
-    goals: [
-      "Lernkarten werden aus deinen PDF-Uploads generiert",
-      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
-      "Zusammenfassungen bleiben klausurrelevant",
-    ],
-    documents: ["Noch keine PDFs hochgeladen"],
+    goals: uploadGoals,
+    documents: defaultDocuments,
   },
   {
     title: "Diabetes mellitus",
     subtitle: "Stoffwechsel verstehen & Pflegeinterventionen",
-    goals: [
-      "Lernkarten werden aus deinen PDF-Uploads generiert",
-      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
-      "Zusammenfassungen bleiben klausurrelevant",
-    ],
-    documents: ["Noch keine PDFs hochgeladen"],
+    goals: uploadGoals,
+    documents: defaultDocuments,
   },
   {
     title: "Thromboseprophylaxe",
     subtitle: "Risiken erkennen & Maßnahmen planen",
-    goals: [
-      "Lernkarten werden aus deinen PDF-Uploads generiert",
-      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
-      "Zusammenfassungen bleiben klausurrelevant",
-    ],
-    documents: ["Noch keine PDFs hochgeladen"],
+    goals: uploadGoals,
+    documents: defaultDocuments,
   },
   {
     title: "Fiebererkrankungen",
     subtitle: "Fiebermanagement & Beobachtung",
-    goals: [
-      "Lernkarten werden aus deinen PDF-Uploads generiert",
-      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
-      "Zusammenfassungen bleiben klausurrelevant",
-    ],
-    documents: ["Noch keine PDFs hochgeladen"],
+    goals: uploadGoals,
+    documents: defaultDocuments,
   },
 ]
 
@@ -67,28 +59,20 @@ const learningMethods = [
   },
 ]
 
+const uploadQuizQuestion = "Quizfragen erscheinen nach deinem Upload."
+const uploadQuizAnswer =
+  "Lade deine PDFs hoch, damit passende Fragen generiert werden."
+
 const quickChecks = [
-  {
-    topic: "Wunden",
-    question: "Quizfragen erscheinen nach deinem Upload.",
-    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
-  },
-  {
-    topic: "Diabetes mellitus",
-    question: "Quizfragen erscheinen nach deinem Upload.",
-    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
-  },
-  {
-    topic: "Thromboseprophylaxe",
-    question: "Quizfragen erscheinen nach deinem Upload.",
-    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
-  },
-  {
-    topic: "Fiebererkrankungen",
-    question: "Quizfragen erscheinen nach deinem Upload.",
-    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
-  },
-]
+  "Wunden",
+  "Diabetes mellitus",
+  "Thromboseprophylaxe",
+  "Fiebererkrankungen",
+].map((topic) => ({
+  topic,
+  question: uploadQuizQuestion,
+  answer: uploadQuizAnswer,
+}))
 
 export default function LernplattformPage() {
   return (
