@@ -46,7 +46,7 @@ const pdfSources = {
   fever: ["Fieber"],
 }
 
-const pdfUploads = Array.from(new Set(Object.values(pdfSources).flat()))
+const pdfCatalog = Array.from(new Set(Object.values(pdfSources).flat()))
 
 const learningFields = [
   {
@@ -65,9 +65,9 @@ const learningFields = [
     subtitle: "Stoffwechsel verstehen & Pflegeinterventionen",
     goals: [
       "Insulinwirkung: Glukose wird in Zellen eingeschleust, Speicherung als Glykogen.",
-      "Diagnostik: nüchtern BZ 80–100 mg%, HbA1c 6,5 mg%, oGTT.",
+      "Diagnostik: nüchtern BZ 80–100 mg/dl, HbA1c ≥ 6,5% (Diagnosegrenze für Diabetes mellitus), oGTT.",
       "Hypoglykämie < 50 mg/dl: Glukosegabe, BZ messen, Arzt informieren.",
-      "DGE-Ernährung: 5 am Tag, Vollkorn, 1,5 Liter Wasser, 300–600 g Fleisch/Woche.",
+      "DGE (Deutsche Gesellschaft für Ernährung): 5 am Tag, Vollkorn, 1,5 Liter Wasser, 300–600 g Fleisch/Woche.",
     ],
     documents: pdfSources.diabetes,
   },
@@ -86,7 +86,7 @@ const learningFields = [
     title: "Fiebererkrankungen",
     subtitle: "Fiebermanagement & Beobachtung",
     goals: [
-      "Fieber = > 38 °C, Temperaturbereiche kennen.",
+      "Fieber > 38 °C (rektal), Temperaturbereiche kennen.",
       "Fieberphasen: Anstieg, Höhe, Abfall, Erschöpfung.",
       "Maßnahmen: Vitalzeichen, Wadenwickel, Waschungen, Flüssigkeit.",
     ],
@@ -128,7 +128,7 @@ const learningMethods = [
   {
     title: "Wundheilungsphasen-Poster",
     description:
-      "Exsudation (bis 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4).",
+      "Exsudation (bis 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4, überlappend).",
   },
   {
     title: "Non-Touch-Verbandswechsel",
@@ -138,7 +138,7 @@ const learningMethods = [
   {
     title: "Diabetes-Glukosewerte-Check",
     description:
-      "Nüchtern-BZ 80–100 mg%, HbA1c 6,5 mg% und oGTT im Team abfragen.",
+      "Nüchtern-BZ 80–100 mg/dl, HbA1c ≥ 6,5% (Diagnosegrenze für Diabetes mellitus) und oGTT im Team abfragen.",
   },
   {
     title: "Hypoglykämie-Notfallkarte",
@@ -168,89 +168,91 @@ const dataBacktests = [
     question: "Was ist eine Thrombose?",
     answer:
       "Ein Gefäßverschluss durch intravasale Blutgerinnung (Thrombus), teils oder vollständig.",
-    source: "1. Definition Thrombose-1.pdf",
+    source: "1. Definition Thrombose",
   },
   {
     topic: "Thrombose",
     question: "Welche drei Faktoren umfasst die Virchow-Trias?",
     answer:
       "Verlangsamte Blutströmung, Gefäßwandschaden und erhöhte Gerinnungsneigung.",
-    source: "2. Übersicht Virchow Trias.pdf",
+    source: "2. Übersicht Virchow-Trias",
   },
   {
     topic: "Thrombose",
     question: "Nenne typische Symptome einer tiefen Beinvenenthrombose.",
     answer:
       "Einseitiges Schweregefühl, warme Extremität, Schwellung, Waden-Schmerz und bläulich-rote Haut.",
-    source: "1. Definition Thrombose-1.pdf",
+    source: "1. Definition Thrombose",
   },
   {
     topic: "Thrombose",
     question: "Was ist die Sofortmaßnahme bei Verdacht auf Phlebothrombose?",
     answer:
       "Arzt verständigen, absolute Bettruhe einhalten und den Oberkörper hochlagern.",
-    source: "1. Definition Thrombose-1.pdf",
+    source: "1. Definition Thrombose",
   },
   {
     topic: "Fieber",
     question: "Ab wann spricht man von Fieber?",
     answer: "Ab einer Körpertemperatur über 38 °C.",
-    source: "Fieber.pdf",
+    source: "Fieber",
   },
   {
     topic: "Fieber",
     question: "Welche Phasen durchläuft ein Fieberverlauf?",
     answer:
       "Fieberanstieg (Schüttelfrost), Fieberhöhe, Fieberabfall (Schwitzen), Erschöpfung.",
-    source: "Fieber.pdf",
+    source: "Fieber",
   },
   {
     topic: "Fieber",
     question: "Welche fiebersenkenden Maßnahmen werden genannt?",
     answer:
       "Wadenwickel, Waschungen sowie Medikamente wie Paracetamol oder Ibuprofen.",
-    source: "Fieber.pdf",
+    source: "Fieber",
   },
   {
     topic: "Wunden",
     question: "Wie heißen die drei Wundheilungsphasen?",
     answer:
-      "Exsudationsphase (bis ca. 3 Tage), Proliferationsphase (1–14 Tage), Regenerationsphase (ab Tag 4).",
-    source: "04 Wunden & Wundversorgung-1.pdf",
+      "Exsudationsphase (bis ca. 3 Tage), Proliferationsphase (1–14 Tage), Regenerationsphase (ab Tag 4, überlappend).",
+    source: "04 Wunden & Wundversorgung",
   },
   {
     topic: "Wunden",
     question: "Wodurch unterscheiden sich primäre und sekundäre Wundheilung?",
     answer:
       "Primär: komplikationslos, kleine Narben; sekundär: verunreinigt/infiziert, langsamer, große Narben.",
-    source: "04 Wunden & Wundversorgung-1.pdf",
+    source: "04 Wunden & Wundversorgung",
   },
   {
     topic: "Wunden",
     question: "Was kennzeichnet eine aseptische vs. septische Wunde?",
     answer:
       "Aseptisch = keimfrei (OP-Wunde), septisch = mit Keimen/Infektionszeichen (z.B. Dekubitus).",
-    source: "04 Wunden & Wundversorgung-1.pdf",
+    source: "04 Wunden & Wundversorgung",
   },
   {
     topic: "Diabetes",
-    question: "Welche Werte gelten als nüchtern BZ und HbA1c-Normwert?",
-    answer: "Nüchtern BZ 80–100 mg%, HbA1c etwa 6,5 mg%.",
-    source: "1. Diabetes Präsentation.pdf-1.pdf",
+    question:
+      "Welche Werte nennt die Präsentation für nüchtern BZ und HbA1c (Diagnosegrenze)?",
+    answer:
+      "Nüchtern BZ 80–100 mg/dl, HbA1c ≥ 6,5% als Diagnosegrenze für Diabetes mellitus.",
+    source: "1. Diabetes Präsentation",
   },
   {
     topic: "Diabetes",
     question: "Ab wann gilt eine Hypoglykämie und was ist sofort zu tun?",
     answer:
       "Unter 50 mg/dl: Pflegefachkraft/Arzt informieren, BZ messen, Glukose geben; bei Bewusstlosigkeit stabile Seitenlage.",
-    source: "1. Diabetes Präsentation.pdf-1.pdf",
+    source: "1. Diabetes Präsentation",
   },
   {
     topic: "Ernährung",
     question: "Welche DGE-Regeln helfen gegen Diabetes Typ 2?",
     answer:
       "5 am Tag, Vollkorn, rund 1,5 Liter Wasser/Tag, Zucker sparen und max. 300–600 g Fleisch/Woche.",
-    source: "2.Die 10-Regeln-der-DGE.pdf",
+    source: "2. Die 10 Regeln der DGE",
   },
 ]
 
@@ -293,7 +295,7 @@ export default function LernplattformPage() {
                 Lege deine Unterlagen im Repository-Ordner{" "}
                 <span className="font-semibold">/pdf-uploads</span> ab. Die
                 Inhalte werden ausgelesen – aktuell sind{" "}
-                <span className="font-semibold">{pdfUploads.length} PDFs</span>{" "}
+                <span className="font-semibold">{pdfCatalog.length} PDFs</span>{" "}
                 erfasst.
               </CardDescription>
             </CardHeader>
@@ -317,10 +319,10 @@ export default function LernplattformPage() {
               </div>
               <div className="rounded-lg border border-gray-100 bg-white/70 p-3 text-xs text-gray-500">
                 <p className="text-sm font-medium text-gray-700">
-                  Eingelesene PDFs ({pdfUploads.length})
+                  Eingelesene PDFs ({pdfCatalog.length})
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {pdfUploads.map((doc) => (
+                  {pdfCatalog.map((doc) => (
                     <Badge
                       key={doc}
                       variant="outline"
