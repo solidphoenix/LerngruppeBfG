@@ -14,41 +14,41 @@ const learningFields = [
     title: "Wunden",
     subtitle: "Wundheilung, Assessment & Verbandwechsel",
     goals: [
-      "Wundarten unterscheiden und richtig benennen",
-      "Heilungsphasen erklären und dokumentieren",
-      "Verbandwechsel strukturiert planen",
+      "Lernkarten werden aus deinen PDF-Uploads generiert",
+      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
+      "Zusammenfassungen bleiben klausurrelevant",
     ],
-    documents: ["PDF-Skript (Upload geplant)", "Checkliste Verbandwechsel", "Bildatlas"],
+    documents: ["Noch keine PDFs hochgeladen"],
   },
   {
     title: "Diabetes mellitus",
     subtitle: "Stoffwechsel verstehen & Pflegeinterventionen",
     goals: [
-      "Typen und Leitsymptome sicher zuordnen",
-      "Blutzucker-Messungen interpretieren",
-      "Ernährungs- und Bewegungsberatung vorbereiten",
+      "Lernkarten werden aus deinen PDF-Uploads generiert",
+      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
+      "Zusammenfassungen bleiben klausurrelevant",
     ],
-    documents: ["Therapie-Übersicht (PDF)", "Insulin-Guide", "Fallbeispiele"],
+    documents: ["Noch keine PDFs hochgeladen"],
   },
   {
     title: "Thromboseprophylaxe",
     subtitle: "Risiken erkennen & Maßnahmen planen",
     goals: [
-      "Risikofaktoren einschätzen",
-      "Medikamentöse & physikalische Maßnahmen vergleichen",
-      "Patientenaufklärung üben",
+      "Lernkarten werden aus deinen PDF-Uploads generiert",
+      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
+      "Zusammenfassungen bleiben klausurrelevant",
     ],
-    documents: ["Prophylaxe-Checkliste", "Kompressionsschema", "Übungsblatt"],
+    documents: ["Noch keine PDFs hochgeladen"],
   },
   {
     title: "Fiebererkrankungen",
     subtitle: "Fiebermanagement & Beobachtung",
     goals: [
-      "Fieberverlauf richtig beurteilen",
-      "Pflegemaßnahmen priorisieren",
-      "Warnzeichen früh erkennen",
+      "Lernkarten werden aus deinen PDF-Uploads generiert",
+      "Quizfragen basieren ausschließlich auf deinen Unterlagen",
+      "Zusammenfassungen bleiben klausurrelevant",
     ],
-    documents: ["Fieberkurven-Vorlage", "Symptom-Quickguide", "Pflegeplan"],
+    documents: ["Noch keine PDFs hochgeladen"],
   },
 ]
 
@@ -70,23 +70,23 @@ const learningMethods = [
 const quickChecks = [
   {
     topic: "Wunden",
-    question: "Welche Phasen der Wundheilung gibt es?",
-    answer: "Exsudation, Granulation, Epithelisierung, Remodellierung.",
+    question: "Quizfragen erscheinen nach deinem Upload.",
+    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
   },
   {
     topic: "Diabetes mellitus",
-    question: "Was gehört zu den klassischen Symptomen?",
-    answer: "Polyurie, Polydipsie, Gewichtsverlust, Müdigkeit.",
+    question: "Quizfragen erscheinen nach deinem Upload.",
+    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
   },
   {
     topic: "Thromboseprophylaxe",
-    question: "Nenne zwei physikalische Maßnahmen.",
-    answer: "Frühmobilisation, Kompressionsstrümpfe oder Venengymnastik.",
+    question: "Quizfragen erscheinen nach deinem Upload.",
+    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
   },
   {
     topic: "Fiebererkrankungen",
-    question: "Wann ist ärztliche Rücksprache dringend nötig?",
-    answer: "Bei Bewusstseinsveränderung, Schüttelfrost oder starkem Anstieg.",
+    question: "Quizfragen erscheinen nach deinem Upload.",
+    answer: "Lade deine PDFs hoch, damit passende Fragen generiert werden.",
   },
 ]
 
@@ -100,9 +100,9 @@ export default function LernplattformPage() {
             Klausur-Training ohne Langeweile
           </h1>
           <p className="text-lg text-gray-600 text-pretty max-w-2xl mx-auto">
-            Hier bündeln wir die Lerninhalte für die Klausur. Die Dokumente
-            werden später hochgeladen – bis dahin kannst du mit Lernzielen,
-            Methoden und Mini-Checks starten.
+            Hier lädst du deine Unterlagen hoch. Lernkarten, Quizfragen und
+            Zusammenfassungen werden daraus erzeugt, damit alles wirklich
+            klausurrelevant bleibt.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
             <Link
@@ -144,9 +144,14 @@ export default function LernplattformPage() {
                   className="mt-3 bg-white"
                 />
                 <p className="mt-2 text-xs text-gray-500">
-                  Hinweis: Die Upload-Funktion speichert aktuell noch nicht
-                  dauerhaft – sie zeigt nur, wo die Dateien später landen.
+                  Die Uploads sind die Grundlage für deine Lernkarten und
+                  Quizfragen. Sobald Dateien ausgewählt sind, erscheinen sie in
+                  der Übersicht unter den Lernfeldern.
                 </p>
+              </div>
+              <div className="rounded-lg border border-gray-100 bg-white/70 p-3 text-xs text-gray-500">
+                Noch keine PDFs hochgeladen. Wähle oben Dateien aus, damit wir
+                daraus Lernkarten und Quizfragen erstellen können.
               </div>
               <div className="grid gap-3 md:grid-cols-2 text-sm text-gray-600">
                 <div className="rounded-lg border border-gray-100 bg-white/70 p-3">
@@ -171,7 +176,7 @@ export default function LernplattformPage() {
 
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-            Lernfelder für die Klausur
+            Lernfelder auf Basis deiner Uploads
           </h2>
           <div className="grid gap-6 md:grid-cols-2">
             {learningFields.map((field) => (
@@ -196,7 +201,7 @@ export default function LernplattformPage() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-700">
-                      Dokumente (Upload geplant)
+                      Deine PDFs
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {field.documents.map((doc) => (
@@ -211,8 +216,8 @@ export default function LernplattformPage() {
                     </div>
                   </div>
                   <div className="rounded-lg border border-dashed border-gray-200 bg-white/70 p-3 text-xs text-gray-500">
-                    Platz für PDF & Materialien – sobald die Dateien da sind,
-                    werden sie hier ergänzt.
+                    Deine hochgeladenen PDFs werden hier gesammelt, damit wir
+                    daraus Lernkarten, Quiz und Zusammenfassungen erstellen.
                   </div>
                 </CardContent>
               </Card>
@@ -238,7 +243,7 @@ export default function LernplattformPage() {
 
         <section className="mt-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-            Mini-Checks für zwischendurch
+            Quizfragen aus deinen PDFs
           </h2>
           <div className="grid gap-4 md:grid-cols-2">
             {quickChecks.map((check) => (
@@ -257,8 +262,8 @@ export default function LernplattformPage() {
 
         <footer className="mt-12 pt-6 border-t border-gray-200 text-center text-sm text-gray-500">
           <p className="mb-3">
-            Du kannst jederzeit neue Dokumente hinzufügen – die Struktur steht
-            schon bereit.
+            Lade jederzeit neue PDFs hoch, damit die Lernkarten und Quizfragen
+            aktuell bleiben.
           </p>
           <Link href="/" className="text-primary hover:underline">
             Zur Startseite
