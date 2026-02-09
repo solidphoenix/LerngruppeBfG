@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 import {
   Card,
   CardContent,
@@ -118,6 +119,55 @@ export default function LernplattformPage() {
             </Link>
           </div>
         </header>
+
+        <section className="mb-12">
+          <Card className="bg-white/80">
+            <CardHeader>
+              <CardTitle className="text-2xl">PDF-Upload</CardTitle>
+              <CardDescription>
+                Lade deine Unterlagen hoch, damit wir daraus passende
+                Lerninhalte und Übungen erstellen können.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="rounded-lg border border-dashed border-emerald-200 bg-emerald-50/60 p-4">
+                <label className="text-sm font-medium text-gray-700">
+                  PDF-Dateien auswählen
+                  <span className="block text-xs text-gray-500">
+                    Mehrere PDFs möglich (z.B. Skripte, Folien, Zusammenfassungen)
+                  </span>
+                </label>
+                <Input
+                  type="file"
+                  accept="application/pdf"
+                  multiple
+                  className="mt-3 bg-white"
+                />
+                <p className="mt-2 text-xs text-gray-500">
+                  Hinweis: Die Upload-Funktion speichert aktuell noch nicht
+                  dauerhaft – sie zeigt nur, wo die Dateien später landen.
+                </p>
+              </div>
+              <div className="grid gap-3 md:grid-cols-2 text-sm text-gray-600">
+                <div className="rounded-lg border border-gray-100 bg-white/70 p-3">
+                  <p className="font-medium text-gray-700">Was passiert danach?</p>
+                  <p className="mt-1 text-xs">
+                    Die PDFs werden analysiert, damit Lernkarten, Quizfragen und
+                    Zusammenfassungen automatisch entstehen können.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-gray-100 bg-white/70 p-3">
+                  <p className="font-medium text-gray-700">Empfohlene Inhalte</p>
+                  <ul className="mt-1 list-disc space-y-1 pl-4 text-xs">
+                    <li>Unterrichtsskripte und Leitlinien</li>
+                    <li>Eigene Zusammenfassungen</li>
+                    <li>Abbildungen oder Tabellen (PDF)</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
 
         <section>
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
