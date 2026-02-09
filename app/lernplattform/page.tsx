@@ -15,32 +15,32 @@ const uploadGoals = [
   "Zusammenfassungen bleiben klausurrelevant",
 ]
 
-const defaultDocuments = ["Noch keine PDFs hochgeladen"]
+const emptyDocumentsMessage = ["Noch keine PDFs hochgeladen"]
 
 const learningFields = [
   {
     title: "Wunden",
     subtitle: "Wundheilung, Assessment & Verbandwechsel",
     goals: uploadGoals,
-    documents: defaultDocuments,
+    documents: emptyDocumentsMessage,
   },
   {
     title: "Diabetes mellitus",
     subtitle: "Stoffwechsel verstehen & Pflegeinterventionen",
     goals: uploadGoals,
-    documents: defaultDocuments,
+    documents: emptyDocumentsMessage,
   },
   {
     title: "Thromboseprophylaxe",
     subtitle: "Risiken erkennen & Maßnahmen planen",
     goals: uploadGoals,
-    documents: defaultDocuments,
+    documents: emptyDocumentsMessage,
   },
   {
     title: "Fiebererkrankungen",
     subtitle: "Fiebermanagement & Beobachtung",
     goals: uploadGoals,
-    documents: defaultDocuments,
+    documents: emptyDocumentsMessage,
   },
 ]
 
@@ -59,8 +59,8 @@ const learningMethods = [
   },
 ]
 
-const uploadQuizQuestion = "Quizfragen erscheinen nach deinem Upload."
-const uploadQuizAnswer =
+const placeholderQuizQuestion = "Quizfragen erscheinen nach deinem Upload."
+const placeholderQuizAnswer =
   "Lade deine PDFs hoch, damit passende Fragen generiert werden."
 
 const quickChecks = [
@@ -70,8 +70,8 @@ const quickChecks = [
   "Fiebererkrankungen",
 ].map((topic) => ({
   topic,
-  question: uploadQuizQuestion,
-  answer: uploadQuizAnswer,
+  question: placeholderQuizQuestion,
+  answer: placeholderQuizAnswer,
 }))
 
 export default function LernplattformPage() {
