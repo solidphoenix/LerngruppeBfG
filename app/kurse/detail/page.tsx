@@ -231,7 +231,7 @@ function KursDetailInner() {
           <p className="text-lg text-gray-600 text-pretty max-w-2xl mx-auto">
             Lerninhalte basierend auf {course.pdfFiles.length} PDF-Dateien.
             Erstellt am{" "}
-            {new Date(content.generatedAt).toLocaleDateString("de-DE", {
+            {new Date(content.generatedAt).toLocaleString("de-DE", {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",

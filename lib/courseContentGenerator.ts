@@ -50,7 +50,8 @@ function pickRandom<T>(arr: T[], n: number): T[] {
   const result: T[] = []
   for (let i = 0; i < n && copy.length > 0; i++) {
     const idx = Math.floor(Math.random() * copy.length)
-    result.push(copy.splice(idx, 1)[0])
+    const removed = copy.splice(idx, 1)
+    if (removed.length > 0) result.push(removed[0])
   }
   return result
 }
