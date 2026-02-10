@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -556,14 +556,21 @@ function QuizCard({ quiz }: { quiz: QuizQuestion }) {
 }
 
 export default function LernquizPage() {
-  const randomizedSections = useMemo(
-    () =>
+  const [randomizedSections, setRandomizedSections] = useState(() =>
+    allQuizSections.map((section) => ({
+      ...section,
+      questions: section.questions.slice(0, QUESTIONS_PER_SECTION),
+    }))
+  )
+
+  useEffect(() => {
+    setRandomizedSections(
       allQuizSections.map((section) => ({
         ...section,
         questions: shuffle(section.questions).slice(0, QUESTIONS_PER_SECTION),
-      })),
-    []
-  )
+      }))
+    )
+  }, [])
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-indigo-50">
