@@ -77,7 +77,7 @@ function CourseCard({
             </Link>
           ) : (
             <Link
-              href="/lernplattform"
+              href={`/kurse/detail?id=${encodeURIComponent(course.id)}`}
               className="flex-1 rounded-lg bg-primary px-4 py-2 text-center text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
             >
               Kurs öffnen

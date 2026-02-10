@@ -93,6 +93,55 @@ export type ModuleConfig = {
 
 /* ── Full course configuration ────────────────────────────── */
 
+/* ── Generated course content types ───────────────────────── */
+
+export type GeneratedFlashcard = {
+  title: string
+  question: string
+  answer: string
+  tip: string
+  source: string
+}
+
+export type GeneratedQuiz = {
+  title: string
+  question: string
+  options: string[]
+  answer: string
+  explanation: string
+}
+
+export type GeneratedTableRow = Record<string, string>
+
+export type GeneratedTable = {
+  title: string
+  headers: string[]
+  rows: GeneratedTableRow[]
+}
+
+export type GeneratedQA = {
+  question: string
+  answer: string
+}
+
+export type GeneratedLearningField = {
+  title: string
+  subtitle: string
+  goals: string[]
+  documents: string[]
+}
+
+export type GeneratedCourseContent = {
+  learningFields: GeneratedLearningField[]
+  flashcards: GeneratedFlashcard[]
+  quizItems: GeneratedQuiz[]
+  tables: GeneratedTable[]
+  quickQuestions: GeneratedQA[]
+  generatedAt: string
+}
+
+export type GenerationStatus = "idle" | "generating" | "done" | "error"
+
 export type CourseConfig = {
   id: string
   topicName: string
@@ -100,6 +149,8 @@ export type CourseConfig = {
   pdfFiles: string[]
   modules: Record<ModuleType, ModuleConfig>
   createdAt: string
+  generatedContent?: GeneratedCourseContent
+  generationStatus?: GenerationStatus
 }
 
 /* ── Default module counts ────────────────────────────────── */
