@@ -434,6 +434,12 @@ export default function KiQuizPage() {
               Zum KI-Assistenten
             </Link>
             <Link
+              href="/ki-einstellungen"
+              className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
+            >
+              ⚙️ KI-Einstellungen
+            </Link>
+            <Link
               href="/"
               className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
             >
@@ -547,6 +553,9 @@ export default function KiQuizPage() {
             </Link>
             <Link href="/ki-assistent" className="text-primary hover:underline">
               Zum KI-Assistenten
+            </Link>
+            <Link href="/ki-einstellungen" className="text-primary hover:underline">
+              KI-Einstellungen
             </Link>
             <Link href="/kurse" className="text-primary hover:underline">
               Alle Kurse
