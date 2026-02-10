@@ -427,6 +427,7 @@ export default function KursErstellenPage() {
     () => ({ ...defaultModuleConfig })
   )
   const [created, setCreated] = useState(false)
+  const [createdCourseId, setCreatedCourseId] = useState("")
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const totalSteps = 4
@@ -449,8 +450,9 @@ export default function KursErstellenPage() {
   function handleCreate() {
     if (!level) return
 
+    const courseId = `${level}-${Date.now()}`
     const course: CourseConfig = {
-      id: `${level}-${Date.now()}`,
+      id: courseId,
       topicName: topicName.trim(),
       level,
       pdfFiles,
@@ -459,6 +461,7 @@ export default function KursErstellenPage() {
     }
 
     saveCourse(course)
+    setCreatedCourseId(courseId)
     setCreated(true)
   }
 
@@ -487,6 +490,12 @@ export default function KursErstellenPage() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 pt-4">
               <Link
+                href={`/kurse/detail?id=${encodeURIComponent(createdCourseId)}`}
+                className="px-5 py-2 rounded-full bg-emerald-600 text-white text-sm font-medium shadow-sm hover:bg-emerald-700 transition-colors"
+              >
+                Kurs öffnen & Inhalte generieren
+              </Link>
+              <Link
                 href="/kurse"
                 className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-sm hover:bg-primary/90 transition-colors"
               >
@@ -495,6 +504,7 @@ export default function KursErstellenPage() {
               <button
                 onClick={() => {
                   setCreated(false)
+                  setCreatedCourseId("")
                   setStep(0)
                   setTopicName("")
                   setLevel(null)

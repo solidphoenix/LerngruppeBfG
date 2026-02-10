@@ -10,7 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { searchKnowledge, getTopics, getEntriesByTopic, type KnowledgeEntry } from "@/lib/pdfKnowledge"
+import { searchKnowledge, getTopics, getEntriesByTopic, pdfKnowledge, type KnowledgeEntry } from "@/lib/pdfKnowledge"
+import { isOpenAIConfigured, chatCompletion, type ChatMessage } from "@/lib/openaiClient"
 
 type Message = {
   role: "user" | "assistant"
@@ -54,7 +55,7 @@ const features = [
   },
 ]
 
-function buildAnswer(query: string): Message {
+function buildLocalAnswer(query: string): Message {
   const results = searchKnowledge(query)
 
   if (results.length === 0) {
@@ -75,6 +76,68 @@ function buildAnswer(query: string): Message {
     role: "assistant",
     text: answerParts.join("\n\n"),
     sources,
+  }
+}
+
+/** Build a system prompt that includes all PDF knowledge for context. */
+function buildSystemPrompt(): string {
+  const knowledgeContext = pdfKnowledge
+    .map(
+      (e) =>
+        `[${e.topic} – ${e.subtopic}] (Quelle: ${e.source})\n${e.content}`
+    )
+    .join("\n\n")
+
+  return `Du bist ein hilfreicher KI-Lernassistent für Pflegeschüler. Du kennst den Inhalt aller hochgeladenen Unterrichts-PDFs und antwortest basierend auf diesem Wissen.
+
+Antworte immer auf Deutsch. Gib am Ende deiner Antwort die genutzten Quellen an (PDF-Namen).
+
+Hier sind die Unterrichtsinhalte aus den PDFs:
+
+${knowledgeContext}`
+}
+
+async function buildOpenAIAnswer(
+  query: string,
+  conversationHistory: Message[]
+): Promise<Message> {
+  const systemPrompt = buildSystemPrompt()
+
+  // Keep last 6 messages as context window to stay within token limits
+  const recentMessages = conversationHistory.slice(-6)
+  const apiMessages: ChatMessage[] = [
+    { role: "system", content: systemPrompt },
+    ...recentMessages.map((m) => ({
+      role: m.role as "user" | "assistant",
+      content: m.text,
+    })),
+    { role: "user" as const, content: query },
+  ]
+
+  try {
+    const response = await chatCompletion(apiMessages, {
+      temperature: 0.7,
+      maxTokens: 1024,
+    })
+
+    // Try to extract source references from the response
+    const results = searchKnowledge(query)
+    const sources = Array.from(
+      new Set(results.slice(0, 3).map((e) => e.source))
+    )
+
+    return {
+      role: "assistant",
+      text: response,
+      sources,
+    }
+  } catch (err) {
+    const fallback = buildLocalAnswer(query)
+    return {
+      role: "assistant",
+      text: `⚠️ OpenAI-Fehler: ${(err as Error).message}\n\nIch nutze stattdessen den lokalen Wissens-Modus:\n\n${fallback.text}`,
+      sources: fallback.sources,
+    }
   }
 }
 
@@ -153,21 +216,35 @@ export default function KiAssistentPage() {
     },
   ])
   const [input, setInput] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [useAI, setUseAI] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  function handleSend(question?: string) {
+  useEffect(() => {
+    setUseAI(isOpenAIConfigured())
+  }, [])
+
+  async function handleSend(question?: string) {
     const q = question ?? input.trim()
     if (!q) return
 
     const userMessage: Message = { role: "user", text: q }
-    const answer = buildAnswer(q)
-
-    setMessages((prev) => [...prev, userMessage, answer])
     setInput("")
+
+    if (useAI) {
+      setMessages((prev) => [...prev, userMessage])
+      setLoading(true)
+      const answer = await buildOpenAIAnswer(q, [...messages, userMessage])
+      setMessages((prev) => [...prev, answer])
+      setLoading(false)
+    } else {
+      const answer = buildLocalAnswer(q)
+      setMessages((prev) => [...prev, userMessage, answer])
+    }
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -246,11 +323,30 @@ export default function KiAssistentPage() {
               Zum KI-Quiz
             </Link>
             <Link
+              href="/ki-einstellungen"
+              className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
+            >
+              ⚙️ KI-Einstellungen
+            </Link>
+            <Link
               href="/"
               className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
             >
               Zur Anmeldung
             </Link>
+          </div>
+          {/* AI Mode Indicator */}
+          <div className="mt-4">
+            <span
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
+                useAI
+                  ? "bg-emerald-100 text-emerald-700"
+                  : "bg-gray-100 text-gray-600"
+              }`}
+            >
+              <span className={`h-2 w-2 rounded-full ${useAI ? "bg-emerald-500" : "bg-gray-400"}`} />
+              {useAI ? "ChatGPT-Modus aktiv" : "Lokaler Wissens-Modus"}
+            </span>
           </div>
         </header>
 
@@ -319,6 +415,13 @@ export default function KiAssistentPage() {
                     </div>
                   </div>
                 ))}
+                {loading && (
+                  <div className="flex justify-start">
+                    <div className="max-w-[85%] rounded-lg px-4 py-2 text-sm bg-white border border-gray-200 text-gray-500">
+                      ChatGPT denkt nach…
+                    </div>
+                  </div>
+                )}
                 <div ref={chatEndRef} />
               </div>
 
@@ -329,14 +432,15 @@ export default function KiAssistentPage() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Stelle eine Frage zum Unterrichtsstoff…"
-                  className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
+                  disabled={loading}
+                  className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30 disabled:opacity-50"
                 />
                 <button
                   onClick={() => handleSend()}
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || loading}
                   className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Senden
+                  {loading ? "…" : "Senden"}
                 </button>
               </div>
 
@@ -374,6 +478,9 @@ export default function KiAssistentPage() {
             </Link>
             <Link href="/ki-quiz" className="text-primary hover:underline">
               Zum KI-Quiz
+            </Link>
+            <Link href="/ki-einstellungen" className="text-primary hover:underline">
+              KI-Einstellungen
             </Link>
           </div>
         </footer>
