@@ -330,6 +330,20 @@ const learningSprint = [
 
 const learningResources = [
   {
+    title: "Lernen mit KI",
+    description:
+      "Stelle Fragen zum Unterrichtsstoff – der KI-Assistent kennt alle PDF-Inhalte und hilft dir beim Verstehen.",
+    href: "/ki-assistent",
+    badge: "KI-Assistent",
+  },
+  {
+    title: "KI-Quiz",
+    description:
+      "Dynamisch generierte Quizfragen aus dem PDF-Wissen – jedes Mal neu, damit du Verständnis statt Auswendiglernen trainierst.",
+    href: "/ki-quiz",
+    badge: "KI-Quiz",
+  },
+  {
     title: "Lernkarten-Decks",
     description:
       "Thematisch sortierte Karteikarten mit Antworten, Tipps und Quellen aus den PDFs.",
@@ -383,16 +397,22 @@ export default function LernplattformPage() {
           </p>
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
             <Link
-              href="/"
+              href="/kurse"
               className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-sm hover:bg-primary/90 transition-colors"
             >
-              Zurück zur Anmeldung
+              Alle Kurse
             </Link>
             <Link
-              href="/delete"
+              href="/kurs-erstellen"
               className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
             >
-              Abmeldung verwalten
+              Kurs erstellen
+            </Link>
+            <Link
+              href="/"
+              className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
+            >
+              Zurück zur Anmeldung
             </Link>
           </div>
         </header>
