@@ -1,11 +1,9 @@
 /**
  * Generates learning content for a course based on topic name and PDF file names.
  *
- * Since the app runs as a static GitHub Pages export (no server-side API routes),
- * content is generated client-side using the course metadata (topic name, PDF names,
- * module config) as input.  The generator creates flashcards, quiz questions,
- * learning tables, Q&A pairs and learning-field summaries that mirror the structure
- * of the existing Pflegefachassistenz course.
+ * When an OpenAI API key is configured (NEXT_PUBLIC_OPENAI_API_KEY in .env.local),
+ * ChatGPT is used to extract and generate real educational content from the PDF
+ * topics. Without an API key, a template-based fallback generates placeholder content.
  *
  * Each generation step is reported through a progress callback so the UI can
  * display a live feed / progress bar.
@@ -20,6 +18,7 @@ import type {
   GeneratedQA,
   GeneratedLearningField,
 } from "./courseConfig"
+import { isOpenAIConfigured, chatCompletion, type ChatMessage } from "./openaiClient"
 
 /* ── helpers ─────────────────────────────────────────────── */
 
@@ -31,7 +30,6 @@ function sleep(ms: number) {
 function extractTopics(pdfFiles: string[]): string[] {
   const topics = new Set<string>()
   for (const f of pdfFiles) {
-    // strip leading numbers / dots / dashes and common prefixes
     const cleaned = f
       .replace(/^\d+[\s._-]*/g, "")
       .replace(/^(AB|LS|Text)\s*[-–—]?\s*/i, "")
@@ -65,6 +63,32 @@ export type ProgressStep = {
 
 export type ProgressCallback = (steps: ProgressStep[], currentIndex: number) => void
 
+/* ── OpenAI helper: ask ChatGPT and parse JSON ──────────── */
+
+async function askGPT(prompt: string, maxTokens = 2048): Promise<string> {
+  const messages: ChatMessage[] = [
+    {
+      role: "system",
+      content:
+        "Du bist ein Experte für Pflegeausbildung und erstellst Lernmaterialien. " +
+        "Antworte immer auf Deutsch. Gib ausschließlich valides JSON zurück, " +
+        "ohne Markdown-Codeblöcke, ohne Erklärungen.",
+    },
+    { role: "user", content: prompt },
+  ]
+  return chatCompletion(messages, { temperature: 0.7, maxTokens })
+}
+
+function safeParseJSON<T>(text: string): T | null {
+  try {
+    // Strip markdown code fences if present
+    const cleaned = text.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "")
+    return JSON.parse(cleaned) as T
+  } catch {
+    return null
+  }
+}
+
 /* ── generator ──────────────────────────────────────────── */
 
 export async function generateCourseContent(
@@ -73,14 +97,15 @@ export async function generateCourseContent(
 ): Promise<GeneratedCourseContent> {
   const topics = extractTopics(course.pdfFiles)
   const topicName = course.topicName
+  const useAI = isOpenAIConfigured()
 
   const steps: ProgressStep[] = [
     { label: "Themen aus PDFs extrahieren…", done: false },
     { label: "Lernfelder erstellen…", done: false },
-    { label: "Lernkarten generieren…", done: false },
-    { label: "Quizfragen erstellen…", done: false },
-    { label: "Lerntabellen aufbauen…", done: false },
-    { label: "Fragen & Antworten formulieren…", done: false },
+    { label: useAI ? "Lernkarten mit ChatGPT generieren…" : "Lernkarten generieren…", done: false },
+    { label: useAI ? "Quizfragen mit ChatGPT erstellen…" : "Quizfragen erstellen…", done: false },
+    { label: useAI ? "Lerntabellen mit ChatGPT aufbauen…" : "Lerntabellen aufbauen…", done: false },
+    { label: useAI ? "Fragen & Antworten mit ChatGPT formulieren…" : "Fragen & Antworten formulieren…", done: false },
     { label: "Inhalte zusammenführen…", done: false },
   ]
 
@@ -94,31 +119,37 @@ export async function generateCourseContent(
   report(0)
 
   /* Step 2 – learning fields */
-  await sleep(500)
-  const learningFields = generateLearningFields(topicName, topics, course.pdfFiles)
+  await sleep(300)
+  const learningFields = useAI
+    ? await generateLearningFieldsAI(topicName, topics, course.pdfFiles)
+    : generateLearningFieldsFallback(topicName, topics, course.pdfFiles)
   report(1)
 
   /* Step 3 – flashcards */
-  await sleep(600)
   const flashcardCount = course.modules.lernkarten.enabled ? course.modules.lernkarten.count : 0
-  const flashcards = generateFlashcards(topicName, topics, course.pdfFiles, flashcardCount)
+  const flashcards = useAI
+    ? await generateFlashcardsAI(topicName, topics, course.pdfFiles, flashcardCount)
+    : generateFlashcardsFallback(topicName, topics, course.pdfFiles, flashcardCount)
   report(2)
 
   /* Step 4 – quiz items */
-  await sleep(500)
   const quizCount = course.modules.lernquiz.enabled ? course.modules.lernquiz.count : 0
-  const quizItems = generateQuizItems(topicName, topics, course.pdfFiles, quizCount)
+  const quizItems = useAI
+    ? await generateQuizItemsAI(topicName, topics, course.pdfFiles, quizCount)
+    : generateQuizItemsFallback(topicName, topics, course.pdfFiles, quizCount)
   report(3)
 
   /* Step 5 – tables */
-  await sleep(500)
   const tableCount = course.modules.lerntabellen.enabled ? course.modules.lerntabellen.count : 0
-  const tables = generateTables(topicName, topics, course.pdfFiles, tableCount)
+  const tables = useAI
+    ? await generateTablesAI(topicName, topics, course.pdfFiles, tableCount)
+    : generateTablesFallback(topicName, topics, course.pdfFiles, tableCount)
   report(4)
 
   /* Step 6 – quick questions */
-  await sleep(400)
-  const quickQuestions = generateQuickQuestions(topicName, topics, course.pdfFiles)
+  const quickQuestions = useAI
+    ? await generateQuickQuestionsAI(topicName, topics, course.pdfFiles)
+    : generateQuickQuestionsFallback(topicName, topics, course.pdfFiles)
   report(5)
 
   /* Step 7 – done */
@@ -135,14 +166,182 @@ export async function generateCourseContent(
   }
 }
 
-/* ── content generators ─────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   AI-powered generators (using OpenAI ChatGPT)
+   ══════════════════════════════════════════════════════════ */
 
-function generateLearningFields(
+async function generateLearningFieldsAI(
+  topicName: string,
+  topics: string[],
+  pdfFiles: string[]
+): Promise<GeneratedLearningField[]> {
+  const topicList = topics.length > 0 ? topics.join(", ") : topicName
+  const pdfList = pdfFiles.join(", ")
+
+  const prompt = `Erstelle Lernfelder für einen Pflegekurs zum Thema "${topicName}".
+
+Verfügbare Themen aus den PDFs: ${topicList}
+PDF-Dateien: ${pdfList}
+
+Erstelle 2-4 Lernfelder. Jedes Lernfeld soll folgende Struktur haben:
+- title: Titel des Lernfeldes (spezifisch zum Thema)
+- subtitle: Untertitel mit Bezug zum Kurs
+- goals: Array mit 3-4 konkreten, fachlich korrekten Lernzielen
+- documents: Array mit den zugehörigen PDF-Dateinamen
+
+Antworte als JSON-Array. Beispiel:
+[{"title":"...","subtitle":"...","goals":["...","...","..."],"documents":["..."]}]`
+
+  try {
+    const response = await askGPT(prompt)
+    const parsed = safeParseJSON<GeneratedLearningField[]>(response)
+    if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed
+  } catch { /* fallback */ }
+  return generateLearningFieldsFallback(topicName, topics, pdfFiles)
+}
+
+async function generateFlashcardsAI(
+  topicName: string,
+  topics: string[],
+  pdfFiles: string[],
+  count: number
+): Promise<GeneratedFlashcard[]> {
+  if (count <= 0) return []
+
+  const topicList = topics.length > 0 ? topics.join(", ") : topicName
+  const pdfList = pdfFiles.join(", ")
+
+  const prompt = `Erstelle ${count} Lernkarten (Flashcards) für Pflegeschüler zum Thema "${topicName}".
+
+Verfügbare Themen: ${topicList}
+PDF-Dateien: ${pdfList}
+
+Jede Lernkarte soll fachlich korrekte Pflegeinhalte enthalten:
+- title: Kurzer Titel (z.B. "Definition Thrombose – Karte 1")
+- question: Eine konkrete Lernfrage
+- answer: Die fachlich korrekte, ausführliche Antwort (2-3 Sätze)
+- tip: Ein Lerntipp
+- source: Die zugehörige PDF-Datei
+
+Verteile die Karten gleichmäßig auf die verschiedenen Themen.
+Antworte als JSON-Array:
+[{"title":"...","question":"...","answer":"...","tip":"...","source":"..."}]`
+
+  try {
+    const response = await askGPT(prompt, 3000)
+    const parsed = safeParseJSON<GeneratedFlashcard[]>(response)
+    if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed
+  } catch { /* fallback */ }
+  return generateFlashcardsFallback(topicName, topics, pdfFiles, count)
+}
+
+async function generateQuizItemsAI(
+  topicName: string,
+  topics: string[],
+  pdfFiles: string[],
+  count: number
+): Promise<GeneratedQuiz[]> {
+  if (count <= 0) return []
+
+  const topicList = topics.length > 0 ? topics.join(", ") : topicName
+  const pdfList = pdfFiles.join(", ")
+
+  const prompt = `Erstelle ${count} Multiple-Choice-Quizfragen für Pflegeschüler zum Thema "${topicName}".
+
+Verfügbare Themen: ${topicList}
+PDF-Dateien: ${pdfList}
+
+Jede Frage soll 4 Antwortmöglichkeiten haben, wobei genau EINE richtig ist:
+- title: Kurzer Titel (z.B. "Thrombose – Quiz 1")
+- question: Die Quizfrage (fachlich korrekt und prüfungsrelevant)
+- options: Array mit genau 4 Antwortoptionen (vollständige Sätze)
+- answer: Der Buchstabe der richtigen Antwort ("A", "B", "C" oder "D")
+- explanation: Erklärung warum die Antwort richtig ist (1-2 Sätze)
+
+Die richtige Antwort soll NICHT immer an der gleichen Position stehen.
+Antworte als JSON-Array:
+[{"title":"...","question":"...","options":["A-Option","B-Option","C-Option","D-Option"],"answer":"B","explanation":"..."}]`
+
+  try {
+    const response = await askGPT(prompt, 3000)
+    const parsed = safeParseJSON<GeneratedQuiz[]>(response)
+    if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed
+  } catch { /* fallback */ }
+  return generateQuizItemsFallback(topicName, topics, pdfFiles, count)
+}
+
+async function generateTablesAI(
+  topicName: string,
+  topics: string[],
+  pdfFiles: string[],
+  count: number
+): Promise<GeneratedTable[]> {
+  if (count <= 0) return []
+
+  const topicList = topics.length > 0 ? topics.join(", ") : topicName
+  const pdfList = pdfFiles.join(", ")
+
+  const prompt = `Erstelle ${count} Lerntabellen für Pflegeschüler zum Thema "${topicName}".
+
+Verfügbare Themen: ${topicList}
+PDF-Dateien: ${pdfList}
+
+Jede Tabelle soll fachlich korrekte Pflegeinhalte zusammenfassen:
+- title: Titel der Tabelle (z.B. "Thrombose – Übersicht")
+- headers: Array mit 3 Spaltenüberschriften (z.B. ["Aspekt", "Beschreibung", "Quelle"])
+- rows: Array mit 4-5 Zeilen, jede Zeile ist ein Objekt mit den Header-Keys
+
+Die Inhalte müssen fachlich korrekt und spezifisch zum jeweiligen Thema sein.
+Antworte als JSON-Array:
+[{"title":"...","headers":["Aspekt","Beschreibung","Quelle"],"rows":[{"Aspekt":"Definition","Beschreibung":"Konkreter Inhalt...","Quelle":"PDF-Name"}]}]`
+
+  try {
+    const response = await askGPT(prompt, 3000)
+    const parsed = safeParseJSON<GeneratedTable[]>(response)
+    if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed
+  } catch { /* fallback */ }
+  return generateTablesFallback(topicName, topics, pdfFiles, count)
+}
+
+async function generateQuickQuestionsAI(
+  topicName: string,
+  topics: string[],
+  pdfFiles: string[]
+): Promise<GeneratedQA[]> {
+  const topicList = topics.length > 0 ? topics.join(", ") : topicName
+  const pdfList = pdfFiles.join(", ")
+  const qaCount = Math.min(6, Math.max(4, topics.length * 2))
+
+  const prompt = `Erstelle ${qaCount} Fragen und Antworten für Pflegeschüler zum Thema "${topicName}".
+
+Verfügbare Themen: ${topicList}
+PDF-Dateien: ${pdfList}
+
+Jede Frage-Antwort soll prüfungsrelevantes Pflegewissen abdecken:
+- question: Eine konkrete Lernfrage
+- answer: Eine fachlich korrekte Antwort (2-3 Sätze)
+
+Die Fragen sollen verschiedene Aspekte des Themas abdecken (Definition, Ursachen, Symptome, Maßnahmen, etc.).
+Antworte als JSON-Array:
+[{"question":"...","answer":"..."}]`
+
+  try {
+    const response = await askGPT(prompt)
+    const parsed = safeParseJSON<GeneratedQA[]>(response)
+    if (parsed && Array.isArray(parsed) && parsed.length > 0) return parsed
+  } catch { /* fallback */ }
+  return generateQuickQuestionsFallback(topicName, topics, pdfFiles)
+}
+
+/* ══════════════════════════════════════════════════════════
+   Fallback generators (template-based, no API needed)
+   ══════════════════════════════════════════════════════════ */
+
+function generateLearningFieldsFallback(
   topicName: string,
   topics: string[],
   pdfFiles: string[]
 ): GeneratedLearningField[] {
-  // Group PDFs into logical clusters (max 4 fields)
   const chunkSize = Math.max(1, Math.ceil(pdfFiles.length / Math.min(4, Math.max(1, topics.length))))
   const fields: GeneratedLearningField[] = []
 
@@ -167,7 +366,7 @@ function generateLearningFields(
   return fields
 }
 
-function generateFlashcards(
+function generateFlashcardsFallback(
   topicName: string,
   topics: string[],
   pdfFiles: string[],
@@ -194,7 +393,7 @@ function generateFlashcards(
   return cards
 }
 
-function generateQuizItems(
+function generateQuizItemsFallback(
   topicName: string,
   topics: string[],
   pdfFiles: string[],
@@ -220,7 +419,7 @@ function generateQuizItems(
     },
     {
       q: (t: string) => `Was gehört zu den Grundlagen von ${t}?`,
-      options: (t: string) => [
+      options: () => [
         `Nur theoretisches Wissen ohne Praxisbezug.`,
         `Definition, Ursachen und pflegerische Maßnahmen.`,
         `Ausschließlich medikamentöse Therapie.`,
@@ -232,7 +431,7 @@ function generateQuizItems(
     },
     {
       q: (t: string) => `Welche Maßnahme ist im Rahmen von ${t} besonders wichtig?`,
-      options: (t: string) => [
+      options: () => [
         `Abwarten ohne Intervention.`,
         `Gezielte Beobachtung und Dokumentation.`,
         `Eigenständige Medikamentengabe ohne Arztanordnung.`,
@@ -244,7 +443,7 @@ function generateQuizItems(
     },
     {
       q: (t: string) => `Worauf muss bei ${t} in der Pflegepraxis geachtet werden?`,
-      options: (t: string) => [
+      options: () => [
         `Es gibt keine besonderen Anforderungen.`,
         `Auf individuelle Patientenbedürfnisse und Sicherheit.`,
         `Nur auf ärztliche Anweisungen.`,
@@ -273,7 +472,7 @@ function generateQuizItems(
   return quizzes
 }
 
-function generateTables(
+function generateTablesFallback(
   topicName: string,
   topics: string[],
   pdfFiles: string[],
@@ -303,7 +502,7 @@ function generateTables(
   return tables
 }
 
-function generateQuickQuestions(
+function generateQuickQuestionsFallback(
   topicName: string,
   topics: string[],
   pdfFiles: string[]

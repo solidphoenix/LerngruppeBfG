@@ -12,49 +12,34 @@ import {
 } from "@/components/ui/card"
 import {
   getOpenAIKey,
-  setOpenAIKey,
   getSelectedModel,
-  setSelectedModel,
+  isOpenAIConfigured,
   testAPIKey,
   AVAILABLE_MODELS,
 } from "@/lib/openaiClient"
 
 export default function KiEinstellungenPage() {
-  const [apiKey, setApiKey] = useState("")
+  const [configured, setConfigured] = useState(false)
   const [model, setModel] = useState("")
-  const [saved, setSaved] = useState(false)
   const [testing, setTesting] = useState(false)
   const [testResult, setTestResult] = useState<{
     ok: boolean
     error?: string
   } | null>(null)
-  const [showKey, setShowKey] = useState(false)
+  const [maskedKey, setMaskedKey] = useState("")
 
   useEffect(() => {
-    setApiKey(getOpenAIKey())
+    const key = getOpenAIKey()
+    setConfigured(isOpenAIConfigured())
     setModel(getSelectedModel())
+    if (key.length > 8) {
+      setMaskedKey(key.slice(0, 4) + "••••••••" + key.slice(-4))
+    } else if (key.length > 0) {
+      setMaskedKey("••••••••")
+    }
   }, [])
 
-  function handleSave() {
-    setOpenAIKey(apiKey)
-    setSelectedModel(model)
-    setSaved(true)
-    setTestResult(null)
-    setTimeout(() => setSaved(false), 3000)
-  }
-
-  function handleRemove() {
-    setOpenAIKey("")
-    setApiKey("")
-    setTestResult(null)
-    setSaved(false)
-  }
-
   async function handleTest() {
-    if (!apiKey.trim()) return
-    // Save first so the test uses the current key
-    setOpenAIKey(apiKey)
-    setSelectedModel(model)
     setTesting(true)
     setTestResult(null)
     const result = await testAPIKey()
@@ -62,12 +47,7 @@ export default function KiEinstellungenPage() {
     setTesting(false)
   }
 
-  const isConfigured = apiKey.trim().length > 0
-
-  function maskKey(key: string): string {
-    if (key.length <= 8) return "••••••••"
-    return key.slice(0, 4) + "••••••••" + key.slice(-4)
-  }
+  const modelLabel = AVAILABLE_MODELS.find((m) => m.id === model)?.label ?? model
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-purple-50">
@@ -78,8 +58,10 @@ export default function KiEinstellungenPage() {
             KI-Einstellungen
           </h1>
           <p className="text-lg text-gray-600 text-pretty max-w-2xl mx-auto">
-            Konfiguriere deinen OpenAI (ChatGPT) API-Key, um den
-            KI-Assistenten und das KI-Quiz mit echten KI-Antworten zu nutzen.
+            Der OpenAI API-Key wird in der Projekt-Konfiguration
+            (<code className="text-xs bg-gray-100 px-1 rounded">.env.local</code>)
+            hinterlegt. ChatGPT wird für die Datenextraktion aus PDFs und die
+            Generierung von Kursinhalten verwendet.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
             <Link
@@ -101,24 +83,24 @@ export default function KiEinstellungenPage() {
         <section className="mb-6">
           <Card
             className={
-              isConfigured
+              configured
                 ? "bg-emerald-50/80 border-emerald-200"
                 : "bg-amber-50/80 border-amber-200"
             }
           >
             <CardContent className="py-4">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{isConfigured ? "✅" : "⚠️"}</span>
+                <span className="text-2xl">{configured ? "✅" : "⚠️"}</span>
                 <div>
                   <p className="text-sm font-semibold text-gray-800">
-                    {isConfigured
+                    {configured
                       ? "OpenAI API-Key ist konfiguriert"
-                      : "Kein API-Key hinterlegt"}
+                      : "Kein API-Key konfiguriert"}
                   </p>
                   <p className="text-xs text-gray-600">
-                    {isConfigured
-                      ? "KI-Assistent und KI-Quiz nutzen ChatGPT für echte KI-Antworten."
-                      : "Der KI-Assistent nutzt den lokalen Wissens-Modus ohne echte KI."}
+                    {configured
+                      ? `Modell: ${modelLabel} · Key: ${maskedKey}`
+                      : "Bitte den API-Key in der .env.local Datei eintragen."}
                   </p>
                 </div>
               </div>
@@ -126,98 +108,49 @@ export default function KiEinstellungenPage() {
           </Card>
         </section>
 
-        {/* API Key Configuration */}
+        {/* Configuration Info */}
         <section className="mb-6">
           <Card className="bg-white/90">
             <CardHeader>
-              <CardTitle className="text-lg">OpenAI API-Key</CardTitle>
+              <CardTitle className="text-lg">API-Key konfigurieren</CardTitle>
               <CardDescription>
-                Dein API-Key wird nur lokal in deinem Browser gespeichert und
-                niemals an unseren Server übertragen. Die Anfragen gehen direkt
-                von deinem Browser an die OpenAI API.
+                Der API-Key wird in der Datei{" "}
+                <code className="text-xs bg-gray-100 px-1 rounded">.env.local</code>{" "}
+                im Projektverzeichnis gespeichert – nicht im Browser.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  API-Key
-                </label>
+              <div className="rounded-lg bg-gray-900 p-4 font-mono text-sm text-gray-100 overflow-x-auto">
+                <p className="text-gray-400"># .env.local</p>
+                <p>
+                  <span className="text-emerald-400">NEXT_PUBLIC_OPENAI_API_KEY</span>
+                  <span className="text-gray-400">=</span>
+                  <span className="text-amber-300">sk-dein-api-key-hier</span>
+                </p>
+                <p className="mt-1">
+                  <span className="text-emerald-400">NEXT_PUBLIC_OPENAI_MODEL</span>
+                  <span className="text-gray-400">=</span>
+                  <span className="text-amber-300">gpt-4o-mini</span>
+                </p>
+              </div>
+
+              <p className="text-sm text-gray-600">
+                Nach dem Eintragen den Entwicklungsserver neu starten:
+              </p>
+              <div className="rounded-lg bg-gray-900 p-3 font-mono text-sm text-gray-100">
+                <span className="text-gray-400">$ </span>npm run dev
+              </div>
+
+              {configured && (
                 <div className="flex gap-2">
-                  <input
-                    type={showKey ? "text" : "password"}
-                    value={apiKey}
-                    onChange={(e) => {
-                      setApiKey(e.target.value)
-                      setSaved(false)
-                      setTestResult(null)
-                    }}
-                    placeholder="sk-..."
-                    className="flex-1 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700 placeholder-gray-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30 font-mono"
-                  />
                   <button
-                    onClick={() => setShowKey(!showKey)}
-                    className="rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
-                    title={showKey ? "Key verbergen" : "Key anzeigen"}
+                    onClick={handleTest}
+                    disabled={testing}
+                    className="rounded-lg border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {showKey ? "🙈" : "👁️"}
+                    {testing ? "Teste…" : "Verbindung testen"}
                   </button>
                 </div>
-                {isConfigured && !showKey && (
-                  <p className="mt-1 text-xs text-gray-500 font-mono">
-                    Gespeichert: {maskKey(apiKey)}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Modell
-                </label>
-                <select
-                  value={model}
-                  onChange={(e) => {
-                    setModel(e.target.value)
-                    setSaved(false)
-                  }}
-                  className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/30"
-                >
-                  {AVAILABLE_MODELS.map((m) => (
-                    <option key={m.id} value={m.id}>
-                      {m.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={handleSave}
-                  disabled={!apiKey.trim()}
-                  className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  Speichern
-                </button>
-                <button
-                  onClick={handleTest}
-                  disabled={!apiKey.trim() || testing}
-                  className="rounded-lg border border-gray-200 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-                >
-                  {testing ? "Teste…" : "Verbindung testen"}
-                </button>
-                {isConfigured && (
-                  <button
-                    onClick={handleRemove}
-                    className="rounded-lg border border-red-200 px-5 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
-                  >
-                    Key entfernen
-                  </button>
-                )}
-              </div>
-
-              {saved && (
-                <p className="text-sm text-emerald-600 font-medium">
-                  ✓ Einstellungen gespeichert!
-                </p>
               )}
 
               {testResult && (
@@ -245,8 +178,7 @@ export default function KiEinstellungenPage() {
                 So bekommst du einen API-Key
               </CardTitle>
               <CardDescription>
-                Du brauchst ein OpenAI-Konto mit Guthaben (nicht dasselbe wie
-                ein ChatGPT Plus Abo).
+                Du brauchst ein OpenAI-Konto mit API-Guthaben.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -277,7 +209,8 @@ export default function KiEinstellungenPage() {
                 </li>
                 <li>
                   Klicke auf <strong>„Create new secret key"</strong> und kopiere
-                  den Key (beginnt mit <code className="text-xs bg-gray-100 px-1 rounded">sk-</code>).
+                  den Key (beginnt mit{" "}
+                  <code className="text-xs bg-gray-100 px-1 rounded">sk-</code>).
                 </li>
                 <li>
                   Lade unter{" "}
@@ -292,8 +225,9 @@ export default function KiEinstellungenPage() {
                   Guthaben auf (ab $5 USD).
                 </li>
                 <li>
-                  Füge den Key oben ein und klicke auf{" "}
-                  <strong>Speichern</strong>.
+                  Trage den Key in die{" "}
+                  <code className="text-xs bg-gray-100 px-1 rounded">.env.local</code>{" "}
+                  Datei ein und starte den Server neu.
                 </li>
               </ol>
               <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800">
@@ -314,35 +248,69 @@ export default function KiEinstellungenPage() {
           </Card>
         </section>
 
-        {/* Privacy & Security */}
+        {/* What ChatGPT is used for */}
         <section className="mb-6">
           <Card className="bg-white/90">
             <CardHeader>
-              <CardTitle className="text-lg">Datenschutz & Sicherheit</CardTitle>
+              <CardTitle className="text-lg">Wofür wird ChatGPT genutzt?</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="list-disc space-y-1 pl-5 text-sm text-gray-600">
                 <li>
-                  Dein API-Key wird <strong>nur lokal</strong> in deinem Browser
-                  gespeichert (localStorage).
+                  <strong>Datenextraktion:</strong> Inhalte aus den hochgeladenen
+                  PDF-Dateien extrahieren und strukturieren.
                 </li>
                 <li>
-                  Der Key wird <strong>niemals</strong> an unseren Server
-                  übertragen.
+                  <strong>Kursinhalte generieren:</strong> Lernkarten, Quizfragen,
+                  Lerntabellen und Fragen &amp; Antworten basierend auf den PDFs.
                 </li>
                 <li>
-                  Alle Anfragen gehen <strong>direkt</strong> von deinem Browser
-                  an die OpenAI API.
+                  <strong>Fehlende Informationen ergänzen:</strong> Zusätzliches
+                  Fachwissen bereitstellen, wenn die PDFs nicht alle Themen
+                  abdecken.
                 </li>
                 <li>
-                  Du kannst den Key jederzeit entfernen – dann wird wieder der
-                  lokale Wissens-Modus verwendet.
-                </li>
-                <li>
-                  Die Kosten pro Frage liegen bei ca. 0,001–0,01 $ je nach
-                  Modell.
+                  <strong>KI-Assistent:</strong> Fragen von Pflegeschülern
+                  basierend auf dem Unterrichtsstoff beantworten.
                 </li>
               </ul>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Available Models */}
+        <section className="mb-6">
+          <Card className="bg-white/90">
+            <CardHeader>
+              <CardTitle className="text-lg">Verfügbare Modelle</CardTitle>
+              <CardDescription>
+                Setze <code className="text-xs bg-gray-100 px-1 rounded">NEXT_PUBLIC_OPENAI_MODEL</code>{" "}
+                in der .env.local auf eines der folgenden Modelle:
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {AVAILABLE_MODELS.map((m) => (
+                  <div
+                    key={m.id}
+                    className={`flex items-center justify-between rounded-lg border p-3 ${
+                      model === m.id
+                        ? "border-primary bg-primary/5"
+                        : "border-gray-200"
+                    }`}
+                  >
+                    <div>
+                      <p className="text-sm font-medium text-gray-800">
+                        {m.label}
+                      </p>
+                      <p className="text-xs text-gray-500 font-mono">{m.id}</p>
+                    </div>
+                    {model === m.id && (
+                      <Badge variant="secondary">Aktiv</Badge>
+                    )}
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </section>

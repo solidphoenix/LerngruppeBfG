@@ -1,18 +1,16 @@
 /**
  * Client-side OpenAI API wrapper.
  *
- * Since the app is deployed as a static export (GitHub Pages), there are no
- * server-side API routes.  The OpenAI API key is stored in the browser's
- * localStorage – the user enters it via the KI-Einstellungen page.
+ * The OpenAI API key is configured via the environment variable
+ * NEXT_PUBLIC_OPENAI_API_KEY in .env.local (project config).
+ * ChatGPT is used for data extraction from PDFs and content generation,
+ * not as a live chat feature.
  *
  * The wrapper calls the OpenAI Chat Completions API directly from the browser
  * using the standard fetch API.  No SDK dependency is required.
  */
 
-/* ── API key management (localStorage) ───────────────────── */
-
-const API_KEY_STORAGE_KEY = "lernplattform-openai-key"
-const MODEL_STORAGE_KEY = "lernplattform-openai-model"
+/* ── API key from environment variable ───────────────────── */
 
 export const AVAILABLE_MODELS = [
   { id: "gpt-4o-mini", label: "GPT-4o Mini (schnell & günstig)" },
@@ -23,27 +21,11 @@ export const AVAILABLE_MODELS = [
 export const DEFAULT_MODEL = "gpt-4o-mini"
 
 export function getOpenAIKey(): string {
-  if (typeof window === "undefined") return ""
-  return localStorage.getItem(API_KEY_STORAGE_KEY) ?? ""
-}
-
-export function setOpenAIKey(key: string): void {
-  if (typeof window === "undefined") return
-  if (key.trim()) {
-    localStorage.setItem(API_KEY_STORAGE_KEY, key.trim())
-  } else {
-    localStorage.removeItem(API_KEY_STORAGE_KEY)
-  }
+  return process.env.NEXT_PUBLIC_OPENAI_API_KEY ?? ""
 }
 
 export function getSelectedModel(): string {
-  if (typeof window === "undefined") return DEFAULT_MODEL
-  return localStorage.getItem(MODEL_STORAGE_KEY) ?? DEFAULT_MODEL
-}
-
-export function setSelectedModel(model: string): void {
-  if (typeof window === "undefined") return
-  localStorage.setItem(MODEL_STORAGE_KEY, model)
+  return process.env.NEXT_PUBLIC_OPENAI_MODEL ?? DEFAULT_MODEL
 }
 
 export function isOpenAIConfigured(): boolean {
