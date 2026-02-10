@@ -191,8 +191,9 @@ export const moduleSliderRange: Record<ModuleType, { min: number; max: number }>
 export function suggestModuleCounts(
   pdfCount: number
 ): Record<ModuleType, ModuleConfig> {
-  // Normalise pdfCount into a 0-1 ratio across a 1-30 PDF range.
-  const ratio = Math.min(1, Math.max(0, (pdfCount - 1) / 29))
+  // Normalise pdfCount into a 0-1 ratio across a 1–MAX_PDF_RANGE range.
+  const MAX_PDF_RANGE = 30
+  const ratio = Math.min(1, Math.max(0, (pdfCount - 1) / (MAX_PDF_RANGE - 1)))
 
   function scaled(min: number, max: number): number {
     return Math.round(min + ratio * (max - min))
