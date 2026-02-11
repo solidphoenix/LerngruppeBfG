@@ -2,12 +2,11 @@
  * Client-side AI API wrapper.
  *
  * Supports both OpenAI (ChatGPT) and Anthropic (Claude) as AI providers.
+ * Both API keys can be configured simultaneously — the user chooses which
+ * provider to use at runtime from the UI.
+ *
  * Requests are proxied through a server-side API route (/api/chat) so that
  * API keys are never exposed to the browser.
- *
- * The provider is selected via the AI_PROVIDER environment variable:
- *   - "openai"    → uses OPENAI_API_KEY  (default)
- *   - "anthropic" → uses ANTHROPIC_API_KEY
  */
 
 /* ── configuration ───────────────────────────────────────── */
@@ -30,58 +29,24 @@ export const AVAILABLE_MODELS = [...OPENAI_MODELS, ...ANTHROPIC_MODELS]
 
 export const DEFAULT_MODEL = "gpt-4o-mini"
 
-/** Returns the configured AI provider ("openai" or "anthropic"). */
-export function getAIProvider(): AIProvider {
-  const provider = (
-    process.env.AI_PROVIDER ??
-    process.env.NEXT_PUBLIC_AI_PROVIDER ??
-    ""
-  ).toLowerCase()
-  if (provider === "anthropic") return "anthropic"
-  return "openai"
-}
-
 /**
- * Returns the API key for the configured provider.
- *
+ * Returns the OpenAI API key.
  * Only available in server-side contexts.
- * Client-side code should use the /api/chat/status endpoint instead.
  */
-export function getAPIKey(): string {
-  const provider = getAIProvider()
-  if (provider === "anthropic") {
-    return process.env.ANTHROPIC_API_KEY ?? ""
-  }
-  return process.env.OPENAI_API_KEY ?? process.env.NEXT_PUBLIC_OPENAI_API_KEY ?? ""
-}
-
-/** @deprecated Use getAPIKey() instead. Kept for backward compatibility. */
 export function getOpenAIKey(): string {
   return process.env.OPENAI_API_KEY ?? process.env.NEXT_PUBLIC_OPENAI_API_KEY ?? ""
 }
 
 /**
- * Returns the selected AI model.
- *
- * On the server, reads from OPENAI_MODEL / ANTHROPIC_MODEL env var.
- * Client-side code should use the /api/chat/status endpoint instead.
- */
-export function getSelectedModel(): string {
-  const provider = getAIProvider()
-  if (provider === "anthropic") {
-    return process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-20250514"
-  }
-  return process.env.OPENAI_MODEL ?? process.env.NEXT_PUBLIC_OPENAI_MODEL ?? DEFAULT_MODEL
-}
-
-/**
- * Checks whether an AI API key is configured for the active provider.
+ * Checks whether at least one AI API key is configured.
  *
  * Only reliable in server-side contexts. Client-side code should fetch
  * /api/chat/status to determine configuration status.
  */
 export function isOpenAIConfigured(): boolean {
-  return getAPIKey().length > 0
+  const openaiKey = process.env.OPENAI_API_KEY ?? process.env.NEXT_PUBLIC_OPENAI_API_KEY ?? ""
+  const anthropicKey = process.env.ANTHROPIC_API_KEY ?? ""
+  return openaiKey.length > 0 || anthropicKey.length > 0
 }
 
 /* ── Chat Completion ─────────────────────────────────────── */
@@ -99,15 +64,16 @@ export type OpenAIError = {
 
 export async function chatCompletion(
   messages: ChatMessage[],
-  options?: { temperature?: number; maxTokens?: number }
+  options?: { temperature?: number; maxTokens?: number; provider?: AIProvider }
 ): Promise<string> {
   const temperature = options?.temperature ?? 0.7
   const maxTokens = options?.maxTokens ?? 1024
+  const provider = options?.provider
 
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages, temperature, maxTokens }),
+    body: JSON.stringify({ messages, temperature, maxTokens, provider }),
   })
 
   if (!response.ok) {
@@ -128,11 +94,11 @@ export async function chatCompletion(
 
 /* ── Convenience: test the API key ───────────────────────── */
 
-export async function testAPIKey(): Promise<{ ok: boolean; error?: string }> {
+export async function testAPIKey(provider?: AIProvider): Promise<{ ok: boolean; error?: string }> {
   try {
     const result = await chatCompletion(
       [{ role: "user", content: "Antworte nur mit: OK" }],
-      { temperature: 0, maxTokens: 10 }
+      { temperature: 0, maxTokens: 10, provider }
     )
     return { ok: result.length > 0 }
   } catch (err) {

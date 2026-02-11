@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { searchKnowledge, getTopics, getEntriesByTopic, pdfKnowledge, type KnowledgeEntry } from "@/lib/pdfKnowledge"
-import { chatCompletion, type ChatMessage } from "@/lib/openaiClient"
+import { chatCompletion, type ChatMessage, type AIProvider } from "@/lib/openaiClient"
 
 type Message = {
   role: "user" | "assistant"
@@ -109,7 +109,8 @@ ${knowledgeContext}`
 
 async function buildOpenAIAnswer(
   query: string,
-  conversationHistory: Message[]
+  conversationHistory: Message[],
+  provider?: AIProvider
 ): Promise<Message> {
   const systemPrompt = buildSystemPrompt()
 
@@ -128,6 +129,7 @@ async function buildOpenAIAnswer(
     const response = await chatCompletion(apiMessages, {
       temperature: 0.7,
       maxTokens: 2048,
+      provider,
     })
 
     // Try to extract source references from the response
@@ -228,6 +230,8 @@ export default function KiAssistentPage() {
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [useAI, setUseAI] = useState(false)
+  const [selectedProvider, setSelectedProvider] = useState<AIProvider>("openai")
+  const [availableProviders, setAvailableProviders] = useState<{ openai: boolean; anthropic: boolean }>({ openai: false, anthropic: false })
   const chatEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -237,8 +241,14 @@ export default function KiAssistentPage() {
   useEffect(() => {
     fetch("/api/chat/status")
       .then((res) => res.json())
-      .then((data: { configured?: boolean }) => {
-        setUseAI(data.configured ?? false)
+      .then((data: { configured?: boolean; openai?: { configured?: boolean }; anthropic?: { configured?: boolean } }) => {
+        const openaiOk = data.openai?.configured ?? false
+        const anthropicOk = data.anthropic?.configured ?? false
+        setAvailableProviders({ openai: openaiOk, anthropic: anthropicOk })
+        setUseAI(openaiOk || anthropicOk)
+        // Default to whichever is available (prefer openai)
+        if (openaiOk) setSelectedProvider("openai")
+        else if (anthropicOk) setSelectedProvider("anthropic")
       })
       .catch(() => {
         setUseAI(false)
@@ -255,7 +265,7 @@ export default function KiAssistentPage() {
     if (useAI) {
       setMessages((prev) => [...prev, userMessage])
       setLoading(true)
-      const answer = await buildOpenAIAnswer(q, [...messages, userMessage])
+      const answer = await buildOpenAIAnswer(q, [...messages, userMessage], selectedProvider)
       setMessages((prev) => [...prev, answer])
       setLoading(false)
     } else {
@@ -352,8 +362,8 @@ export default function KiAssistentPage() {
               Zur Anmeldung
             </Link>
           </div>
-          {/* AI Mode Indicator */}
-          <div className="mt-4">
+          {/* AI Mode Indicator & Provider Toggle */}
+          <div className="mt-4 flex flex-col items-center gap-2">
             <span
               className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
                 useAI
@@ -362,8 +372,34 @@ export default function KiAssistentPage() {
               }`}
             >
               <span className={`h-2 w-2 rounded-full ${useAI ? "bg-emerald-500" : "bg-gray-400"}`} />
-              {useAI ? "ChatGPT-Modus aktiv" : "Lokaler Wissens-Modus"}
+              {useAI
+                ? selectedProvider === "anthropic" ? "Claude-Modus aktiv" : "ChatGPT-Modus aktiv"
+                : "Lokaler Wissens-Modus"}
             </span>
+            {useAI && availableProviders.openai && availableProviders.anthropic && (
+              <div className="inline-flex rounded-full border border-gray-200 bg-white p-0.5 text-xs">
+                <button
+                  onClick={() => setSelectedProvider("openai")}
+                  className={`rounded-full px-3 py-1 font-medium transition-colors ${
+                    selectedProvider === "openai"
+                      ? "bg-emerald-500 text-white shadow-sm"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
+                >
+                  🟢 ChatGPT
+                </button>
+                <button
+                  onClick={() => setSelectedProvider("anthropic")}
+                  className={`rounded-full px-3 py-1 font-medium transition-colors ${
+                    selectedProvider === "anthropic"
+                      ? "bg-purple-500 text-white shadow-sm"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
+                >
+                  🟣 Claude
+                </button>
+              </div>
+            )}
           </div>
         </header>
 
@@ -435,7 +471,7 @@ export default function KiAssistentPage() {
                 {loading && (
                   <div className="flex justify-start">
                     <div className="max-w-[85%] rounded-lg px-4 py-2 text-sm bg-white border border-gray-200 text-gray-500">
-                      ChatGPT denkt nach…
+                      {selectedProvider === "anthropic" ? "Claude denkt nach…" : "ChatGPT denkt nach…"}
                     </div>
                   </div>
                 )}

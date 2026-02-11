@@ -11,30 +11,20 @@ export const dynamic = "force-static"
 
 type AIProvider = "openai" | "anthropic"
 
-function getProvider(): AIProvider {
-  const provider = (
-    process.env.AI_PROVIDER ??
-    process.env.NEXT_PUBLIC_AI_PROVIDER ??
-    ""
-  ).toLowerCase()
-  if (provider === "anthropic") return "anthropic"
-  return "openai"
-}
-
-function getApiKey(): string {
-  const provider = getProvider()
-  if (provider === "anthropic") {
-    return process.env.ANTHROPIC_API_KEY ?? ""
-  }
+function getOpenAIKey(): string {
   return process.env.OPENAI_API_KEY ?? process.env.NEXT_PUBLIC_OPENAI_API_KEY ?? ""
 }
 
-function getModel(): string {
-  const provider = getProvider()
-  if (provider === "anthropic") {
-    return process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-20250514"
-  }
+function getAnthropicKey(): string {
+  return process.env.ANTHROPIC_API_KEY ?? ""
+}
+
+function getOpenAIModel(): string {
   return process.env.OPENAI_MODEL ?? process.env.NEXT_PUBLIC_OPENAI_MODEL ?? "gpt-4o-mini"
+}
+
+function getAnthropicModel(): string {
+  return process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-20250514"
 }
 
 export function GET() {
@@ -45,21 +35,12 @@ export function GET() {
 }
 
 export async function POST(request: Request) {
-  const provider = getProvider()
-  const apiKey = getApiKey()
-  if (!apiKey) {
-    const providerName = provider === "anthropic" ? "Anthropic (Claude)" : "OpenAI"
-    return NextResponse.json(
-      { error: `${providerName} API key not configured on the server.` },
-      { status: 500 }
-    )
-  }
-
   let body: {
     messages?: { role: string; content: string }[]
     temperature?: number
     maxTokens?: number
     model?: string
+    provider?: AIProvider
   }
 
   try {
@@ -75,7 +56,29 @@ export async function POST(request: Request) {
     )
   }
 
-  const model = body.model ?? getModel()
+  // Determine provider: explicit in body > auto-detect based on available keys
+  let provider: AIProvider = "openai"
+  if (body.provider === "anthropic") {
+    provider = "anthropic"
+  } else if (body.provider === "openai") {
+    provider = "openai"
+  } else {
+    // Auto-detect: prefer OpenAI if both configured, use whichever is available
+    if (getOpenAIKey()) provider = "openai"
+    else if (getAnthropicKey()) provider = "anthropic"
+  }
+
+  const apiKey = provider === "anthropic" ? getAnthropicKey() : getOpenAIKey()
+  if (!apiKey) {
+    const providerName = provider === "anthropic" ? "Anthropic (Claude)" : "OpenAI (ChatGPT)"
+    return NextResponse.json(
+      { error: `${providerName} API-Key ist nicht konfiguriert.` },
+      { status: 500 }
+    )
+  }
+
+  const defaultModel = provider === "anthropic" ? getAnthropicModel() : getOpenAIModel()
+  const model = body.model ?? defaultModel
   const temperature = body.temperature ?? 0.7
   const maxTokens = body.maxTokens ?? 1024
 

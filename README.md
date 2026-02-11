@@ -57,34 +57,31 @@ This project uses:
 - ✅ KI-Assistent for answering nursing questions
 - ✅ KI-Quiz with auto-generated questions
 
-### KI-Setup (ChatGPT oder Claude)
+### KI-Setup (ChatGPT und/oder Claude)
 
-This application supports two AI providers. Choose one:
+This application supports both AI providers. You can configure one or both — when both are configured, you can switch between them in the KI-Assistent UI.
 
-#### Option A: OpenAI (ChatGPT)
+#### OpenAI (ChatGPT)
 
 1. Go to [platform.openai.com](https://platform.openai.com/signup) and create an account
 2. Open [API Keys](https://platform.openai.com/api-keys) in the settings
 3. Click **"Create new secret key"** and copy it (starts with `sk-`)
 4. Add credit under [Billing](https://platform.openai.com/settings/organization/billing/overview) (from $5 USD)
-5. Configure in `.env.local`:
 
-```env
-AI_PROVIDER=openai
-OPENAI_API_KEY=sk-your-api-key-here
-OPENAI_MODEL=gpt-4o-mini
-```
-
-#### Option B: Anthropic (Claude)
+#### Anthropic (Claude)
 
 1. Go to [console.anthropic.com](https://console.anthropic.com/) and create an account
 2. Navigate to [Settings → API Keys](https://console.anthropic.com/settings/keys)
 3. Click **"Create Key"** and copy it (starts with `sk-ant-`)
 4. Add credit under [Settings → Billing](https://console.anthropic.com/settings/billing) (from $5 USD)
-5. Configure in `.env.local`:
+
+#### Configure in `.env.local`:
 
 ```env
-AI_PROVIDER=anthropic
+# Add one or both:
+OPENAI_API_KEY=sk-your-api-key-here
+OPENAI_MODEL=gpt-4o-mini
+
 ANTHROPIC_API_KEY=sk-ant-your-api-key-here
 ANTHROPIC_MODEL=claude-sonnet-4-20250514
 ```
