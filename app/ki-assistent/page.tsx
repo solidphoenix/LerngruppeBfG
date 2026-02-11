@@ -88,9 +88,19 @@ function buildSystemPrompt(): string {
     )
     .join("\n\n")
 
-  return `Du bist ein hilfreicher KI-Lernassistent für Pflegeschüler. Du kennst den Inhalt aller hochgeladenen Unterrichts-PDFs und antwortest basierend auf diesem Wissen.
+  return `Du bist ein hilfreicher KI-Lernassistent für Pflegeschüler. Du hast zwei Wissensquellen:
 
-Antworte immer auf Deutsch. Gib am Ende deiner Antwort die genutzten Quellen an (PDF-Namen).
+1. **Unterrichts-PDFs**: Du kennst den Inhalt aller hochgeladenen PDFs (siehe unten). Nutze diese als primäre Quelle für themenbezogene Fragen.
+
+2. **Allgemeines Pflegewissen**: Du verfügst zusätzlich über umfassendes Fachwissen in der Pflege (Anatomie, Physiologie, Krankheitsbilder, Pflegeplanung, Medikamentenlehre, Recht, etc.). Nutze dieses Wissen um Antworten zu ergänzen, zu vertiefen und in einen größeren Kontext zu setzen.
+
+Wichtige Regeln:
+- Antworte immer auf Deutsch und fachlich korrekt.
+- Beantworte Fragen ausführlich (3-5 Sätze) mit konkreten Fakten.
+- Wenn das Thema in den PDFs enthalten ist, beziehe dich darauf UND ergänze mit deinem allgemeinen Wissen.
+- Wenn das Thema NICHT in den PDFs vorkommt, nutze dein allgemeines Pflegewissen und weise darauf hin.
+- Gib am Ende deiner Antwort die genutzten Quellen an (PDF-Namen), falls zutreffend.
+- Erkläre komplexe Zusammenhänge verständlich und praxisbezogen.
 
 Hier sind die Unterrichtsinhalte aus den PDFs:
 
@@ -117,7 +127,7 @@ async function buildOpenAIAnswer(
   try {
     const response = await chatCompletion(apiMessages, {
       temperature: 0.7,
-      maxTokens: 1024,
+      maxTokens: 2048,
     })
 
     // Try to extract source references from the response
@@ -212,7 +222,7 @@ export default function KiAssistentPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      text: "Hallo! Ich bin dein KI-Lernassistent. Ich kenne den Inhalt aller PDFs aus deinem Unterricht. Stell mir eine Frage zu Thrombose, Diabetes, Wunden, Ernährung oder Fieber – ich helfe dir beim Lernen!",
+      text: "Hallo! Ich bin dein KI-Lernassistent. Ich kenne den Inhalt aller PDFs aus deinem Unterricht und verfüge zusätzlich über umfassendes Pflegefachwissen. Stell mir eine Frage zu Thrombose, Diabetes, Wunden, Ernährung, Fieber, Schmerzmanagement oder einem anderen Pflegethema – ich helfe dir beim Lernen!",
     },
   ])
   const [input, setInput] = useState("")
