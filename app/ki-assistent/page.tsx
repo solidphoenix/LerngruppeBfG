@@ -246,7 +246,7 @@ export default function KiAssistentPage() {
         const anthropicOk = data.anthropic?.configured ?? false
         setAvailableProviders({ openai: openaiOk, anthropic: anthropicOk })
         setUseAI(openaiOk || anthropicOk)
-        // Default to whichever is available (prefer openai)
+        // Default to whichever is available (prefer OpenAI)
         if (openaiOk) setSelectedProvider("openai")
         else if (anthropicOk) setSelectedProvider("anthropic")
       })
