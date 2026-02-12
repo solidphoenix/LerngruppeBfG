@@ -14,6 +14,16 @@ npm install
 yarn install
 ```
 
+### Supabase Setup (Required for cross-device sync)
+
+This application uses Supabase to store form entries across devices. To enable this feature:
+
+1. Follow the detailed instructions in [SUPABASE_SETUP.md](SUPABASE_SETUP.md)
+2. Create a Supabase project and table
+3. Provide your Supabase credentials via `.env.local`
+
+**Note:** Without Supabase configuration, registrations cannot be stored.
+
 Then, run the development server:
 
 ```bash
@@ -26,6 +36,21 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+> **GitHub Pages preview:** When `GITHUB_ACTIONS=true` the app uses the `/Lerngruppe26` base path. In that case use `http://localhost:3000/Lerngruppe26/`.
+
+## Quick Tutorial: Test registration + deletion
+
+1. Ensure Supabase is configured via `.env.local` (see **Supabase Setup** below).
+2. Start the dev server: `npm run dev`.
+3. Register a participant with your email.
+4. Open **Teilnehmerliste**, click the **X** next to your entry.
+5. Enter the same email address and confirm deletion.
+
+If deletion fails across devices:
+- Confirm **Anonymous Sign-ins** are enabled in Supabase (**Authentication → Providers**).
+- Ensure the **delete by token** policy in [SUPABASE_SETUP.md](SUPABASE_SETUP.md) is applied.
+- For server-capable hosting, set `SUPABASE_SERVICE_ROLE_KEY` so `/api/delete` can delete with the service role.
+
 ## Project Structure
 
 This project uses:
@@ -33,6 +58,69 @@ This project uses:
 - **React** - UI library
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
+- **Supabase** - Hosted database for cross-device synchronization
+- **EmailJS** - Email notification service
+- **OpenAI (ChatGPT)** or **Anthropic (Claude)** - AI for content generation
+
+## Features
+
+- ✅ Registration form for learning group sessions
+- ✅ Real-time synchronization across all devices
+- ✅ Email confirmations with cancellation links
+- ✅ Admin dashboard (local only)
+- ✅ AI-powered course content generation (ChatGPT or Claude)
+- ✅ KI-Assistent for answering nursing questions
+- ✅ KI-Quiz with auto-generated questions
+
+### KI-Setup (ChatGPT und/oder Claude)
+
+This application supports both AI providers. You can configure one or both — when both are configured, you can switch between them in the KI-Assistent UI.
+
+#### OpenAI (ChatGPT)
+
+1. Go to [platform.openai.com](https://platform.openai.com/signup) and create an account
+2. Open [API Keys](https://platform.openai.com/api-keys) in the settings
+3. Click **"Create new secret key"** and copy it (starts with `sk-`)
+4. Add credit under [Billing](https://platform.openai.com/settings/organization/billing/overview) (from $5 USD)
+
+#### Anthropic (Claude)
+
+1. Go to [console.anthropic.com](https://console.anthropic.com/) and create an account
+2. Navigate to [Settings → API Keys](https://console.anthropic.com/settings/keys)
+3. Click **"Create Key"** and copy it (starts with `sk-ant-`)
+4. Add credit under [Settings → Billing](https://console.anthropic.com/settings/billing) (from $5 USD)
+
+#### Configure in `.env.local`:
+
+```env
+# Add one or both:
+OPENAI_API_KEY=sk-your-api-key-here
+OPENAI_MODEL=gpt-4o-mini
+
+ANTHROPIC_API_KEY=sk-ant-your-api-key-here
+ANTHROPIC_MODEL=claude-sonnet-4-20250514
+```
+
+#### Using newer/custom models
+
+You can use **any valid model name** — just change the `OPENAI_MODEL` or `ANTHROPIC_MODEL` value:
+
+```env
+# Examples for newer OpenAI models:
+OPENAI_MODEL=gpt-5.2-codex    # Latest coding model
+OPENAI_MODEL=gpt-5.2          # Latest reasoning model
+OPENAI_MODEL=gpt-4.1          # 1M+ context window
+OPENAI_MODEL=o4-mini           # Fast reasoning
+
+# Examples for newer Anthropic models:
+ANTHROPIC_MODEL=claude-opus-4-6    # Most powerful Claude
+ANTHROPIC_MODEL=claude-sonnet-4-5  # Fast & capable
+ANTHROPIC_MODEL=claude-haiku-4-5   # Fastest & cheapest
+```
+
+Current model names: [OpenAI Models](https://platform.openai.com/docs/models) · [Anthropic Models](https://docs.anthropic.com/en/docs/about-claude/models)
+
+> **Note:** A ChatGPT Plus or Claude Pro subscription ($20/month) is **not** the same as API credit. The API requires separate prepaid credit.
 
 Common folders:
 - **app/** - Next.js App Router pages and layouts
@@ -48,9 +136,26 @@ To learn more about Next.js, take a look at the following resources:
 
 ## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
+This project is configured to deploy to GitHub Pages. Push to `main`, enable Pages in the repository settings (GitHub Actions), and visit:
 
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+https://<your-username>.github.io/Lerngruppe26/
+```
+
+If you rename the repository, update `basePath` and `assetPrefix` in `next.config.js`.
+
+## Linting & Build
+
+```bash
+npm run lint
+npm run build
+```
+
+There are currently no automated tests in this repository.
+
+Note: The admin view is meant for local use only. It is disabled on GitHub Pages because client-side passwords are not secure on static sites.
+
+If styles look missing on Vercel, ensure the deployment uses the default base path (this repo config only applies the `/Lerngruppe26` base path when building for GitHub Pages).
 
 ---
 
