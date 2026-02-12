@@ -59,6 +59,8 @@ const learningFields = [
       "Wundarten (mechanisch, chemisch, thermisch, Strahlen) sicher unterscheiden.",
       "Aseptische vs. septische Wunden erkennen und dokumentieren.",
       "Wundheilungsphasen: Exsudation, Proliferation, Regeneration.",
+      "Infektionszeichen (Rötung, Wärme, Schwellung, Schmerz, Exsudat) sicher erkennen.",
+      "Drainagen: Zweck, Beobachtung und Menge/Farbe regelmäßig dokumentieren.",
       "Wunddokumentation und Non-Touch-Verbandswechsel üben.",
     ],
     documents: pdfSources.wounds,
@@ -68,8 +70,10 @@ const learningFields = [
     subtitle: "Stoffwechsel verstehen & Pflegeinterventionen",
     goals: [
       "Insulinwirkung: Glukose wird in Zellen eingeschleust, Speicherung als Glykogen.",
-      "Diagnostik: nüchtern BZ 80–100 mg/dl, HbA1c ≥ 6,5% (Diagnosegrenze für Diabetes mellitus), oGTT.",
+      "Diagnostik: nüchtern Blutzucker (BZ) 80–100 mg/dl, HbA1c ≥ 6,5% (Diagnosegrenze für Diabetes mellitus), oGTT.",
       "Hypoglykämie < 50 mg/dl: Glukosegabe, BZ messen, Arzt informieren.",
+      "Hyperglykämie erkennen: Durst, Polyurie, Müdigkeit, ggf. Übelkeit.",
+      "Insulinpen & BZ-Messung: richtige Vorbereitung, Einstichstelle und Dokumentation.",
       "DGE (Deutsche Gesellschaft für Ernährung): 5 am Tag, Vollkorn, 1,5 Liter Wasser, 300–600 g Fleisch/Woche.",
     ],
     documents: pdfSources.diabetes,
@@ -81,7 +85,9 @@ const learningFields = [
       "Definition Thrombose + Gefahr der Lungenembolie verinnerlichen.",
       "Virchow-Trias: Blutströmung, Gefäßwand, Gerinnungsneigung.",
       "Symptome: Schweregefühl, warme Extremität, Schwellung, Wadenschmerz.",
+      "Risikofaktoren: Immobilität, Operationen, Dehydration, Rauchen.",
       "Prophylaxe: Bewegung, Atemübungen, Hochlagerung, Kompression.",
+      "Lungenembolie-Warnzeichen: Atemnot, Thoraxschmerz, Unruhe.",
     ],
     documents: pdfSources.thrombosis,
   },
@@ -91,12 +97,111 @@ const learningFields = [
     goals: [
       "Fieber > 38 °C (rektal), Temperaturbereiche kennen.",
       "Fieberphasen: Anstieg, Höhe, Abfall, Erschöpfung.",
+      "Temperaturmessung: Messorte (rektal, oral, axillar) korrekt anwenden.",
       "Maßnahmen: Vitalzeichen, Wadenwickel, Waschungen, Flüssigkeit.",
+      "Beobachtung: Trinkmenge, Haut, Bewusstsein und Verlauf dokumentieren.",
     ],
     documents: pdfSources.fever,
   },
 ]
 
+const learningMethods = [
+  {
+    title: "Virchow-Trias-Check",
+    description:
+      "Ordne Risikofaktoren den drei Ursachen (Blutströmung, Gefäßwand, Gerinnung) zu.",
+  },
+  {
+    title: "Thrombose-Symptom-Scan",
+    description:
+      "Schweregefühl, warme Extremität, Schwellung und Wadenschmerz als Alarmzeichen merken.",
+  },
+  {
+    title: "Atem- & Bewegungsübungen",
+    description:
+      "Tiefes Atmen und aktive Fußbewegungen fördern den venösen Rückfluss.",
+  },
+  {
+    title: "Ausstreichen & Hochlagerung",
+    description:
+      "Beinvenen ausstreichen und Beine hochlagern, um venöse Stauung zu reduzieren.",
+  },
+  {
+    title: "Kompressionstraining",
+    description:
+      "Kompressionsverband und Thromboseprophylaxestrumpf korrekt anlegen.",
+  },
+  {
+    title: "Risikofaktoren-Radar",
+    description:
+      "Immobilität, Operationen, Dehydration und Rauchen als Thrombose-Treiber prüfen.",
+  },
+  {
+    title: "Lungenembolie-Alarmplan",
+    description:
+      "Atemnot, Thoraxschmerz, Tachykardie erkennen und sofort ärztlich melden.",
+  },
+  {
+    title: "Wundarten-Karteikarten",
+    description:
+      "Mechanische, chemische, thermische und strahlenbedingte Wunden unterscheiden.",
+  },
+  {
+    title: "Wundheilungsphasen-Poster",
+    description:
+      "Exsudation (bis 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4, überlappend).",
+  },
+  {
+    title: "Non-Touch-Verbandswechsel",
+    description:
+      "Wundauflage nicht berühren und einfache Wundversorgung strukturiert üben.",
+  },
+  {
+    title: "Drainagen-Checkliste",
+    description:
+      "Menge, Farbe und Geruch der Drainage kontrollieren und dokumentieren.",
+  },
+  {
+    title: "Diabetes-Glukosewerte-Check",
+    description:
+      "Nüchtern-BZ 80–100 mg/dl, HbA1c ≥ 6,5% (Diagnosegrenze für Diabetes mellitus) und oGTT im Team abfragen.",
+  },
+  {
+    title: "Insulinpen-Training",
+    description:
+      "Insulinpen vorbereiten, Testhub durchführen, Dosis spritzen und 10 Sekunden halten.",
+  },
+  {
+    title: "Hyperglykämie-Check",
+    description:
+      "Durst, Polyurie, Müdigkeit oder Übelkeit als Warnzeichen erkennen.",
+  },
+  {
+    title: "Hypoglykämie-Notfallkarte",
+    description:
+      "Bei < 50 mg/dl Glukose geben, BZ messen, Arzt informieren; bei Bewusstlosigkeit stabile Seitenlage.",
+  },
+  {
+    title: "DGE-10-Regeln-Foodplan",
+    description:
+      "5 am Tag, Vollkorn, 1,5 Liter Wasser, maximal 300–600 g Fleisch/Woche.",
+  },
+  {
+    title: "Fieberkurven & Pflegeplan",
+    description:
+      "Fieberphasen erkennen, Vitalzeichen 2× täglich, Wadenwickel bei warmen Beinen.",
+  },
+  {
+    title: "Fiebermessung & Flüssigkeitsbilanz",
+    description:
+      "Temperatur korrekt messen, Trinkmenge dokumentieren und Verlauf beobachten.",
+  },
+  {
+    title: "Fallbeispiel Herr Winterhaus",
+    description:
+      "Case-Review zu Diabetes, Wundversorgung, Fiebermanagement und Mobilisation.",
+  },
+]
 
 const dataBacktests = [
   {
@@ -122,10 +227,31 @@ const dataBacktests = [
   },
   {
     topic: "Thrombose",
+    question: "Nenne typische Risikofaktoren für Thrombosen.",
+    answer:
+      "Immobilität, Operationen, Flüssigkeitsmangel, Rauchen oder Varikosis erhöhen das Risiko.",
+    source: "3. Risikofaktoren einer Thrombose",
+  },
+  {
+    topic: "Thrombose",
+    question: "Welche Warnzeichen sprechen für eine Lungenembolie?",
+    answer:
+      "Plötzliche Atemnot, Thoraxschmerz, Tachykardie, Unruhe oder Blaufärbung.",
+    source: "1a Lungenembolie",
+  },
+  {
+    topic: "Thrombose",
     question: "Was ist die Sofortmaßnahme bei Verdacht auf Phlebothrombose?",
     answer:
       "Arzt verständigen, absolute Bettruhe einhalten und den Oberkörper hochlagern.",
     source: "1. Definition Thrombose",
+  },
+  {
+    topic: "Thrombose",
+    question: "Welches Ziel hat die Thromboseprophylaxe?",
+    answer:
+      "Blutfluss fördern, Stase vermeiden und Thrombenbildung verhindern.",
+    source: "6. Ansatzpunkte & Ziele der Thromboseprophylaxe",
   },
   {
     topic: "Fieber",
@@ -145,6 +271,13 @@ const dataBacktests = [
     question: "Welche fiebersenkenden Maßnahmen werden genannt?",
     answer:
       "Wadenwickel, Waschungen sowie Medikamente wie Paracetamol oder Ibuprofen.",
+    source: "Fieber",
+  },
+  {
+    topic: "Fieber",
+    question: "Welche Messorte sind bei der Temperaturkontrolle üblich?",
+    answer:
+      "Rektal, oral oder axillar; rektal gilt als besonders zuverlässig.",
     source: "Fieber",
   },
   {
@@ -169,6 +302,20 @@ const dataBacktests = [
     source: "04 Wunden & Wundversorgung",
   },
   {
+    topic: "Wunden",
+    question: "Welche Zeichen sprechen für eine Wundinfektion?",
+    answer:
+      "Rötung, Wärme, Schwellung, Schmerz und eitriges Exsudat.",
+    source: "04 Wunden & Wundversorgung",
+  },
+  {
+    topic: "Wunden",
+    question: "Warum werden Drainagen eingesetzt?",
+    answer:
+      "Sie leiten Wundsekret ab, entlasten das Gewebe und müssen bezüglich Menge und Farbe kontrolliert werden.",
+    source: "04b Literatur Wunden und Drainagen",
+  },
+  {
     topic: "Diabetes",
     question:
       "Welche Werte nennt die Präsentation für nüchtern BZ und HbA1c (Diagnosegrenze)?",
@@ -182,6 +329,20 @@ const dataBacktests = [
     answer:
       "Unter 50 mg/dl: Pflegefachkraft/Arzt informieren, BZ messen, Glukose geben; bei Bewusstlosigkeit stabile Seitenlage.",
     source: "1. Diabetes Präsentation",
+  },
+  {
+    topic: "Diabetes",
+    question: "Welche Schritte gehören zum Insulinspritzen mit dem Pen?",
+    answer:
+      "Nadel aufsetzen, Testhub durchführen, Dosis einstellen, injizieren und 10 Sekunden halten.",
+    source: "5. Insulinspritzen mit dem PEN",
+  },
+  {
+    topic: "Diabetes",
+    question: "Welche pflegerischen Schwerpunkte gelten bei Typ-2-Diabetes?",
+    answer:
+      "Ernährung, Bewegung, Gewichtsmanagement, Fußpflege und regelmäßige BZ-Kontrolle.",
+    source: "8 Pflege bei Diabetes mellitus Typ 2",
   },
   {
     topic: "Ernährung",
