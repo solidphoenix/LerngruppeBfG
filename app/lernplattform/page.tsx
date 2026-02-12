@@ -7,6 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { learningMethods } from "@/lib/learningMethods"
+import { PdfLink } from "@/components/pdf-link"
+import { QuizItem } from "@/components/quiz-item"
 
 const pdfSources = {
   wounds: [
@@ -350,6 +353,194 @@ const dataBacktests = [
   },
 ]
 
+const flashcards = [
+  {
+    title: "Wundheilung in 3 Phasen",
+    question: "Welche Phasen der Wundheilung musst du nennen können?",
+    answer:
+      "Exsudation (bis ca. 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4, überlappend).",
+    tip: "Merksatz: Erst reinigen, dann aufbauen, dann stabilisieren.",
+    source: "04 Wunden & Wundversorgung",
+  },
+  {
+    title: "Aseptisch vs. septisch",
+    question: "Woran erkennst du eine septische Wunde?",
+    answer:
+      "Zeichen der Infektion: Rötung, Wärme, Schwellung, Schmerz oder eitriges Exsudat.",
+    tip: "Aseptisch = keimfrei, septisch = infiziert.",
+    source: "04 Wunden & Wundversorgung",
+  },
+  {
+    title: "Virchow-Trias",
+    question: "Welche drei Ursachen begünstigen eine Thrombose?",
+    answer:
+      "Verlangsamte Blutströmung, Gefäßwandschaden, erhöhte Gerinnungsneigung.",
+    tip: "Denke an: Strom, Wand, Gerinnung.",
+    source: "2. Übersicht Virchow-Trias",
+  },
+  {
+    title: "Thrombose-Warnzeichen",
+    question: "Nenne zwei Alarmzeichen einer Beinvenenthrombose.",
+    answer: "Einseitige Schwellung, warme Extremität, Wadenschmerz.",
+    tip: "Bei Verdacht: Arzt informieren, Bettruhe.",
+    source: "1. Definition Thrombose",
+  },
+  {
+    title: "Hypoglykämie-Alarm",
+    question: "Ab welchem Wert beginnt eine Hypoglykämie?",
+    answer: "Unter 50 mg/dl.",
+    tip: "Blutzucker (BZ) messen, Glukose geben, Arzt informieren; bei Bewusstlosigkeit stabile Seitenlage.",
+    source: "1. Diabetes Präsentation",
+  },
+  {
+    title: "Fiebermanagement",
+    question: "Welche Maßnahmen helfen bei Fieber?",
+    answer:
+      "Wadenwickel, Waschungen, Flüssigkeit, ggf. Paracetamol/Ibuprofen.",
+    tip: "Temperatur und Vitalzeichen dokumentieren.",
+    source: "Fieber",
+  },
+]
+
+const quizItems = [
+  {
+    title: "Thrombose-Check",
+    question: "Welche Maßnahme gehört zur Thromboseprophylaxe?",
+    options: [
+      "Absolute Bettruhe ohne Mobilisation",
+      "Atemübungen und aktive Fußbewegungen",
+      "Beine dauerhaft tief lagern",
+      "Flüssigkeitszufuhr reduzieren",
+    ],
+    answer: "B",
+    explanation:
+      "Atem- und Bewegungsübungen aktivieren die Muskelpumpe und fördern den venösen Rückfluss.",
+  },
+  {
+    title: "Diabetes-Quiz",
+    question: "Welche HbA1c-Grenze gilt als Diagnosegrenze?",
+    options: ["≥ 5,5%", "≥ 6,5%", "≥ 7,5%", "≥ 8,5%"],
+    answer: "B",
+    explanation:
+      "Die Präsentation nennt ≥ 6,5% als Diagnosegrenze für Diabetes mellitus.",
+  },
+  {
+    title: "Wundpflege-Quiz",
+    question: "Welche Aussage beschreibt eine aseptische Wunde korrekt?",
+    options: [
+      "Sie ist mit Keimen besiedelt und eitrig.",
+      "Sie entsteht ausschließlich durch thermische Einwirkung.",
+      "Sie ist keimfrei, z.B. eine OP-Wunde.",
+      "Sie ist immer chronisch und schlecht heilend.",
+    ],
+    answer: "C",
+    explanation: "Aseptische Wunden gelten als keimfrei.",
+  },
+  {
+    title: "Fieber-Quiz",
+    question: "Ab welcher Temperatur spricht man von Fieber?",
+    options: ["37,0 °C", "37,5 °C", "38,0 °C", "39,5 °C"],
+    answer: "C",
+    explanation: "Fieber beginnt ab 38 °C Körpertemperatur.",
+  },
+]
+
+const quickQuestions = [
+  {
+    question: "Wie oft sollen Vitalzeichen bei Fieber kontrolliert werden?",
+    answer: "Mindestens 2× täglich und zusätzlich bei Zustandsveränderungen.",
+  },
+  {
+    question: "Was gehört in die Wunddokumentation?",
+    answer:
+      "Datum/Zeit, Wundgröße, Exsudat, Geruch, Schmerzen, Wundrand und verwendetes Material.",
+  },
+  {
+    question: "Welche DGE-Regel ist bei Diabetes besonders wichtig?",
+    answer:
+      "Zucker sparen, Vollkorn bevorzugen und 5 Portionen Obst/Gemüse am Tag.",
+  },
+  {
+    question: "Was ist die erste Maßnahme bei Verdacht auf Thrombose?",
+    answer: "Arzt informieren und Bettruhe einhalten.",
+  },
+]
+
+const learningSprint = [
+  {
+    title: "10-Minuten-Überblick",
+    focus: "Lernziele der Einheit durchlesen, Schlüsselbegriffe markieren.",
+    duration: "10 Min",
+  },
+  {
+    title: "Karteikarten-Runde",
+    focus: "3–5 Lernkarten laut beantworten, Antworten prüfen.",
+    duration: "15 Min",
+  },
+  {
+    title: "Mini-Quiz",
+    focus: "1–2 Quizfragen lösen und Begründungen lesen.",
+    duration: "10 Min",
+  },
+  {
+    title: "Kurz-Reflexion",
+    focus: "Notiere 2 Dinge, die du heute sicher kannst.",
+    duration: "5 Min",
+  },
+]
+
+const learningResources = [
+  {
+    title: "Lernen mit KI",
+    description:
+      "Stelle Fragen zum Unterrichtsstoff – der KI-Assistent kennt alle PDF-Inhalte und hilft dir beim Verstehen.",
+    href: "/ki-assistent",
+    badge: "KI-Assistent",
+  },
+  {
+    title: "KI-Quiz",
+    description:
+      "Dynamisch generierte Quizfragen aus dem PDF-Wissen – jedes Mal neu, damit du Verständnis statt Auswendiglernen trainierst.",
+    href: "/ki-quiz",
+    badge: "KI-Quiz",
+  },
+  {
+    title: "Lernkarten-Decks",
+    description:
+      "Thematisch sortierte Karteikarten mit Antworten, Tipps und Quellen aus den PDFs.",
+    href: "/lernkarten",
+    badge: "Lernkarten",
+  },
+  {
+    title: "Lernquiz-Station",
+    description:
+      "Ausführliche Quizfragen mit Lösungen, Begründungen und Tipps zur Selbstkontrolle.",
+    href: "/lernquiz",
+    badge: "Lernquiz",
+  },
+  {
+    title: "Lerntabellen",
+    description:
+      "Kleine, übersichtliche Merktabellen zu Wunden, Diabetes, Thrombose und Fieber.",
+    href: "/lerntabellen",
+    badge: "Lerntabellen",
+  },
+  {
+    title: "Tabellen & Übersichten",
+    description:
+      "Ausführliche Tabellen für Pflegeprozesse, Maßnahmenplanung und Dokumentation.",
+    href: "/tabellen",
+    badge: "Tabellen",
+  },
+  {
+    title: "Abbildungen aus den PDFs",
+    description:
+      "Wichtige Grafiken, Schemata und Prozessbilder mit Kurzkommentaren.",
+    href: "/abbildungen",
+    badge: "Abbildungen",
+  },
+]
+
 export default function LernplattformPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-sky-50">
@@ -367,19 +558,51 @@ export default function LernplattformPage() {
           </p>
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-3">
             <Link
-              href="/"
+              href="/kurse"
               className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-sm hover:bg-primary/90 transition-colors"
+            >
+              Alle Kurse
+            </Link>
+            <Link
+              href="/kurs-erstellen"
+              className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
+            >
+              Kurs erstellen
+            </Link>
+            <Link
+              href="/"
+              className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
             >
               Zurück zur Anmeldung
             </Link>
-            <Link
-              href="/delete"
-              className="px-5 py-2 rounded-full border border-gray-200 text-sm text-gray-600 hover:border-primary hover:text-primary transition-colors"
-            >
-              Abmeldung verwalten
-            </Link>
           </div>
         </header>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            Schnellzugriff auf Lernmodule
+          </h2>
+          <p className="text-sm text-gray-600 mb-6 max-w-3xl">
+            Nutze die neuen Themenseiten, um Lernkarten, Quizfragen, Tabellen
+            und Abbildungen strukturiert zu trainieren. Alle Inhalte basieren
+            auf den PDFs aus dem Ordner <span className="font-semibold">/pdf-uploads</span>.
+          </p>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {learningResources.map((resource) => (
+              <Link key={resource.title} href={resource.href}>
+                <Card className="h-full bg-white/90 transition hover:-translate-y-1 hover:shadow-md">
+                  <CardHeader>
+                    <div className="flex items-center justify-between gap-2">
+                      <CardTitle className="text-lg">{resource.title}</CardTitle>
+                      <Badge variant="secondary">{resource.badge}</Badge>
+                    </div>
+                    <CardDescription>{resource.description}</CardDescription>
+                  </CardHeader>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         <section className="mb-12">
           <Card className="bg-white/80">
@@ -417,13 +640,11 @@ export default function LernplattformPage() {
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {pdfCatalog.map((doc) => (
-                    <Badge
+                    <PdfLink
                       key={doc}
-                      variant="outline"
-                      className="border-dashed text-[11px]"
-                    >
-                      {doc}
-                    </Badge>
+                      name={doc}
+                      className="text-[11px] no-underline"
+                    />
                   ))}
                 </div>
               </div>
@@ -479,13 +700,11 @@ export default function LernplattformPage() {
                     </p>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {field.documents.map((doc) => (
-                        <Badge
+                        <PdfLink
                           key={doc}
-                          variant="outline"
-                          className="border-dashed text-xs"
-                        >
-                          {doc}
-                        </Badge>
+                          name={doc}
+                          className="text-xs"
+                        />
                       ))}
                     </div>
                   </div>
@@ -505,12 +724,120 @@ export default function LernplattformPage() {
           </h2>
           <div className="grid gap-4 md:grid-cols-3">
             {learningMethods.map((method) => (
-              <Card key={method.title} className="bg-white/80">
+              <Link
+                key={method.title}
+                href={`/lernplattform/lernmethoden/${method.slug}`}
+                className="group"
+              >
+                <Card className="h-full bg-white/80 transition group-hover:-translate-y-1 group-hover:shadow-md">
+                  <CardHeader>
+                    <CardTitle className="text-lg">{method.title}</CardTitle>
+                    <CardDescription>{method.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0 text-xs text-primary">
+                    Mehr erfahren →
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-3">
+            Lernroutine für effektive Sessions
+          </h2>
+          <p className="text-sm text-gray-600 mb-4 max-w-3xl">
+            Arbeite in kurzen Sprints, damit du Wissen aktiv abrufst und direkt
+            festigst. Nutze die Karten, Quizfragen und Q&amp;A-Blöcke darunter.
+          </p>
+          <div className="grid gap-4 md:grid-cols-2">
+            {learningSprint.map((step) => (
+              <Card key={step.title} className="bg-white/80">
                 <CardHeader>
-                  <CardTitle className="text-lg">{method.title}</CardTitle>
-                  <CardDescription>{method.description}</CardDescription>
+                  <div className="flex items-center justify-between gap-2">
+                    <CardTitle className="text-lg">{step.title}</CardTitle>
+                    <Badge variant="secondary">{step.duration}</Badge>
+                  </div>
+                  <CardDescription>{step.focus}</CardDescription>
                 </CardHeader>
               </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-3">
+            Lernkarten: aktive Wiederholung
+          </h2>
+          <p className="text-sm text-gray-600 mb-4 max-w-3xl">
+            Lies zuerst die Frage, beantworte sie laut und klappe danach die
+            Antwort auf. So trainierst du aktives Erinnern.
+          </p>
+          <div className="grid gap-4 md:grid-cols-2">
+            {flashcards.map((card) => (
+              <Card key={card.title} className="bg-white/80">
+                <CardHeader>
+                  <div className="flex items-center justify-between gap-2">
+                    <CardTitle className="text-lg">{card.title}</CardTitle>
+                    <Badge variant="outline">Lernkarte</Badge>
+                  </div>
+                  <CardDescription>{card.question}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm text-gray-600">
+                  <details className="rounded-lg border border-dashed border-gray-200 bg-white/80 p-3">
+                    <summary className="cursor-pointer text-sm font-medium text-gray-700">
+                      Antwort anzeigen
+                    </summary>
+                    <p className="mt-2">{card.answer}</p>
+                    <p className="mt-2 text-xs text-gray-500">{card.tip}</p>
+                    <p className="mt-2 text-xs text-gray-400">
+                      Quelle: {card.source}
+                    </p>
+                  </details>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-3">
+            Lernquiz: prüfe dein Wissen
+          </h2>
+          <p className="text-sm text-gray-600 mb-4 max-w-3xl">
+            Kreuze deine Antwort an (laut oder schriftlich) und klappe die
+            Lösung auf, um dich selbst zu kontrollieren.
+          </p>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {quizItems.map((quiz) => (
+              <QuizItem
+                key={quiz.title}
+                title={quiz.title}
+                question={quiz.question}
+                options={quiz.options}
+                answer={quiz.answer}
+                explanation={quiz.explanation}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            Fragen &amp; Antworten
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {quickQuestions.map((item) => (
+              <details
+                key={item.question}
+                className="rounded-lg border border-gray-200 bg-white/80 p-4"
+              >
+                <summary className="cursor-pointer text-sm font-semibold text-gray-800">
+                  {item.question}
+                </summary>
+                <p className="mt-2 text-sm text-gray-600">{item.answer}</p>
+              </details>
             ))}
           </div>
         </section>
@@ -543,9 +870,32 @@ export default function LernplattformPage() {
             <span className="font-semibold">/pdf-uploads{" "}</span>ab, damit
             Lernmethoden und Backtests aktuell bleiben.
           </p>
-          <Link href="/" className="text-primary hover:underline">
-            Zur Startseite
-          </Link>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/" className="text-primary hover:underline">
+              Startseite
+            </Link>
+            <Link href="/kurse" className="text-primary hover:underline">
+              Alle Kurse
+            </Link>
+            <Link href="/ki-quiz" className="text-primary hover:underline">
+              KI-Quiz
+            </Link>
+            <Link href="/ki-assistent" className="text-primary hover:underline">
+              KI-Assistent
+            </Link>
+            <Link href="/lernkarten" className="text-primary hover:underline">
+              Lernkarten
+            </Link>
+            <Link href="/lernquiz" className="text-primary hover:underline">
+              Lernquiz
+            </Link>
+            <Link href="/lerntabellen" className="text-primary hover:underline">
+              Lerntabellen
+            </Link>
+            <Link href="/kurs-erstellen" className="text-primary hover:underline">
+              Kurs erstellen
+            </Link>
+          </div>
         </footer>
       </div>
     </main>
