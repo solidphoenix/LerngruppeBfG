@@ -122,6 +122,11 @@ Current model names: [OpenAI Models](https://platform.openai.com/docs/models) ·
 
 > **Note:** A ChatGPT Plus or Claude Pro subscription ($20/month) is **not** the same as API credit. The API requires separate prepaid credit.
 
+Common folders:
+- **app/** - Next.js App Router pages and layouts
+- **components/** - Reusable React components
+- **lib/** - Shared utilities and helpers
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
