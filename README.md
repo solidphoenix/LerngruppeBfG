@@ -36,7 +36,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-> **GitHub Pages preview:** When `GITHUB_ACTIONS=true` the app uses the `/Lerngruppe26` base path. In that case use `http://localhost:3000/Lerngruppe26/`.
+> **GitHub Pages preview:** When building for GitHub Pages the app uses `/<repo-name>` as the base path (e.g. `/LerngruppeBfG`). In that case use `http://localhost:3000/LerngruppeBfG/`.
 
 ## Quick Tutorial: Test registration + deletion
 
@@ -139,10 +139,26 @@ To learn more about Next.js, take a look at the following resources:
 This project is configured to deploy to GitHub Pages. Push to `main`, enable Pages in the repository settings (GitHub Actions), and visit:
 
 ```
-https://<your-username>.github.io/Lerngruppe26/
+https://solidphoenix.github.io/LerngruppeBfG/
 ```
 
-If you rename the repository, update `basePath` and `assetPrefix` in `next.config.js`.
+The base path is automatically derived from the repository name — no manual changes to `next.config.js` are needed when using a different repository name.
+
+### GitHub Secrets (optional but recommended)
+
+To enable Supabase, AI (OpenAI / Anthropic), and email features in production, add the following secrets to your repository under **Settings → Secrets and variables → Actions**:
+
+| Secret | Description |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anonymous key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Your Supabase service role key |
+| `OPENAI_API_KEY` | Your OpenAI API key |
+| `OPENAI_MODEL` | OpenAI model name (e.g. `gpt-4o-mini`) |
+| `ANTHROPIC_API_KEY` | Your Anthropic API key |
+| `ANTHROPIC_MODEL` | Anthropic model name (e.g. `claude-opus-4-6`) |
+
+Copy `.env.local.example` to `.env.local` and fill in your credentials for local development.
 
 ## Linting & Build
 
@@ -155,7 +171,7 @@ There are currently no automated tests in this repository.
 
 Note: The admin view is meant for local use only. It is disabled on GitHub Pages because client-side passwords are not secure on static sites.
 
-If styles look missing on Vercel, ensure the deployment uses the default base path (this repo config only applies the `/Lerngruppe26` base path when building for GitHub Pages).
+If styles look missing on Vercel, ensure the deployment uses the default base path (this repo config only applies the `/<repo-name>` base path when building for GitHub Pages).
 
 ---
 
