@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card"
 
 const repo = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "Lerngruppe26"
-const isGitHubPages = process.env.GITHUB_ACTIONS === "true" || process.env.GITHUB_PAGES === "true"
+const isGitHubPages = process.env.GITHUB_PAGES === "true"
 const basePath = isGitHubPages ? `/${repo}` : ""
 
 const figureSections = [
