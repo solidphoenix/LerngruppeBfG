@@ -10,6 +10,7 @@ import {
 import { learningMethods } from "@/lib/learningMethods"
 import { PdfLink } from "@/components/pdf-link"
 import { QuizItem } from "@/components/quiz-item"
+import { StudyProgress } from "@/components/study-progress"
 
 const pdfSources = {
   wounds: [
@@ -577,6 +578,10 @@ export default function LernplattformPage() {
             </Link>
           </div>
         </header>
+
+        <section className="mb-12">
+          <StudyProgress />
+        </section>
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">
