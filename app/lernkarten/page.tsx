@@ -299,6 +299,181 @@ const flashcardSets = [
       },
     ],
   },
+  {
+    title: "Schmerzmanagement",
+    description:
+      "Schmerzarten, Assessment, WHO-Stufenschema und pflegerische Interventionen.",
+    cards: [
+      {
+        question: "Was ist der Unterschied zwischen akutem und chronischem Schmerz?",
+        answer:
+          "Akuter Schmerz ist ein Warnsignal und gut behandelbar. Chronischer Schmerz dauert Wochen bis Monate und wird zur eigenständigen Erkrankung.",
+        tip: "Chronischer Schmerz verliert die Warnfunktion.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was erfasst die NRS und wie funktioniert sie?",
+        answer:
+          "Die Numerische Rangskala misst Schmerz von 0 (kein Schmerz) bis 10 (stärkster vorstellbarer Schmerz). Der Patient schätzt selbst ein.",
+        tip: "Einfach, schnell, ideal für verbal-kompetente Patienten.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Welche Schmerzskala eignet sich für Menschen mit Demenz?",
+        answer:
+          "Die BESD-Skala (Beurteilung von Schmerzen bei Demenz) – Fremdeinschätzung durch Beobachtung von Mimik, Körpersprache und Lautäußerungen.",
+        tip: "Verhaltensänderungen wie Unruhe oder Abwehr beobachten.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Welche Medikamente gehören zu WHO-Stufe 1?",
+        answer:
+          "Nicht-Opioid-Analgetika: Ibuprofen, Diclofenac, Paracetamol, Metamizol. Wirken analgetisch und z.T. antiphlogistisch.",
+        tip: "NSAR oft mit Magenschutz (PPI) kombinieren.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was sind typische Nebenwirkungen von Opioiden?",
+        answer:
+          "Übelkeit, Obstipation (häufigste Dauernebenwirkung), Sedierung, Atemdepression, Juckreiz und Harnverhalt.",
+        tip: "Laxanzien prophylaktisch verordnen lassen.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Wie lauten die 6 R der Medikamentengabe?",
+        answer:
+          "Richtiger Patient, richtiges Medikament, richtige Dosis, richtiger Zeitpunkt, richtige Applikationsform, richtige Dokumentation.",
+        tip: "Vor jeder Gabe systematisch prüfen.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Nenne drei nicht-medikamentöse Schmerzmaßnahmen.",
+        answer:
+          "Kälte-/Wärmeanwendung, TENS, Progressive Muskelrelaxation, Lagerung, Massage, Atemübungen.",
+        tip: "Immer ergänzend zur medikamentösen Therapie anbieten.",
+        source: "PAP LP Schmerzmanagement",
+      },
+    ],
+  },
+  {
+    title: "Delegation in der Pflege",
+    description:
+      "Verantwortungsbereiche, delegierbare Tätigkeiten und Remonstrationspflicht.",
+    cards: [
+      {
+        question: "Was ist Delegation in der Pflege?",
+        answer:
+          "Übertragung von Aufgaben einer weisungsbefugten Person an andere, geregelt in SGB V und Pflegeberufegesetz.",
+        tip: "Delegation ist im pflegerischen Bereich alltäglich.",
+        source: "Delegation",
+      },
+      {
+        question: "Nenne die vier Verantwortungsbereiche der Delegation.",
+        answer:
+          "Delegationsverantwortung, Instruktions-/Überwachungspflicht, Übernahmeverantwortung, Durchführungsverantwortung.",
+        tip: "Beide Seiten tragen Verantwortung!",
+        source: "Delegation",
+      },
+      {
+        question: "Was ist die Remonstrationspflicht?",
+        answer:
+          "Recht und Pflicht, Maßnahmen abzulehnen, wenn fachliche/technische Fähigkeiten fehlen oder die Anordnung fehlerhaft ist.",
+        tip: "Immer offen kommunizieren und Ablehnungsgrund benennen.",
+        source: "Delegation",
+      },
+      {
+        question: "Welche Tätigkeiten dürfen NICHT an PFA delegiert werden?",
+        answer:
+          "Medikamente stellen, i.m./i.v. Injektionen, Wundversorgungen, Blutentnahmen, Viggo ziehen.",
+        tip: "Im Zweifel nachfragen und Remonstrationspflicht nutzen.",
+        source: "Delegation",
+      },
+      {
+        question: "Welche Tätigkeiten DÜRFEN an PFA delegiert werden?",
+        answer:
+          "Grundpflege, Tabletten verabreichen, s.c. Injektionen (z.B. Insulin), Augentropfen, Säfte, Microclist.",
+        tip: "Voraussetzung: fachliche Kompetenz und Delegation durch PFK.",
+        source: "Delegation",
+      },
+    ],
+  },
+  {
+    title: "Demenz & Validation",
+    description:
+      "IVA nach Nicole Richard, Kitwood-Bedürfnisblume und personzentrierte Pflege.",
+    cards: [
+      {
+        question: "Was bedeutet Integrative Validation (IVA)?",
+        answer:
+          "Sich in die Erlebniswelt des dementen Menschen einlassen, damit er sich akzeptiert fühlt. Validieren = Annehmen, Wertschätzen, Akzeptieren.",
+        tip: "Grundsatz: 'Verwirrt nicht die Verwirrten.'",
+        source: "10 Validation nach Nicole Richard",
+      },
+      {
+        question: "Welche 5 Bedürfnisse hat die Kitwood-Blume?",
+        answer:
+          "Trost, Bindung, Einbeziehung, Beschäftigung, Identität – Liebe im Zentrum.",
+        tip: "Merkhilfe: T-B-E-B-I, umgeben von Liebe.",
+        source: "06 Bedürfnisblume Kitwood",
+      },
+      {
+        question: "Was sind Antriebe und Gefühle bei Demenz?",
+        answer:
+          "Antriebe = lebenslange Charaktereigenschaften (Fürsorge, Ordnungssinn). Gefühle = momentane Empfindungen (Angst, Freude, Wut).",
+        tip: "Die IVA nutzt Antriebe und Gefühle als Zugang zum dementen Menschen.",
+        source: "10 Validation nach Nicole Richard",
+      },
+      {
+        question: "Warum darf man Demente nicht mit der Realität konfrontieren?",
+        answer:
+          "Ihre Erlebniswelt ist für sie real. Konfrontation ist hoffnungslos, unwürdig und sinnlos – sie führt zu Verunsicherung.",
+        tip: "Stattdessen: die Welt des Betroffenen akzeptieren und begleiten.",
+        source: "10 Validation nach Nicole Richard",
+      },
+    ],
+  },
+  {
+    title: "Biographiearbeit",
+    description:
+      "Biographie vs. Lebenslauf, Methoden, Ziele und Grenzen der Biographiearbeit.",
+    cards: [
+      {
+        question: "Was unterscheidet Biographie von Lebenslauf?",
+        answer:
+          "Lebenslauf = zeitliche Daten, berufliche Laufbahn. Biographie = Lebensgeschichte mit Gefühlen und Bedeutungszuschreibungen.",
+        tip: "Die Biographie ist erzählbar und wandelbar.",
+        source: "03b Lebenslauf vs. Biographie Zusammenfassung",
+      },
+      {
+        question: "Nenne die sechs Themenschwerpunkte der Biographiearbeit.",
+        answer:
+          "1. Elternhaus/Jugend, 2. Beruf/Lebensleistung, 3. Normen/Werte, 4. Rituale/Gewohnheiten, 5. Soziale Bedürfnisse, 6. Bedeutsame Lebensereignisse.",
+        tip: "Jeder Schwerpunkt braucht einfühlsame, offene Fragen.",
+        source: "05a Themenschwerpunkte der Biographiearbeit",
+      },
+      {
+        question: "Nenne 5 Methoden der Biographiearbeit.",
+        answer:
+          "Fotos, Erinnerungskoffer, Musik/Singen, Erzählungen, Stammbaum, Tagebücher, Orte der Vergangenheit, Collagen.",
+        tip: "Immer freiwillig und mit wertschätzender Grundhaltung.",
+        source: "05b Methoden und Ziele der Biografiearbeit",
+      },
+      {
+        question: "Welche Ziele verfolgt die Biographiearbeit?",
+        answer:
+          "Sicherheit geben, Identitätsbildung, Sinnstiftung, Kommunikationsförderung, Einsamkeit überbrücken, Gewohnheiten beibehalten.",
+        tip: "Verbindet Vergangenheit, Gegenwart und Zukunft.",
+        source: "05b Methoden und Ziele der Biografiearbeit",
+      },
+      {
+        question: "Was sind Grenzen der Biographiearbeit?",
+        answer:
+          "Freiwilligkeit, kein Verhör, Sensibilität für Traumata, Datenschutz und Intimsphäre, Vertrauen als Grundlage.",
+        tip: "Falsch verstandene Biographiearbeit schadet mehr als sie nutzt.",
+        source: "02 Missverständnis bei falsch verstandener Biographiearbeit",
+      },
+    ],
+  },
 ]
 
 const rotationPlan = [

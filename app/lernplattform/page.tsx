@@ -10,6 +10,7 @@ import {
 import { learningMethods } from "@/lib/learningMethods"
 import { PdfLink } from "@/components/pdf-link"
 import { QuizItem } from "@/components/quiz-item"
+import { StudyProgress } from "@/components/study-progress"
 
 const pdfSources = {
   wounds: [
@@ -47,6 +48,26 @@ const pdfSources = {
     "Text - Medizinischer Thromboseprophylaxestrumpf",
   ],
   fever: ["Fieber"],
+  painManagement: [
+    "PAP LP Schmerzmanagement",
+  ],
+  delegation: [
+    "Delegation",
+  ],
+  dementia: [
+    "01 Fallbeispiel 7C Alt werden ist nichts für Feiglinge",
+    "10 Validation nach Nicole Richard",
+    "06 Bedürfnisblume Kitwood",
+    "07 Text zur Kitwood Blume",
+  ],
+  biography: [
+    "02 Missverständnis bei falsch verstandener Biographiearbeit",
+    "03 Auszug Buch Pflegefachassistenz",
+    "03a Biographie vs. Biographiearbeit",
+    "03b Lebenslauf vs. Biographie Zusammenfassung",
+    "05a Themenschwerpunkte der Biographiearbeit",
+    "05b Methoden und Ziele der Biografiearbeit",
+  ],
 }
 
 const pdfCatalog = Array.from(new Set(Object.values(pdfSources).flat()))
@@ -103,103 +124,57 @@ const learningFields = [
     ],
     documents: pdfSources.fever,
   },
-]
-
-const learningMethods = [
   {
-    title: "Virchow-Trias-Check",
-    description:
-      "Ordne Risikofaktoren den drei Ursachen (Blutströmung, Gefäßwand, Gerinnung) zu.",
+    title: "Schmerzmanagement",
+    subtitle: "Schmerzerfassung, Therapie & pflegerische Interventionen",
+    goals: [
+      "Schmerzarten (akut, chronisch, nozizeptiv, neuropathisch) unterscheiden.",
+      "Schmerzassessment: NRS (0–10), VAS, VRS und BESD-Skala korrekt anwenden.",
+      "WHO-Stufenschema: Stufe 1 (Nicht-Opioide), Stufe 2 (schwache Opioide), Stufe 3 (starke Opioide).",
+      "Nicht-medikamentöse Maßnahmen: Kälte, Wärme, Lagerung, TENS, Entspannung.",
+      "6-R-Regel der Medikamentengabe sicher beherrschen.",
+      "Schmerzanamnese und -dokumentation vollständig durchführen.",
+    ],
+    documents: pdfSources.painManagement,
   },
   {
-    title: "Thrombose-Symptom-Scan",
-    description:
-      "Schweregefühl, warme Extremität, Schwellung und Wadenschmerz als Alarmzeichen merken.",
+    title: "Delegation in der Pflege",
+    subtitle: "Verantwortungsbereiche, Tätigkeiten & Remonstrationspflicht",
+    goals: [
+      "Definition Delegation kennen (Übertragung von Aufgaben, SGB V, Pflegeberufegesetz).",
+      "Vier Verantwortungsbereiche: Delegations-, Überwachungs-, Übernahme-, Durchführungsverantwortung.",
+      "Remonstrationspflicht: Recht und Pflicht zur Ablehnung bei fehlender Kompetenz.",
+      "Delegierbare Tätigkeiten: Grundpflege, Tabletten, subkutane Injektionen.",
+      "Nicht-delegierbare Tätigkeiten: Medikamente stellen, i.m./i.v. Injektionen, Blutentnahme.",
+      "Praxisbeispiele zur Delegation sicher beurteilen können.",
+    ],
+    documents: pdfSources.delegation,
   },
   {
-    title: "Atem- & Bewegungsübungen",
-    description:
-      "Tiefes Atmen und aktive Fußbewegungen fördern den venösen Rückfluss.",
+    title: "Demenz & Validation",
+    subtitle: "Kitwood, IVA nach Nicole Richard & personzentrierte Pflege",
+    goals: [
+      "Demenz als fortschreitende Erkrankung verstehen (Verlust des roten Lebensfadens).",
+      "Integrative Validation (IVA): Annehmen, Wertschätzen, Akzeptieren der Antriebe und Gefühle.",
+      "Grundsatz 'Verwirrt nicht die Verwirrten' verinnerlichen.",
+      "Kitwood-Bedürfnisblume: Trost, Bindung, Einbeziehung, Beschäftigung, Identität.",
+      "Personzentrierte Pflege nach Kitwood umsetzen.",
+      "Herausforderndes Verhalten verstehen und pflegerisch darauf reagieren.",
+    ],
+    documents: pdfSources.dementia,
   },
   {
-    title: "Ausstreichen & Hochlagerung",
-    description:
-      "Beinvenen ausstreichen und Beine hochlagern, um venöse Stauung zu reduzieren.",
-  },
-  {
-    title: "Kompressionstraining",
-    description:
-      "Kompressionsverband und Thromboseprophylaxestrumpf korrekt anlegen.",
-  },
-  {
-    title: "Risikofaktoren-Radar",
-    description:
-      "Immobilität, Operationen, Dehydration und Rauchen als Thrombose-Treiber prüfen.",
-  },
-  {
-    title: "Lungenembolie-Alarmplan",
-    description:
-      "Atemnot, Thoraxschmerz, Tachykardie erkennen und sofort ärztlich melden.",
-  },
-  {
-    title: "Wundarten-Karteikarten",
-    description:
-      "Mechanische, chemische, thermische und strahlenbedingte Wunden unterscheiden.",
-  },
-  {
-    title: "Wundheilungsphasen-Poster",
-    description:
-      "Exsudation (bis 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4, überlappend).",
-  },
-  {
-    title: "Non-Touch-Verbandswechsel",
-    description:
-      "Wundauflage nicht berühren und einfache Wundversorgung strukturiert üben.",
-  },
-  {
-    title: "Drainagen-Checkliste",
-    description:
-      "Menge, Farbe und Geruch der Drainage kontrollieren und dokumentieren.",
-  },
-  {
-    title: "Diabetes-Glukosewerte-Check",
-    description:
-      "Nüchtern-BZ 80–100 mg/dl, HbA1c ≥ 6,5% (Diagnosegrenze für Diabetes mellitus) und oGTT im Team abfragen.",
-  },
-  {
-    title: "Insulinpen-Training",
-    description:
-      "Insulinpen vorbereiten, Testhub durchführen, Dosis spritzen und 10 Sekunden halten.",
-  },
-  {
-    title: "Hyperglykämie-Check",
-    description:
-      "Durst, Polyurie, Müdigkeit oder Übelkeit als Warnzeichen erkennen.",
-  },
-  {
-    title: "Hypoglykämie-Notfallkarte",
-    description:
-      "Bei < 50 mg/dl Glukose geben, BZ messen, Arzt informieren; bei Bewusstlosigkeit stabile Seitenlage.",
-  },
-  {
-    title: "DGE-10-Regeln-Foodplan",
-    description:
-      "5 am Tag, Vollkorn, 1,5 Liter Wasser, maximal 300–600 g Fleisch/Woche.",
-  },
-  {
-    title: "Fieberkurven & Pflegeplan",
-    description:
-      "Fieberphasen erkennen, Vitalzeichen 2× täglich, Wadenwickel bei warmen Beinen.",
-  },
-  {
-    title: "Fiebermessung & Flüssigkeitsbilanz",
-    description:
-      "Temperatur korrekt messen, Trinkmenge dokumentieren und Verlauf beobachten.",
-  },
-  {
-    title: "Fallbeispiel Herr Winterhaus",
-    description:
-      "Case-Review zu Diabetes, Wundversorgung, Fiebermanagement und Mobilisation.",
+    title: "Biographiearbeit",
+    subtitle: "Lebensgeschichte verstehen & pflegerisch nutzen",
+    goals: [
+      "Lebenslauf vs. Biographie vs. Biographiearbeit unterscheiden.",
+      "Sechs Themenschwerpunkte der Biographiearbeit kennen.",
+      "Methoden: Fotos, Musik, Erinnerungskoffer, Erzählungen, Stammbaum.",
+      "Ziele: Sicherheit, Identitätsbildung, Sinnstiftung, Kommunikationsförderung.",
+      "Grenzen beachten: Freiwilligkeit, Datenschutz, Sensibilität für Traumata.",
+      "Gelungene Biographiearbeit: Vergangenheit, Gegenwart und Zukunft verbinden.",
+    ],
+    documents: pdfSources.biography,
   },
 ]
 
@@ -351,6 +326,114 @@ const dataBacktests = [
       "5 am Tag, Vollkorn, rund 1,5 Liter Wasser/Tag, Zucker sparen und max. 300–600 g Fleisch/Woche.",
     source: "2. Die 10 Regeln der DGE",
   },
+  {
+    topic: "Schmerzmanagement",
+    question: "Welche Schmerzarten werden grundlegend unterschieden?",
+    answer:
+      "Akuter Schmerz (Warnsignal), chronischer Schmerz (eigenständige Erkrankung), nozizeptiver, neuropathischer und noziplastischer Schmerz.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Was erfasst die NRS und wie wird sie angewendet?",
+    answer:
+      "Die Numerische Rangskala (NRS) misst Schmerz von 0 (kein Schmerz) bis 10 (stärkster vorstellbarer Schmerz). Einfach und schnell durchführbar.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Welche drei Stufen umfasst das WHO-Stufenschema?",
+    answer:
+      "Stufe 1: Nicht-Opioide (Ibuprofen, Paracetamol), Stufe 2: schwache Opioide (Tramadol), Stufe 3: starke Opioide (Morphin, Fentanyl).",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Was bedeutet die 6-R-Regel bei der Medikamentengabe?",
+    answer:
+      "Richtiger Patient, richtiges Medikament, richtige Dosis, richtiger Zeitpunkt, richtige Applikationsform, richtige Dokumentation.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Welche nicht-medikamentösen Maßnahmen helfen bei Schmerzen?",
+    answer:
+      "Kälte, Wärme, Lagerung, TENS, Massage, Atemübungen, Progressive Muskelrelaxation, Ablenkung und Musiktherapie.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  // ── Delegation ─────────────────────────────────────────────
+  {
+    topic: "Delegation",
+    question: "Was ist Delegation in der Pflege?",
+    answer:
+      "Übertragung von Aufgaben einer weisungsbefugten Person an andere, geregelt in SGB V und Pflegeberufegesetz.",
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    question: "Welche vier Verantwortungsbereiche gibt es bei der Delegation?",
+    answer:
+      "Delegationsverantwortung, Instruktions-/Überwachungspflicht, Übernahmeverantwortung und Durchführungsverantwortung.",
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    question: "Was ist die Remonstrationspflicht?",
+    answer:
+      "Recht und Pflicht, Maßnahmen abzulehnen, wenn die nötigen fachlichen/technischen Fähigkeiten fehlen oder die Anordnung fehlerhaft ist.",
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    question: "Nenne 3 Tätigkeiten, die NICHT an Pflegefachassistenten delegiert werden dürfen.",
+    answer:
+      "Medikamente stellen, intramuskuläre Injektionen, Blutentnahmen, intravenöse Injektionen/Infusionen, Wundversorgungen.",
+    source: "Delegation",
+  },
+  // ── Demenz ─────────────────────────────────────────────────
+  {
+    topic: "Demenz",
+    question: "Was bedeutet Integrative Validation (IVA) nach Nicole Richard?",
+    answer:
+      "Sich in die Erlebniswelt des dementen Menschen einlassen, damit er sich akzeptiert und respektiert fühlt. Validieren = Annehmen, Wertschätzen, Akzeptieren.",
+    source: "10 Validation nach Nicole Richard",
+  },
+  {
+    topic: "Demenz",
+    question: "Welche fünf Bedürfnisse umfasst die Kitwood-Bedürfnisblume?",
+    answer:
+      "Trost, Bindung, Einbeziehung, Beschäftigung und Identität – mit Liebe im Zentrum.",
+    source: "06 Bedürfnisblume Kitwood",
+  },
+  {
+    topic: "Demenz",
+    question: "Was bedeutet 'Verwirrt nicht die Verwirrten'?",
+    answer:
+      "Demente Menschen nicht mit der Realität konfrontieren; ihre Erlebniswelt akzeptieren und respektieren.",
+    source: "10 Validation nach Nicole Richard",
+  },
+  // ── Biographiearbeit ───────────────────────────────────────
+  {
+    topic: "Biographiearbeit",
+    question: "Was unterscheidet Biographie von Lebenslauf?",
+    answer:
+      "Lebenslauf = zeitliche Daten/berufliche Laufbahn. Biographie = Lebensgeschichte mit Gefühlen und Bedeutungszuschreibungen, erzählbar und wandelbar.",
+    source: "03b Lebenslauf vs. Biographie Zusammenfassung",
+  },
+  {
+    topic: "Biographiearbeit",
+    question: "Nenne drei Methoden der Biographiearbeit.",
+    answer:
+      "Fotos, Erinnerungskoffer/Themenkisten, Musik/Singen/Geräusche, Erzählungen, Stammbaum, Tagebücher, Orte der Vergangenheit.",
+    source: "05b Methoden und Ziele der Biografiearbeit",
+  },
+  {
+    topic: "Biographiearbeit",
+    question: "Was sind Grenzen der Biographiearbeit?",
+    answer:
+      "Freiwilligkeit wahren, kein Verhör, Sensibilität für Traumata, Datenschutz und Intimsphäre beachten, Vertrauen aufbauen.",
+    source: "02 Missverständnis bei falsch verstandener Biographiearbeit",
+  },
 ]
 
 const flashcards = [
@@ -400,6 +483,81 @@ const flashcards = [
     tip: "Temperatur und Vitalzeichen dokumentieren.",
     source: "Fieber",
   },
+  {
+    title: "WHO-Stufenschema",
+    question: "Welche drei Stufen umfasst das WHO-Stufenschema?",
+    answer:
+      "Stufe 1: Nicht-Opioide (z.B. Ibuprofen), Stufe 2: schwache Opioide (z.B. Tramadol), Stufe 3: starke Opioide (z.B. Morphin).",
+    tip: "Adjuvantien können auf jeder Stufe ergänzt werden.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    title: "Schmerzskalen",
+    question: "Welche Schmerzskala nutzt du bei Demenz?",
+    answer:
+      "BESD-Skala (Beurteilung von Schmerzen bei Demenz) – Fremdeinschätzung anhand von Mimik, Körpersprache und Lautäußerungen.",
+    tip: "Die NRS eignet sich für verbal-kompetente Patienten.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    title: "6-R-Regel",
+    question: "Wie lauten die 6 R bei der Medikamentengabe?",
+    answer:
+      "Richtiger Patient, richtiges Medikament, richtige Dosis, richtiger Zeitpunkt, richtige Applikationsform, richtige Dokumentation.",
+    tip: "Vor jeder Gabe systematisch prüfen.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  // ── Delegation ─────────────────────────────────────────────
+  {
+    title: "Remonstrationspflicht",
+    question: "Was ist die Remonstrationspflicht?",
+    answer:
+      "Recht und Pflicht, delegierte Maßnahmen abzulehnen, wenn fachliche/technische Fähigkeiten fehlen oder die Anordnung fehlerhaft ist.",
+    tip: "Immer offen kommunizieren, warum du ablehnst.",
+    source: "Delegation",
+  },
+  {
+    title: "Delegierbare Tätigkeiten",
+    question: "Nenne 3 delegierbare Tätigkeiten für Pflegefachassistenten.",
+    answer:
+      "Grundpflege (Körperpflege, Mundpflege), Tabletten verabreichen, subkutane Injektionen (z.B. Insulin), Augentropfen.",
+    tip: "Voraussetzung: Fachliche Kompetenz und Delegation durch PFK.",
+    source: "Delegation",
+  },
+  // ── Demenz ─────────────────────────────────────────────────
+  {
+    title: "Kitwood-Bedürfnisblume",
+    question: "Welche 5 Bedürfnisse hat die Kitwood-Blume?",
+    answer:
+      "Trost, Bindung, Einbeziehung, Beschäftigung, Identität – Liebe im Zentrum.",
+    tip: "Merkhilfe: T-B-E-B-I, umgeben von Liebe.",
+    source: "06 Bedürfnisblume Kitwood",
+  },
+  {
+    title: "IVA nach Nicole Richard",
+    question: "Was bedeutet Validieren bei Demenz?",
+    answer:
+      "Annehmen, Wertschätzen und Akzeptieren der Antriebe und Gefühle des dementen Menschen.",
+    tip: "Nie mit der Realität konfrontieren – die Erlebniswelt akzeptieren.",
+    source: "10 Validation nach Nicole Richard",
+  },
+  // ── Biographiearbeit ───────────────────────────────────────
+  {
+    title: "Biographie vs. Lebenslauf",
+    question: "Was unterscheidet Biographie von Lebenslauf?",
+    answer:
+      "Lebenslauf = zeitliche Daten und berufliche Laufbahn. Biographie = Lebensgeschichte mit Gefühlen und Bedeutungen.",
+    tip: "Biographiearbeit verbindet beides und gibt dem Erlebten Bedeutung.",
+    source: "03b Lebenslauf vs. Biographie Zusammenfassung",
+  },
+  {
+    title: "Methoden der Biographiearbeit",
+    question: "Nenne 4 Methoden der Biographiearbeit.",
+    answer:
+      "Fotos, Erinnerungskoffer, Musik/Singen, Erzählungen, Stammbaum, Tagebücher, Orte der Vergangenheit.",
+    tip: "Immer freiwillig und mit wertschätzender Grundhaltung.",
+    source: "05b Methoden und Ziele der Biografiearbeit",
+  },
 ]
 
 const quizItems = [
@@ -443,6 +601,58 @@ const quizItems = [
     answer: "C",
     explanation: "Fieber beginnt ab 38 °C Körpertemperatur.",
   },
+  {
+    title: "Schmerzmanagement-Quiz",
+    question: "Welches Instrument eignet sich zur Schmerzerfassung bei Demenz?",
+    options: [
+      "NRS (Numerische Rangskala)",
+      "BESD-Skala (Beurteilung von Schmerzen bei Demenz)",
+      "VAS (Visuelle Analogskala)",
+      "Blutdruckmessung",
+    ],
+    answer: "B",
+    explanation:
+      "Die BESD-Skala wurde speziell zur Fremdeinschätzung von Schmerzen bei Menschen mit Demenz entwickelt.",
+  },
+  {
+    title: "Delegation-Quiz",
+    question: "Darf ein Pflegefachassistent Medikamente stellen?",
+    options: [
+      "Ja, nach Einweisung durch die PFK",
+      "Ja, wenn kein anderer verfügbar ist",
+      "Nein, das ist nicht delegierbar",
+      "Nur bei einfachen Medikamenten",
+    ],
+    answer: "C",
+    explanation:
+      "Medikamente stellen gehört zu den nicht-delegierbaren Tätigkeiten für Pflegefachassistenten.",
+  },
+  {
+    title: "Demenz-Quiz",
+    question: "Was steht im Zentrum der Kitwood-Bedürfnisblume?",
+    options: [
+      "Beschäftigung",
+      "Identität",
+      "Liebe",
+      "Bindung",
+    ],
+    answer: "C",
+    explanation:
+      "Liebe bildet das Zentrum der Kitwood-Bedürfnisblume; die fünf Blätter sind Trost, Bindung, Einbeziehung, Beschäftigung und Identität.",
+  },
+  {
+    title: "Biographiearbeit-Quiz",
+    question: "Welche Aussage über Biographiearbeit ist richtig?",
+    options: [
+      "Sie ist ein standardisierter Fragebogen.",
+      "Sie verbindet Vergangenheit, Gegenwart und Zukunft.",
+      "Sie darf nur von Psychologen durchgeführt werden.",
+      "Sie ersetzt die Pflegeplanung.",
+    ],
+    answer: "B",
+    explanation:
+      "Gelungene Biographiearbeit verbindet Vergangenheit, Gegenwart und Zukunft und steigert Wohlbefinden.",
+  },
 ]
 
 const quickQuestions = [
@@ -463,6 +673,31 @@ const quickQuestions = [
   {
     question: "Was ist die erste Maßnahme bei Verdacht auf Thrombose?",
     answer: "Arzt informieren und Bettruhe einhalten.",
+  },
+  {
+    question: "Was sind die drei Stufen des WHO-Stufenschemas?",
+    answer:
+      "Stufe 1: Nicht-Opioide (z.B. Ibuprofen), Stufe 2: schwache Opioide (z.B. Tramadol), Stufe 3: starke Opioide (z.B. Morphin).",
+  },
+  {
+    question: "Was gehört zu einer vollständigen Schmerzanamnese?",
+    answer:
+      "Lokalisation, Intensität (NRS), Qualität, Zeitverlauf, Auslöser, Linderung, bisherige Therapie und Alltagseinschränkungen.",
+  },
+  {
+    question: "Was bedeutet Delegationsverantwortung?",
+    answer:
+      "Die delegierende PFK verantwortet, dass die Aufgabe delegierbar ist, die Anordnung korrekt und der/die PFA die Fähigkeiten besitzt.",
+  },
+  {
+    question: "Was sind die 5 Bedürfnisse nach Kitwood?",
+    answer:
+      "Trost, Bindung, Einbeziehung, Beschäftigung und Identität – Liebe im Zentrum.",
+  },
+  {
+    question: "Welche 6 Themenschwerpunkte hat die Biographiearbeit?",
+    answer:
+      "Elternhaus/Jugend, Beruf/Lebensleistung, Normen/Werte/Interessen, Rituale/Gewohnheiten, soziale Bedürfnisse, bedeutsame Lebensereignisse.",
   },
 ]
 
@@ -521,7 +756,7 @@ const learningResources = [
   {
     title: "Lerntabellen",
     description:
-      "Kleine, übersichtliche Merktabellen zu Wunden, Diabetes, Thrombose und Fieber.",
+      "Kleine, übersichtliche Merktabellen zu Wunden, Diabetes, Thrombose, Fieber, Schmerzmanagement, Delegation, Demenz und Biographiearbeit.",
     href: "/lerntabellen",
     badge: "Lerntabellen",
   },
@@ -577,6 +812,10 @@ export default function LernplattformPage() {
             </Link>
           </div>
         </header>
+
+        <section className="mb-12">
+          <StudyProgress />
+        </section>
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-4">

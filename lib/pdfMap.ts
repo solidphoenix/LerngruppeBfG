@@ -63,6 +63,32 @@ export const pdfMap: Record<string, string> = {
     "Text - Kompressionsverband.pdf",
   "Text - Medizinischer Thromboseprophylaxestrumpf":
     "Text - Medizinischer Thromboseprophylaxestrumpf-1.pdf",
+  "PAP LP Schmerzmanagement":
+    "PAP LP Schmerzmanagement.pdf",
+  // ── Delegation ──────────────────────────────────────────────
+  "Delegation":
+    "Delegation-1.pdf",
+  // ── Demenz & Biographiearbeit ───────────────────────────────
+  "01 Fallbeispiel 7C Alt werden ist nichts für Feiglinge":
+    "01. Fallbeispiel 7C Alt werden ist nichts für Feiglinge-1.pdf",
+  "02 Missverständnis bei falsch verstandener Biographiearbeit":
+    "02 Missverständnis bei falsch verstandener Biographiearbeit-1.pdf",
+  "03 Auszug Buch Pflegefachassistenz":
+    "03. Auszug Buch-Pflegefachassistenz-1.pdf",
+  "03a Biographie vs. Biographiearbeit":
+    "03a Biographie vs. Biographiearbeit-1.pdf",
+  "03b Lebenslauf vs. Biographie Zusammenfassung":
+    "03b Lebenslauf vs. Biographie Zusammenfassung-1.pdf",
+  "05a Themenschwerpunkte der Biographiearbeit":
+    "05a Themenschwerpunkte der Biographiearbeit-1.pdf",
+  "05b Methoden und Ziele der Biografiearbeit":
+    "05b Methoden und Ziele der Biografiearbeit-1.pdf",
+  "06 Bedürfnisblume Kitwood":
+    "06. Bedürfnisblume Kitwood-1.pdf",
+  "07 Text zur Kitwood Blume":
+    "07 Text zur Kitwood Blume-1.pdf",
+  "10 Validation nach Nicole Richard":
+    "10 Validation nach Nicole Richard -1.pdf",
 }
 
 const REPO_URL =

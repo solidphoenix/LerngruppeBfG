@@ -123,6 +123,80 @@ const miniTables = [
       ["Makroangiopathie", "Herz, Gefäße", "Bewegung, Ernährung, Rauchstopp"],
     ],
   },
+  {
+    title: "Schmerzmanagement kompakt",
+    description: "Übersicht Schmerzarten, Assessment und Therapie.",
+    headers: ["Aspekt", "Kerninfo", "Pflege"],
+    rows: [
+      ["Akuter Schmerz", "Warnsignal, gut behandelbar", "Ursache behandeln, Analgetika nach AO"],
+      ["Chronischer Schmerz", "Eigenständige Erkrankung", "Multimodale Therapie, Beratung"],
+      ["Assessment", "NRS 0–10, BESD bei Demenz", "Bei Aufnahme + regelmäßig"],
+      ["WHO Stufe 1", "Nicht-Opioide (Ibuprofen)", "Magenschutz beachten"],
+      ["WHO Stufe 2–3", "Opioide (Tramadol, Morphin)", "Obstipationsprophylaxe, BtM-Regeln"],
+      ["Nicht-medikamentös", "Kälte, Wärme, TENS, Entspannung", "Ergänzend zu Medikamenten"],
+    ],
+  },
+  {
+    title: "6-R-Regel der Medikamentengabe",
+    description: "Sicherheitscheck vor jeder Medikamentenverabreichung.",
+    headers: ["Regel", "Prüfung", "Risiko bei Fehler"],
+    rows: [
+      ["Richtiger Patient", "Name + Geb.-Datum abgleichen", "Verwechslung"],
+      ["Richtiges Medikament", "Verordnung prüfen", "Falsche Wirkung"],
+      ["Richtige Dosis", "Dosis kontrollieren", "Über-/Unterdosierung"],
+      ["Richtiger Zeitpunkt", "Uhrzeiten einhalten", "Wirkungsverlust"],
+      ["Richtige Applikation", "Oral, s.c., i.v., transdermal", "Fehlende Wirkung"],
+      ["Richtige Dokumentation", "Gabe sofort dokumentieren", "Doppelgabe oder Auslassung"],
+    ],
+  },
+  {
+    title: "Delegation – Verantwortungsbereiche",
+    description: "Die vier Verantwortungsbereiche bei Delegation in der Pflege.",
+    headers: ["Verantwortung", "Wer?", "Aufgabe"],
+    rows: [
+      ["Delegationsverantwortung", "PFK", "Aufgabe ist delegierbar, Anordnung korrekt, PFA fähig"],
+      ["Überwachungspflicht", "PFK", "Regelmäßig prüfen, ob PFA korrekt ausführt"],
+      ["Übernahmeverantwortung", "PFA", "Eigene Kompetenz einschätzen, Remonstrationspflicht"],
+      ["Durchführungsverantwortung", "PFA", "Maßnahme korrekt durchführen"],
+    ],
+  },
+  {
+    title: "Delegierbar vs. Nicht delegierbar",
+    description: "Welche Tätigkeiten dürfen an PFA delegiert werden?",
+    headers: ["Delegierbar ✓", "Nicht delegierbar ✗"],
+    rows: [
+      ["Grundpflege (Körperpflege, Mundpflege)", "Medikamente stellen"],
+      ["Tabletten verabreichen", "Intramuskuläre Injektionen"],
+      ["Subkutane Injektionen (z.B. Insulin)", "Intravenöse Injektionen/Infusionen"],
+      ["Augentropfen, Säfte", "Blutentnahmen"],
+      ["Microclist verabreichen", "Wundversorgungen"],
+      ["Hauswirtschaftliche Tätigkeiten", "Viggo (Venenverweilkanüle) ziehen"],
+    ],
+  },
+  {
+    title: "Kitwood-Bedürfnisblume",
+    description: "Die fünf psychischen Grundbedürfnisse nach Tom Kitwood.",
+    headers: ["Bedürfnis", "Bedeutung", "Pflegerische Maßnahme"],
+    rows: [
+      ["Trost", "Sicherheit, Nähe", "Beruhigende Atmosphäre, Körperkontakt"],
+      ["Bindung", "Vertraute Beziehungen", "Bezugspflege, Angehörige einbeziehen"],
+      ["Einbeziehung", "Teilhabe am sozialen Leben", "Gemeinschaftsaktivitäten anbieten"],
+      ["Beschäftigung", "Sinnvolle Aktivität", "Biographisch orientierte Angebote"],
+      ["Identität", "Das eigene Selbst erhalten", "Name, Gewohnheiten, Rituale bewahren"],
+    ],
+  },
+  {
+    title: "Biographiearbeit – Methoden",
+    description: "Zugänge zur Lebensgeschichte in der Pflege.",
+    headers: ["Methode", "Beschreibung", "Beispiel"],
+    rows: [
+      ["Fotos", "Persönliche Fotoalben, Zeitdokumente", "Alte Familienfotos betrachten"],
+      ["Erinnerungskoffer", "Themenkisten mit Gegenständen", "Kiste zum Thema Kochen"],
+      ["Musik/Singen", "Vertraute Lieder, Geräusche", "Alte Schlager gemeinsam singen"],
+      ["Erzählungen", "Persönliches Leben erzählen", "Von der Kindheit berichten lassen"],
+      ["Stammbaum", "Eigenen Stammbaum gestalten", "Familie aufzeichnen"],
+    ],
+  },
 ]
 
 const checklist = [
