@@ -119,6 +119,7 @@ const learningFields = [
     ],
     documents: pdfSources.painManagement,
   },
+]
 
 const dataBacktests = [
   {
@@ -304,6 +305,12 @@ const dataBacktests = [
     source: "PAP LP Schmerzmanagement",
   },
 ]
+
+const flashcards = [
+  {
+    title: "Wundheilung in 3 Phasen",
+    question: "Welche Phasen der Wundheilung musst du nennen können?",
+    answer:
       "Exsudation (bis ca. 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4, überlappend).",
     tip: "Merksatz: Erst reinigen, dann aufbauen, dann stabilisieren.",
     source: "04 Wunden & Wundversorgung",
@@ -371,6 +378,8 @@ const dataBacktests = [
     source: "PAP LP Schmerzmanagement",
   },
 ]
+
+const quizItems = [
   {
     title: "Thrombose-Check",
     question: "Welche Maßnahme gehört zur Thromboseprophylaxe?",
@@ -425,6 +434,8 @@ const dataBacktests = [
       "Die BESD-Skala wurde speziell zur Fremdeinschätzung von Schmerzen bei Menschen mit Demenz entwickelt.",
   },
 ]
+
+const quickQuestions = [
   {
     question: "Wie oft sollen Vitalzeichen bei Fieber kontrolliert werden?",
     answer: "Mindestens 2× täglich und zusätzlich bei Zustandsveränderungen.",

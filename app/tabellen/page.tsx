@@ -174,6 +174,12 @@ const overviewTables = [
   },
 ]
 
+const workflowNotes = [
+  "Alle Tabellen können als Lernposter ausgedruckt werden.",
+  "Ergänze eigene Beispiele aus der Praxis, um den Transfer zu sichern.",
+  "Bei Unsicherheiten immer die PDF-Quellen prüfen.",
+]
+
 export default function TabellenPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-zinc-50">

@@ -356,6 +356,8 @@ const flashcardSets = [
     ],
   },
 ]
+
+const rotationPlan = [
   {
     step: "Warm-up",
     duration: "5 Min",
