@@ -436,6 +436,140 @@ export const pdfKnowledge: KnowledgeEntry[] = [
     keywords: ["interprofessionell", "Zusammenarbeit", "Schmerzkonferenz", "Physiotherapie", "Psychologe", "Team"],
     source: "PAP LP Schmerzmanagement",
   },
+
+  // ── Delegation ─────────────────────────────────────────────
+  {
+    topic: "Delegation",
+    subtopic: "Definition und Rechtsgrundlage",
+    content:
+      "Delegation ist die Übertragung von Aufgaben einer weisungsbefugten Person an andere. Im pflegerischen Bereich kommt Delegation sehr häufig vor. Sie ist unter anderem im fünften Sozialgesetzbuch (SGB V) und dem Pflegeberufegesetz geregelt.",
+    keywords: ["Delegation", "Übertragung", "Aufgaben", "SGB V", "Pflegeberufegesetz", "weisungsbefugt"],
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    subtopic: "Vier Verantwortungsbereiche",
+    content:
+      "Bei der Delegation unterscheidet man vier Verantwortungsbereiche: 1. Delegationsverantwortung: Die delegierende Pflegefachperson verantwortet, dass die Aufgabe delegierbar ist, die Anordnung korrekt ist und die Pflegefachassistenz die nötigen Fähigkeiten besitzt. 2. Instruktions- und Überwachungspflicht: Die Pflegefachperson muss sich regelmäßig überzeugen, dass die Aufgabe korrekt ausgeführt wird. 3. Übernahmeverantwortung: Die Pflegefachassistenz muss von ihren fachlichen und technischen Fähigkeiten überzeugt sein; sie hat die Remonstrationspflicht. 4. Durchführungsverantwortung: Die Pflegefachassistenz ist verpflichtet, die Maßnahme korrekt durchzuführen.",
+    keywords: ["Delegationsverantwortung", "Überwachungspflicht", "Übernahmeverantwortung", "Durchführungsverantwortung", "Instruktion"],
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    subtopic: "Remonstrationspflicht",
+    content:
+      "Die Remonstrationspflicht ist das Recht und die Pflicht, Maßnahmen abzulehnen, wenn man nicht die nötigen fachlichen und/oder technischen Fähigkeiten besitzt oder wenn die Anordnung nach eigenem Ermessen fehlerhaft ist. Pflegefachassistenten müssen dies der Pflegefachkraft mitteilen.",
+    keywords: ["Remonstrationspflicht", "Ablehnung", "Recht", "Pflicht", "fachliche Fähigkeiten"],
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    subtopic: "Delegierbare Tätigkeiten",
+    content:
+      "An Pflegefachassistenten delegierbare Tätigkeiten: grundpflegerische Tätigkeiten (Körperpflege, Mundpflege, An- und Auskleiden), Tabletten verabreichen, subkutane Injektionen (z.B. Insulin), hauswirtschaftliche Tätigkeiten, Verabreichen eines Microclist, Augentropfen und Säfte verabreichen.",
+    keywords: ["delegierbar", "Grundpflege", "Tabletten", "subkutane Injektion", "Insulin"],
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    subtopic: "Nicht-delegierbare Tätigkeiten",
+    content:
+      "Nicht an Pflegefachassistenten delegierbare Tätigkeiten: Medikamente stellen, intramuskuläre Injektionen, Wundversorgungen, Blutentnahmen, intravenöse Injektionen, intravenöse Infusionen, Viggo (Venenverweilkanüle) ziehen.",
+    keywords: ["nicht delegierbar", "Medikamente stellen", "intramuskulär", "Blutentnahme", "intravenös"],
+    source: "Delegation",
+  },
+  {
+    topic: "Delegation",
+    subtopic: "Fallbeispiel und Praxisbezug",
+    content:
+      "Praxisbeispiel: Pflegefachkraft Manuela bittet Pflegefachassistenten Paul, Medikamente für Herrn Winterhaus zu stellen – dies muss Paul ablehnen (Remonstrationspflicht), da Medikamente stellen nicht delegierbar ist. Subkutane Insulininjektion darf eine Pflegefachassistenz nach Delegation durchführen, wenn die Pflegefachperson sich vergewissert hat, dass das Fachwissen und die Technik beherrscht werden. Die Insulineinheiten müssen durch die PFK eingestellt werden.",
+    keywords: ["Fallbeispiel", "Praxis", "Insulin", "Medikamente stellen", "Remonstration"],
+    source: "Delegation",
+  },
+
+  // ── Demenz & Validation ────────────────────────────────────
+  {
+    topic: "Demenz",
+    subtopic: "Fallbeispiel Frau Ring – Demenz im Pflegealltag",
+    content:
+      "Frau Ring, 76 Jahre, lebt seit drei Jahren im Seniorenzentrum Abendsonne. Parkinson-Erkrankung weit fortgeschritten, zunehmende Demenz. Kann durch Tremor kaum noch selbstständig essen und trinken. Ruft wiederholt 'Schwester' und klopft auf den Tisch – herausforderndes Verhalten, das alle Beteiligten belastet. Bedarf an beruhigender Pflege und Bedarfsmedikation. Zimmergenossin Frau Mau hat Hemiparese rechts nach Apoplex; Anleitung nach Bobath-Konzept geplant.",
+    keywords: ["Demenz", "Parkinson", "herausforderndes Verhalten", "Fallbeispiel", "Frau Ring", "Bobath"],
+    source: "01 Fallbeispiel 7C Alt werden ist nichts für Feiglinge",
+  },
+  {
+    topic: "Demenz",
+    subtopic: "Integrative Validation (IVA) nach Nicole Richard",
+    content:
+      "Die integrative Validation (IVA) nach Nicole Richard dient dazu, sich in die Zeit- und Erlebniswelt des dementen Menschen einzulassen, sodass er sich akzeptiert und respektiert fühlt. Grundprinzip: 'Verwirrt nicht die Verwirrten.' Für den dementen Menschen ist seine Realität genauso real wie unsere. Demente Menschen ändern zu wollen oder mit der Realität zu konfrontieren, wäre hoffnungslos, unwürdig und sinnlos. Validieren bedeutet: Annehmen, Wertschätzen, Akzeptieren der Antriebe und Gefühle.",
+    keywords: ["Validation", "IVA", "Nicole Richard", "Naomi Feil", "Demenz", "Wertschätzen", "Akzeptieren"],
+    source: "10 Validation nach Nicole Richard",
+  },
+  {
+    topic: "Demenz",
+    subtopic: "Antriebe und Gefühle bei Demenz",
+    content:
+      "Antriebe (Charaktereigenschaften) sind lebenslang stabil und werden bei Demenz wieder stärker sichtbar, z.B. Fürsorge, Pflichtbewusstsein, Ordnungssinn, Hilfsbereitschaft, Neugier. Gefühle (momentane Empfindungen) wie Angst, Freude, Trauer, Wut sind bei Demenz oft intensiver erlebbar. Die IVA nutzt diese Antriebe und Gefühle als Zugang zum dementen Menschen.",
+    keywords: ["Antriebe", "Gefühle", "Charaktereigenschaften", "Empfindungen", "IVA"],
+    source: "10 Validation nach Nicole Richard",
+  },
+  {
+    topic: "Demenz",
+    subtopic: "Bedürfnisblume nach Tom Kitwood",
+    content:
+      "Tom Kitwood beschreibt fünf psychische Grundbedürfnisse von Menschen mit Demenz in der sogenannten Bedürfnisblume: 1. Trost (Sicherheit, Nähe), 2. Bindung (vertraute Beziehungen), 3. Einbeziehung (Teilhabe am sozialen Leben), 4. Beschäftigung (sinnvolle Aktivität), 5. Identität (das eigene Selbst erhalten). Im Zentrum steht das übergeordnete Bedürfnis nach Liebe. Personzentrierte Pflege orientiert sich an diesen Bedürfnissen.",
+    keywords: ["Kitwood", "Bedürfnisblume", "Trost", "Bindung", "Einbeziehung", "Beschäftigung", "Identität", "personzentriert"],
+    source: "06 Bedürfnisblume Kitwood",
+  },
+
+  // ── Biographiearbeit ───────────────────────────────────────
+  {
+    topic: "Biographiearbeit",
+    subtopic: "Biographie vs. Lebenslauf",
+    content:
+      "Der Lebenslauf enthält zeitliche Daten und die bisherige schulische und berufliche Laufbahn. Die Biographie ist die Lebensgeschichte – ein Geflecht aus Lebensereignissen, Empfindungen (Gefühlen) und Bedeutungszuschreibungen. Sie ist erzählbar und wandelbar und bringt den individuellen Reifungsprozess eines Menschen zum Ausdruck. Biographiearbeit umfasst Lebenslauf plus erlebtes Leben (Gefühle, Sinngebung, Erfahrungen) und gibt dem Erlebten eine Bedeutung.",
+    keywords: ["Biographie", "Lebenslauf", "Lebensgeschichte", "Biographiearbeit", "Bedeutung"],
+    source: "03b Lebenslauf vs. Biographie Zusammenfassung",
+  },
+  {
+    topic: "Biographiearbeit",
+    subtopic: "Gelungene Biographiearbeit",
+    content:
+      "Kennzeichen gelungener Biographiearbeit: Verbindet Vergangenheit, Gegenwart und Zukunft. Steigert durch das 'Erzählenlassen' Wohlbefinden und Lebenszufriedenheit. Eröffnet durch das Erzählte einen Zugang zu einem zunächst fremden Menschen und einer ressourcenorientierten Pflege. Ist für alle Altersgruppen geeignet.",
+    keywords: ["gelungene Biographiearbeit", "Wohlbefinden", "Erzählen", "ressourcenorientiert"],
+    source: "03b Lebenslauf vs. Biographie Zusammenfassung",
+  },
+  {
+    topic: "Biographiearbeit",
+    subtopic: "Themenschwerpunkte",
+    content:
+      "Themenschwerpunkte der Biographiearbeit: 1. Elternhaus und frühe Jugend (Geschwister, Eltern, Schule, Freizeit), 2. Beruf und Lebensleistung (erlernter Beruf, Stolz), 3. Persönliche Normen, Werte, Interessen und Vorlieben (Religion, Tradition, Hobby), 4. Persönliche Rituale und Gewohnheiten (Aufsteh-Rituale, Mahlzeiten, Zubettgehen), 5. Soziale Bedürfnisse (wichtige Menschen, Gesellschaft vs. Alleinsein), 6. Persönliche bedeutsame Lebensereignisse (wertvolle Erinnerungen, Heimatgegenstände).",
+    keywords: ["Themenschwerpunkte", "Elternhaus", "Beruf", "Werte", "Rituale", "soziale Bedürfnisse", "Lebensereignisse"],
+    source: "05a Themenschwerpunkte der Biographiearbeit",
+  },
+  {
+    topic: "Biographiearbeit",
+    subtopic: "Methoden",
+    content:
+      "Methoden der Biographiearbeit: Fotos (Zeitdokumente, persönliche Fotoalben), Arbeitsblätter (thematische Schwerpunkte), Collagen/Erinnerungskoffer (Themenkisten z.B. zum Thema Kochen), Ton- und Filmaufnahmen, Bücher und Zeitschriften (Schulbücher, Briefe, Postkarten), Erzählungen, Museen und Ausstellungen, Musik/Singen/Geräusche (vertraute Lieder), Tagebücher, Stammbaum, Orte der Vergangenheit, Porträt (Körperumriss mit persönlichen Dingen).",
+    keywords: ["Methoden", "Fotos", "Erinnerungskoffer", "Musik", "Erzählung", "Stammbaum"],
+    source: "05b Methoden und Ziele der Biografiearbeit",
+  },
+  {
+    topic: "Biographiearbeit",
+    subtopic: "Ziele",
+    content:
+      "Ziele der Biographiearbeit: Gibt persönliche Sicherheit, unterstützt die Bewältigung von Alterungsprozessen, spürt Diskrepanzen im Lebenslauf auf und bewertet sie neu, fördert Sinnstiftung und Identitätsbildung, überbrückt Einsamkeit und bahnt Kontakte an, aktiviert und fördert die Kommunikationsfähigkeiten, hilft beim Verstehen von Bedürfnissen, Wünschen und Ressourcen, unterstützt das Beibehalten von Gewohnheiten, befriedigt Bedürfnisse nach Sicherheit und Geborgenheit.",
+    keywords: ["Ziele", "Sicherheit", "Identitätsbildung", "Sinnstiftung", "Kommunikation", "Gewohnheiten"],
+    source: "05b Methoden und Ziele der Biografiearbeit",
+  },
+  {
+    topic: "Biographiearbeit",
+    subtopic: "Missverständnisse und Grenzen",
+    content:
+      "Falsch verstandene Biographiearbeit: Biographiearbeit ist kein Verhör und kein Fragebogen. Sie darf nicht als Kontrolle missbraucht werden. Wichtig: Freiwilligkeit, Respekt vor dem Nicht-Erzählen-Wollen, Sensibilität für traumatische Erlebnisse. Informationen gehören zum Schutz der Intimsphäre vertraulich behandelt. Biographiearbeit braucht Vertrauen und eine wertschätzende Grundhaltung.",
+    keywords: ["Missverständnisse", "Grenzen", "Freiwilligkeit", "Datenschutz", "Vertrauen", "Intimsphäre"],
+    source: "02 Missverständnis bei falsch verstandener Biographiearbeit",
+  },
 ]
 
 /**
