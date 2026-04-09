@@ -293,4 +293,75 @@ export const learningMethods: LearningMethod[] = [
     ],
     topics: ["04 Wunden & Wundversorgung", "04b Literatur Wunden und Drainagen"],
   },
+  // ── Schmerzmanagement ──────────────────────────────────────
+  {
+    slug: "schmerzassessment-training",
+    title: "Schmerzassessment-Training",
+    description:
+      "NRS, VAS und BESD-Skala sicher anwenden und den passenden Einsatzbereich kennen.",
+    focus:
+      "Du trainierst das schnelle und korrekte Einschätzen von Schmerzen mit verschiedenen Assessment-Instrumenten.",
+    steps: [
+      "Schreibe die Skalen NRS, VAS, VRS und BESD mit jeweils einer Kurzbeschreibung auf.",
+      "Ordne jeder Skala eine passende Patientengruppe zu (z.B. BESD bei Demenz).",
+      "Simuliere ein Schmerzassessment mit einem Lernpartner und dokumentiere die Ergebnisse.",
+    ],
+    topics: ["PAP LP Schmerzmanagement"],
+  },
+  {
+    slug: "who-stufenschema-poster",
+    title: "WHO-Stufenschema-Poster",
+    description:
+      "Die drei Stufen der WHO-Schmerztherapie mit Beispielmedikamenten visualisieren.",
+    focus:
+      "Du erstellst ein Poster, das dir hilft, die medikamentöse Schmerztherapie schnell abzurufen.",
+    steps: [
+      "Zeichne drei Stufen und notiere zu jeder Stufe Beispielmedikamente.",
+      "Ergänze Adjuvantien und typische Nebenwirkungen je Stufe.",
+      "Vergleiche dein Poster mit dem PDF und ergänze fehlende Informationen.",
+    ],
+    topics: ["PAP LP Schmerzmanagement"],
+  },
+  {
+    slug: "schmerzdokumentation-ueben",
+    title: "Schmerzdokumentation üben",
+    description:
+      "Schmerzanamnese vollständig durchführen und korrekt dokumentieren.",
+    focus:
+      "Du lernst, alle relevanten Punkte einer Schmerzanamnese systematisch zu erfassen.",
+    steps: [
+      "Erstelle eine Checkliste für die Schmerzanamnese (Lokalisation, Intensität, Qualität, Zeitverlauf).",
+      "Führe die Anamnese anhand eines Fallbeispiels durch.",
+      "Dokumentiere die Ergebnisse inklusive Maßnahmen und Wirksamkeit.",
+    ],
+    topics: ["PAP LP Schmerzmanagement"],
+  },
+  {
+    slug: "nicht-medikamentoese-schmerzlinderung",
+    title: "Nicht-medikamentöse Schmerzlinderung",
+    description:
+      "Physikalische und psychologische Maßnahmen zur Schmerzlinderung kennenlernen.",
+    focus:
+      "Du erweiterst dein Repertoire an pflegerischen Interventionen gegen Schmerzen.",
+    steps: [
+      "Liste mindestens 5 nicht-medikamentöse Maßnahmen auf (Kälte, Wärme, Lagerung, TENS, Entspannung).",
+      "Ordne jeder Maßnahme eine geeignete Schmerzsituation zu.",
+      "Übe eine Progressive Muskelrelaxation nach Jacobson als praktische Übung.",
+    ],
+    topics: ["PAP LP Schmerzmanagement"],
+  },
+  {
+    slug: "medikamentengabe-6r-regel",
+    title: "6-R-Regel bei Medikamentengabe",
+    description:
+      "Die 6-R-Regel der Medikamentengabe sicher anwenden und dokumentieren.",
+    focus:
+      "Du sicherst die fehlerfreie Medikamentenverabreichung im Pflegealltag.",
+    steps: [
+      "Schreibe die 6 R auf: Richtiger Patient, richtiges Medikament, richtige Dosis, richtiger Zeitpunkt, richtige Applikationsform, richtige Dokumentation.",
+      "Simuliere eine Medikamentengabe mit Lernpartner und prüfe alle 6 R.",
+      "Notiere besondere Regeln für BtM-Medikamente (Vier-Augen-Prinzip, Dokumentation).",
+    ],
+    topics: ["PAP LP Schmerzmanagement"],
+  },
 ]

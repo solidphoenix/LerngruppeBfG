@@ -47,6 +47,9 @@ const pdfSources = {
     "Text - Medizinischer Thromboseprophylaxestrumpf",
   ],
   fever: ["Fieber"],
+  painManagement: [
+    "PAP LP Schmerzmanagement",
+  ],
 }
 
 const pdfCatalog = Array.from(new Set(Object.values(pdfSources).flat()))
@@ -103,105 +106,19 @@ const learningFields = [
     ],
     documents: pdfSources.fever,
   },
-]
-
-const learningMethods = [
   {
-    title: "Virchow-Trias-Check",
-    description:
-      "Ordne Risikofaktoren den drei Ursachen (Blutströmung, Gefäßwand, Gerinnung) zu.",
+    title: "Schmerzmanagement",
+    subtitle: "Schmerzerfassung, Therapie & pflegerische Interventionen",
+    goals: [
+      "Schmerzarten (akut, chronisch, nozizeptiv, neuropathisch) unterscheiden.",
+      "Schmerzassessment: NRS (0–10), VAS, VRS und BESD-Skala korrekt anwenden.",
+      "WHO-Stufenschema: Stufe 1 (Nicht-Opioide), Stufe 2 (schwache Opioide), Stufe 3 (starke Opioide).",
+      "Nicht-medikamentöse Maßnahmen: Kälte, Wärme, Lagerung, TENS, Entspannung.",
+      "6-R-Regel der Medikamentengabe sicher beherrschen.",
+      "Schmerzanamnese und -dokumentation vollständig durchführen.",
+    ],
+    documents: pdfSources.painManagement,
   },
-  {
-    title: "Thrombose-Symptom-Scan",
-    description:
-      "Schweregefühl, warme Extremität, Schwellung und Wadenschmerz als Alarmzeichen merken.",
-  },
-  {
-    title: "Atem- & Bewegungsübungen",
-    description:
-      "Tiefes Atmen und aktive Fußbewegungen fördern den venösen Rückfluss.",
-  },
-  {
-    title: "Ausstreichen & Hochlagerung",
-    description:
-      "Beinvenen ausstreichen und Beine hochlagern, um venöse Stauung zu reduzieren.",
-  },
-  {
-    title: "Kompressionstraining",
-    description:
-      "Kompressionsverband und Thromboseprophylaxestrumpf korrekt anlegen.",
-  },
-  {
-    title: "Risikofaktoren-Radar",
-    description:
-      "Immobilität, Operationen, Dehydration und Rauchen als Thrombose-Treiber prüfen.",
-  },
-  {
-    title: "Lungenembolie-Alarmplan",
-    description:
-      "Atemnot, Thoraxschmerz, Tachykardie erkennen und sofort ärztlich melden.",
-  },
-  {
-    title: "Wundarten-Karteikarten",
-    description:
-      "Mechanische, chemische, thermische und strahlenbedingte Wunden unterscheiden.",
-  },
-  {
-    title: "Wundheilungsphasen-Poster",
-    description:
-      "Exsudation (bis 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4, überlappend).",
-  },
-  {
-    title: "Non-Touch-Verbandswechsel",
-    description:
-      "Wundauflage nicht berühren und einfache Wundversorgung strukturiert üben.",
-  },
-  {
-    title: "Drainagen-Checkliste",
-    description:
-      "Menge, Farbe und Geruch der Drainage kontrollieren und dokumentieren.",
-  },
-  {
-    title: "Diabetes-Glukosewerte-Check",
-    description:
-      "Nüchtern-BZ 80–100 mg/dl, HbA1c ≥ 6,5% (Diagnosegrenze für Diabetes mellitus) und oGTT im Team abfragen.",
-  },
-  {
-    title: "Insulinpen-Training",
-    description:
-      "Insulinpen vorbereiten, Testhub durchführen, Dosis spritzen und 10 Sekunden halten.",
-  },
-  {
-    title: "Hyperglykämie-Check",
-    description:
-      "Durst, Polyurie, Müdigkeit oder Übelkeit als Warnzeichen erkennen.",
-  },
-  {
-    title: "Hypoglykämie-Notfallkarte",
-    description:
-      "Bei < 50 mg/dl Glukose geben, BZ messen, Arzt informieren; bei Bewusstlosigkeit stabile Seitenlage.",
-  },
-  {
-    title: "DGE-10-Regeln-Foodplan",
-    description:
-      "5 am Tag, Vollkorn, 1,5 Liter Wasser, maximal 300–600 g Fleisch/Woche.",
-  },
-  {
-    title: "Fieberkurven & Pflegeplan",
-    description:
-      "Fieberphasen erkennen, Vitalzeichen 2× täglich, Wadenwickel bei warmen Beinen.",
-  },
-  {
-    title: "Fiebermessung & Flüssigkeitsbilanz",
-    description:
-      "Temperatur korrekt messen, Trinkmenge dokumentieren und Verlauf beobachten.",
-  },
-  {
-    title: "Fallbeispiel Herr Winterhaus",
-    description:
-      "Case-Review zu Diabetes, Wundversorgung, Fiebermanagement und Mobilisation.",
-  },
-]
 
 const dataBacktests = [
   {
@@ -351,13 +268,42 @@ const dataBacktests = [
       "5 am Tag, Vollkorn, rund 1,5 Liter Wasser/Tag, Zucker sparen und max. 300–600 g Fleisch/Woche.",
     source: "2. Die 10 Regeln der DGE",
   },
-]
-
-const flashcards = [
   {
-    title: "Wundheilung in 3 Phasen",
-    question: "Welche Phasen der Wundheilung musst du nennen können?",
+    topic: "Schmerzmanagement",
+    question: "Welche Schmerzarten werden grundlegend unterschieden?",
     answer:
+      "Akuter Schmerz (Warnsignal), chronischer Schmerz (eigenständige Erkrankung), nozizeptiver, neuropathischer und noziplastischer Schmerz.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Was erfasst die NRS und wie wird sie angewendet?",
+    answer:
+      "Die Numerische Rangskala (NRS) misst Schmerz von 0 (kein Schmerz) bis 10 (stärkster vorstellbarer Schmerz). Einfach und schnell durchführbar.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Welche drei Stufen umfasst das WHO-Stufenschema?",
+    answer:
+      "Stufe 1: Nicht-Opioide (Ibuprofen, Paracetamol), Stufe 2: schwache Opioide (Tramadol), Stufe 3: starke Opioide (Morphin, Fentanyl).",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Was bedeutet die 6-R-Regel bei der Medikamentengabe?",
+    answer:
+      "Richtiger Patient, richtiges Medikament, richtige Dosis, richtiger Zeitpunkt, richtige Applikationsform, richtige Dokumentation.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    topic: "Schmerzmanagement",
+    question: "Welche nicht-medikamentösen Maßnahmen helfen bei Schmerzen?",
+    answer:
+      "Kälte, Wärme, Lagerung, TENS, Massage, Atemübungen, Progressive Muskelrelaxation, Ablenkung und Musiktherapie.",
+    source: "PAP LP Schmerzmanagement",
+  },
+]
       "Exsudation (bis ca. 3 Tage), Proliferation (1–14 Tage), Regeneration (ab Tag 4, überlappend).",
     tip: "Merksatz: Erst reinigen, dann aufbauen, dann stabilisieren.",
     source: "04 Wunden & Wundversorgung",
@@ -400,9 +346,31 @@ const flashcards = [
     tip: "Temperatur und Vitalzeichen dokumentieren.",
     source: "Fieber",
   },
+  {
+    title: "WHO-Stufenschema",
+    question: "Welche drei Stufen umfasst das WHO-Stufenschema?",
+    answer:
+      "Stufe 1: Nicht-Opioide (z.B. Ibuprofen), Stufe 2: schwache Opioide (z.B. Tramadol), Stufe 3: starke Opioide (z.B. Morphin).",
+    tip: "Adjuvantien können auf jeder Stufe ergänzt werden.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    title: "Schmerzskalen",
+    question: "Welche Schmerzskala nutzt du bei Demenz?",
+    answer:
+      "BESD-Skala (Beurteilung von Schmerzen bei Demenz) – Fremdeinschätzung anhand von Mimik, Körpersprache und Lautäußerungen.",
+    tip: "Die NRS eignet sich für verbal-kompetente Patienten.",
+    source: "PAP LP Schmerzmanagement",
+  },
+  {
+    title: "6-R-Regel",
+    question: "Wie lauten die 6 R bei der Medikamentengabe?",
+    answer:
+      "Richtiger Patient, richtiges Medikament, richtige Dosis, richtiger Zeitpunkt, richtige Applikationsform, richtige Dokumentation.",
+    tip: "Vor jeder Gabe systematisch prüfen.",
+    source: "PAP LP Schmerzmanagement",
+  },
 ]
-
-const quizItems = [
   {
     title: "Thrombose-Check",
     question: "Welche Maßnahme gehört zur Thromboseprophylaxe?",
@@ -443,9 +411,20 @@ const quizItems = [
     answer: "C",
     explanation: "Fieber beginnt ab 38 °C Körpertemperatur.",
   },
+  {
+    title: "Schmerzmanagement-Quiz",
+    question: "Welches Instrument eignet sich zur Schmerzerfassung bei Demenz?",
+    options: [
+      "NRS (Numerische Rangskala)",
+      "BESD-Skala (Beurteilung von Schmerzen bei Demenz)",
+      "VAS (Visuelle Analogskala)",
+      "Blutdruckmessung",
+    ],
+    answer: "B",
+    explanation:
+      "Die BESD-Skala wurde speziell zur Fremdeinschätzung von Schmerzen bei Menschen mit Demenz entwickelt.",
+  },
 ]
-
-const quickQuestions = [
   {
     question: "Wie oft sollen Vitalzeichen bei Fieber kontrolliert werden?",
     answer: "Mindestens 2× täglich und zusätzlich bei Zustandsveränderungen.",
@@ -463,6 +442,16 @@ const quickQuestions = [
   {
     question: "Was ist die erste Maßnahme bei Verdacht auf Thrombose?",
     answer: "Arzt informieren und Bettruhe einhalten.",
+  },
+  {
+    question: "Was sind die drei Stufen des WHO-Stufenschemas?",
+    answer:
+      "Stufe 1: Nicht-Opioide (z.B. Ibuprofen), Stufe 2: schwache Opioide (z.B. Tramadol), Stufe 3: starke Opioide (z.B. Morphin).",
+  },
+  {
+    question: "Was gehört zu einer vollständigen Schmerzanamnese?",
+    answer:
+      "Lokalisation, Intensität (NRS), Qualität, Zeitverlauf, Auslöser, Linderung, bisherige Therapie und Alltagseinschränkungen.",
   },
 ]
 
@@ -521,7 +510,7 @@ const learningResources = [
   {
     title: "Lerntabellen",
     description:
-      "Kleine, übersichtliche Merktabellen zu Wunden, Diabetes, Thrombose und Fieber.",
+      "Kleine, übersichtliche Merktabellen zu Wunden, Diabetes, Thrombose, Fieber und Schmerzmanagement.",
     href: "/lerntabellen",
     badge: "Lerntabellen",
   },

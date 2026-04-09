@@ -299,9 +299,63 @@ const flashcardSets = [
       },
     ],
   },
+  {
+    title: "Schmerzmanagement",
+    description:
+      "Schmerzarten, Assessment, WHO-Stufenschema und pflegerische Interventionen.",
+    cards: [
+      {
+        question: "Was ist der Unterschied zwischen akutem und chronischem Schmerz?",
+        answer:
+          "Akuter Schmerz ist ein Warnsignal und gut behandelbar. Chronischer Schmerz dauert Wochen bis Monate und wird zur eigenständigen Erkrankung.",
+        tip: "Chronischer Schmerz verliert die Warnfunktion.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was erfasst die NRS und wie funktioniert sie?",
+        answer:
+          "Die Numerische Rangskala misst Schmerz von 0 (kein Schmerz) bis 10 (stärkster vorstellbarer Schmerz). Der Patient schätzt selbst ein.",
+        tip: "Einfach, schnell, ideal für verbal-kompetente Patienten.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Welche Schmerzskala eignet sich für Menschen mit Demenz?",
+        answer:
+          "Die BESD-Skala (Beurteilung von Schmerzen bei Demenz) – Fremdeinschätzung durch Beobachtung von Mimik, Körpersprache und Lautäußerungen.",
+        tip: "Verhaltensänderungen wie Unruhe oder Abwehr beobachten.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Welche Medikamente gehören zu WHO-Stufe 1?",
+        answer:
+          "Nicht-Opioid-Analgetika: Ibuprofen, Diclofenac, Paracetamol, Metamizol. Wirken analgetisch und z.T. antiphlogistisch.",
+        tip: "NSAR oft mit Magenschutz (PPI) kombinieren.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was sind typische Nebenwirkungen von Opioiden?",
+        answer:
+          "Übelkeit, Obstipation (häufigste Dauernebenwirkung), Sedierung, Atemdepression, Juckreiz und Harnverhalt.",
+        tip: "Laxanzien prophylaktisch verordnen lassen.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Wie lauten die 6 R der Medikamentengabe?",
+        answer:
+          "Richtiger Patient, richtiges Medikament, richtige Dosis, richtiger Zeitpunkt, richtige Applikationsform, richtige Dokumentation.",
+        tip: "Vor jeder Gabe systematisch prüfen.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Nenne drei nicht-medikamentöse Schmerzmaßnahmen.",
+        answer:
+          "Kälte-/Wärmeanwendung, TENS, Progressive Muskelrelaxation, Lagerung, Massage, Atemübungen.",
+        tip: "Immer ergänzend zur medikamentösen Therapie anbieten.",
+        source: "PAP LP Schmerzmanagement",
+      },
+    ],
+  },
 ]
-
-const rotationPlan = [
   {
     step: "Warm-up",
     duration: "5 Min",

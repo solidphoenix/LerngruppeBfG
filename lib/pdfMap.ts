@@ -63,6 +63,8 @@ export const pdfMap: Record<string, string> = {
     "Text - Kompressionsverband.pdf",
   "Text - Medizinischer Thromboseprophylaxestrumpf":
     "Text - Medizinischer Thromboseprophylaxestrumpf-1.pdf",
+  "PAP LP Schmerzmanagement":
+    "PAP LP Schmerzmanagement.pdf",
 }
 
 const REPO_URL =

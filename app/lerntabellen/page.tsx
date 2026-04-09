@@ -123,6 +123,32 @@ const miniTables = [
       ["Makroangiopathie", "Herz, Gefäße", "Bewegung, Ernährung, Rauchstopp"],
     ],
   },
+  {
+    title: "Schmerzmanagement kompakt",
+    description: "Übersicht Schmerzarten, Assessment und Therapie.",
+    headers: ["Aspekt", "Kerninfo", "Pflege"],
+    rows: [
+      ["Akuter Schmerz", "Warnsignal, gut behandelbar", "Ursache behandeln, Analgetika nach AO"],
+      ["Chronischer Schmerz", "Eigenständige Erkrankung", "Multimodale Therapie, Beratung"],
+      ["Assessment", "NRS 0–10, BESD bei Demenz", "Bei Aufnahme + regelmäßig"],
+      ["WHO Stufe 1", "Nicht-Opioide (Ibuprofen)", "Magenschutz beachten"],
+      ["WHO Stufe 2–3", "Opioide (Tramadol, Morphin)", "Obstipationsprophylaxe, BtM-Regeln"],
+      ["Nicht-medikamentös", "Kälte, Wärme, TENS, Entspannung", "Ergänzend zu Medikamenten"],
+    ],
+  },
+  {
+    title: "6-R-Regel der Medikamentengabe",
+    description: "Sicherheitscheck vor jeder Medikamentenverabreichung.",
+    headers: ["Regel", "Prüfung", "Risiko bei Fehler"],
+    rows: [
+      ["Richtiger Patient", "Name + Geb.-Datum abgleichen", "Verwechslung"],
+      ["Richtiges Medikament", "Verordnung prüfen", "Falsche Wirkung"],
+      ["Richtige Dosis", "Dosis kontrollieren", "Über-/Unterdosierung"],
+      ["Richtiger Zeitpunkt", "Uhrzeiten einhalten", "Wirkungsverlust"],
+      ["Richtige Applikation", "Oral, s.c., i.v., transdermal", "Fehlende Wirkung"],
+      ["Richtige Dokumentation", "Gabe sofort dokumentieren", "Doppelgabe oder Auslassung"],
+    ],
+  },
 ]
 
 const checklist = [

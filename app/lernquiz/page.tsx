@@ -596,9 +596,117 @@ const allQuizSections: QuizSection[] = [
       },
     ],
   },
+  {
+    title: "Schmerzmanagement",
+    description: "Schmerzarten, Assessment, WHO-Stufenschema und pflegerische Interventionen.",
+    questions: [
+      {
+        question: "Welche Schmerzart entsteht durch Nervenschädigung?",
+        options: [
+          "Nozizeptiver Schmerz",
+          "Neuropathischer Schmerz",
+          "Noziplastischer Schmerz",
+          "Psychogener Schmerz",
+        ],
+        answer: "B",
+        explanation:
+          "Neuropathischer Schmerz entsteht durch Nervenschädigung (z.B. diabetische Polyneuropathie) und ist typisch brennend oder einschießend.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was beschreibt die NRS korrekt?",
+        options: [
+          "Eine Skala mit Gesichtern für Kinder",
+          "Eine numerische Skala von 0 bis 10 zur Schmerzeinschätzung",
+          "Eine Skala zur Blutdruckmessung",
+          "Eine Skala für die Wundgröße",
+        ],
+        answer: "B",
+        explanation:
+          "Die NRS (Numerische Rangskala) reicht von 0 (kein Schmerz) bis 10 (stärkster vorstellbarer Schmerz).",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Welches Medikament gehört zu WHO-Stufe 3?",
+        options: [
+          "Ibuprofen",
+          "Tramadol",
+          "Morphin",
+          "Paracetamol",
+        ],
+        answer: "C",
+        explanation:
+          "Morphin ist ein starkes Opioid und der Goldstandard auf WHO-Stufe 3.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was ist die häufigste Dauernebenwirkung von Opioiden?",
+        options: [
+          "Durchfall",
+          "Obstipation",
+          "Hautausschlag",
+          "Fieber",
+        ],
+        answer: "B",
+        explanation:
+          "Obstipation ist die häufigste Dauernebenwirkung bei Opioiden – Laxanzien sollten prophylaktisch gegeben werden.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Welche Skala eignet sich zur Schmerzerfassung bei Demenz?",
+        options: [
+          "NRS",
+          "VAS",
+          "BESD-Skala",
+          "Wong-Baker-Skala",
+        ],
+        answer: "C",
+        explanation:
+          "Die BESD-Skala ist speziell für die Fremdeinschätzung von Schmerzen bei Menschen mit Demenz entwickelt.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was gehört NICHT zur 6-R-Regel der Medikamentengabe?",
+        options: [
+          "Richtiger Patient",
+          "Richtige Zimmernummer",
+          "Richtige Dosis",
+          "Richtige Dokumentation",
+        ],
+        answer: "B",
+        explanation:
+          "Die 6 R sind: Patient, Medikament, Dosis, Zeitpunkt, Applikationsform, Dokumentation – nicht die Zimmernummer.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Was beschreibt den Expertenstandard Schmerzmanagement?",
+        options: [
+          "Nur medikamentöse Therapie bei Schmerzen",
+          "Einen Rahmen für professionelles Schmerzmanagement mit 6 Standardebenen",
+          "Eine ärztliche Leitlinie ohne Pflegebezug",
+          "Nur die WHO-Stufentherapie",
+        ],
+        answer: "B",
+        explanation:
+          "Der DNQP-Expertenstandard umfasst 6 Ebenen: Erhebung, Einschätzung, Planung, Durchführung, Evaluation und Beratung.",
+        source: "PAP LP Schmerzmanagement",
+      },
+      {
+        question: "Welche nicht-medikamentöse Maßnahme hilft bei Muskelverspannung?",
+        options: [
+          "Eispackung",
+          "Wärmeanwendung (Kirschkernkissen, warme Wickel)",
+          "Kompressionsverband",
+          "Hochlagerung der Beine",
+        ],
+        answer: "B",
+        explanation:
+          "Wärmeanwendungen helfen bei chronischen Muskelverspannungen durch Entspannung der Muskulatur.",
+        source: "PAP LP Schmerzmanagement",
+      },
+    ],
+  },
 ]
-
-/** Fisher-Yates shuffle */
 function shuffle<T>(array: T[]): T[] {
   const copy = [...array]
   for (let i = copy.length - 1; i > 0; i--) {

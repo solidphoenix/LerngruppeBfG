@@ -64,6 +64,12 @@ const overviewTables = [
         "Wadenwickel, Flüssigkeit, Ruhe",
         "Fieberkurve, Vitalzeichen",
       ],
+      [
+        "Schmerzmanagement",
+        "Schmerzintensität (NRS), Lokalisation",
+        "Medikamente nach WHO-Schema, Kälte, Wärme, Lagerung",
+        "Schmerztagebuch, Wirksamkeit, Nebenwirkungen",
+      ],
     ],
   },
   {
@@ -95,6 +101,12 @@ const overviewTables = [
         "Wadenwickel, Flüssigkeit",
         "Arzt informieren, Antipyretika nach AO",
       ],
+      [
+        "Starke Schmerzen (NRS ≥ 7)",
+        "Patient äußert starke Schmerzen, Schonhaltung",
+        "Arzt informieren, Bedarfsmedikation",
+        "Reassessment nach 30 Min, Dokumentation",
+      ],
     ],
   },
   {
@@ -123,12 +135,43 @@ const overviewTables = [
       ["Getränke", "1,5 L Wasser/Tag, ungesüßt", "Wasser, Kräutertee"],
     ],
   },
-]
-
-const workflowNotes = [
-  "Alle Tabellen können als Lernposter ausgedruckt werden.",
-  "Ergänze eigene Beispiele aus der Praxis, um den Transfer zu sichern.",
-  "Bei Unsicherheiten immer die PDF-Quellen prüfen.",
+  {
+    title: "WHO-Stufenschema der Schmerztherapie",
+    description: "Medikamentöse Schmerztherapie nach dem WHO-Stufenmodell.",
+    headers: ["Stufe", "Medikamente", "Nebenwirkungen", "Hinweis"],
+    rows: [
+      [
+        "Stufe 1",
+        "Ibuprofen, Diclofenac, Paracetamol, Metamizol",
+        "Magen-Darm, Niere, Leber (Paracetamol)",
+        "PPI-Schutz bei NSAR erwägen",
+      ],
+      [
+        "Stufe 2",
+        "Tramadol, Tilidin, Codein",
+        "Übelkeit, Obstipation, Sedierung",
+        "+ Nicht-Opioide ± Adjuvantien",
+      ],
+      [
+        "Stufe 3",
+        "Morphin, Oxycodon, Fentanyl, Hydromorphon",
+        "Obstipation, Atemdepression, Sedierung",
+        "Laxanzien prophylaktisch, BtM-Regeln",
+      ],
+    ],
+  },
+  {
+    title: "Schmerzassessment-Skalen",
+    description: "Übersicht der Schmerzeinschätzungsinstrumente.",
+    headers: ["Skala", "Beschreibung", "Einsatzgebiet"],
+    rows: [
+      ["NRS", "Numerisch 0–10, Patient schätzt selbst ein", "Verbal-kompetente Erwachsene"],
+      ["VAS", "10-cm-Linie, Patient markiert Schmerzintensität", "Verlaufskontrolle"],
+      ["VRS", "Verbale Kategorien (kein – unerträglich)", "Ältere, einfache Anwendung"],
+      ["Wong-Baker", "Gesichter-Skala (lachend – weinend)", "Kinder, Sprachbarrieren"],
+      ["BESD", "Fremdeinschätzung: Mimik, Körpersprache, Lautäußerung", "Menschen mit Demenz"],
+    ],
+  },
 ]
 
 export default function TabellenPage() {
