@@ -54,7 +54,7 @@ const pdfSources = {
   delegation: [
     "Delegation",
   ],
-  dempieces: [
+  dementia: [
     "01 Fallbeispiel 7C Alt werden ist nichts für Feiglinge",
     "10 Validation nach Nicole Richard",
     "06 Bedürfnisblume Kitwood",
@@ -161,7 +161,7 @@ const learningFields = [
       "Personzentrierte Pflege nach Kitwood umsetzen.",
       "Herausforderndes Verhalten verstehen und pflegerisch darauf reagieren.",
     ],
-    documents: pdfSources.dempieces,
+    documents: pdfSources.dementia,
   },
   {
     title: "Biographiearbeit",
