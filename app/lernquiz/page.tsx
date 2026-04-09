@@ -706,6 +706,258 @@ const allQuizSections: QuizSection[] = [
       },
     ],
   },
+  {
+    title: "Delegation in der Pflege",
+    description: "Delegation, Verantwortungsbereiche und Remonstrationspflicht.",
+    questions: [
+      {
+        question: "Was regelt die Delegationsverantwortung?",
+        options: [
+          "Dass die PFA die Maßnahme korrekt durchführt",
+          "Dass die PFK sicherstellt, dass die Aufgabe delegierbar ist und die PFA die Fähigkeiten besitzt",
+          "Dass die PFA regelmäßig kontrolliert wird",
+          "Dass die PFA die Maßnahme ablehnen darf",
+        ],
+        answer: "B",
+        explanation:
+          "Die Delegationsverantwortung liegt bei der PFK: Die Aufgabe muss delegierbar sein und die PFA muss die nötigen Fähigkeiten besitzen.",
+        source: "Delegation",
+      },
+      {
+        question: "Was ist die Remonstrationspflicht?",
+        options: [
+          "Die Pflicht, jede Aufgabe zu übernehmen",
+          "Das Recht und die Pflicht, Maßnahmen bei fehlender Kompetenz abzulehnen",
+          "Die Pflicht, Fehler der PFK zu melden",
+          "Die Pflicht zur Dokumentation",
+        ],
+        answer: "B",
+        explanation:
+          "Die Remonstrationspflicht ist das Recht und die Pflicht zur Ablehnung, wenn fachliche/technische Fähigkeiten fehlen oder die Anordnung fehlerhaft ist.",
+        source: "Delegation",
+      },
+      {
+        question: "Welche Tätigkeit darf NICHT an Pflegefachassistenten delegiert werden?",
+        options: [
+          "Tabletten verabreichen",
+          "Körperpflege durchführen",
+          "Medikamente stellen",
+          "Subkutane Injektion geben",
+        ],
+        answer: "C",
+        explanation:
+          "Medikamente stellen ist eine nicht-delegierbare Tätigkeit und darf nur von Pflegefachpersonen durchgeführt werden.",
+        source: "Delegation",
+      },
+      {
+        question: "Darf eine PFA nach Delegation Insulin spritzen?",
+        options: [
+          "Nein, auf keinen Fall",
+          "Ja, aber nur s.c. und wenn die PFK die Einheiten eingestellt hat und die Kompetenz bestätigt",
+          "Ja, ohne Einschränkungen",
+          "Nur bei Typ-2-Diabetes",
+        ],
+        answer: "B",
+        explanation:
+          "Subkutane Insulininjektion ist delegierbar, wenn die PFK die Einheiten einstellt und sich vergewissert hat, dass Fachwissen und Technik beherrscht werden.",
+        source: "Delegation",
+      },
+      {
+        question: "Wer trägt die Durchführungsverantwortung?",
+        options: [
+          "Die delegierende Pflegefachkraft",
+          "Die Pflegedienstleitung",
+          "Der/die Pflegefachassistent*in",
+          "Der behandelnde Arzt",
+        ],
+        answer: "C",
+        explanation:
+          "Die Durchführungsverantwortung liegt bei der Person, die die Maßnahme ausführt – also beim/bei der PFA.",
+        source: "Delegation",
+      },
+      {
+        question: "Was passiert, wenn eine PFA eine nicht-delegierbare Tätigkeit durchführt?",
+        options: [
+          "Nichts, solange es gut geht",
+          "Es verstößt gegen die Übernahmeverantwortung und kann rechtliche Konsequenzen haben",
+          "Die PFK ist allein verantwortlich",
+          "Die Pflegedienstleitung haftet",
+        ],
+        answer: "B",
+        explanation:
+          "Die PFA verletzt ihre Übernahmeverantwortung und Remonstrationspflicht; beide Seiten können rechtlich haften.",
+        source: "Delegation",
+      },
+    ],
+  },
+  {
+    title: "Demenz & Validation",
+    description: "IVA nach Nicole Richard, Kitwood-Bedürfnisblume und personzentrierte Pflege.",
+    questions: [
+      {
+        question: "Was bedeutet Integrative Validation (IVA)?",
+        options: [
+          "Den Dementen mit der Realität konfrontieren",
+          "Die Erlebniswelt des dementen Menschen akzeptieren und validierend begleiten",
+          "Medikamentöse Therapie bei Demenz",
+          "Biografische Daten sammeln",
+        ],
+        answer: "B",
+        explanation:
+          "IVA nach Nicole Richard: Sich in die Erlebniswelt des Betroffenen einlassen, damit er sich akzeptiert und respektiert fühlt.",
+        source: "10 Validation nach Nicole Richard",
+      },
+      {
+        question: "Was steht im Zentrum der Kitwood-Bedürfnisblume?",
+        options: [
+          "Beschäftigung",
+          "Trost",
+          "Liebe",
+          "Identität",
+        ],
+        answer: "C",
+        explanation:
+          "Liebe bildet das Zentrum der Kitwood-Bedürfnisblume; die fünf Blätter sind Trost, Bindung, Einbeziehung, Beschäftigung und Identität.",
+        source: "06 Bedürfnisblume Kitwood",
+      },
+      {
+        question: "Was bedeutet 'Verwirrt nicht die Verwirrten'?",
+        options: [
+          "Keine Medikamente gegen Verwirrung geben",
+          "Demente nicht mit der Realität konfrontieren, ihre Welt akzeptieren",
+          "Verwirrte Patienten isolieren",
+          "Alle Verwirrten gleich behandeln",
+        ],
+        answer: "B",
+        explanation:
+          "Für den dementen Menschen ist seine Realität genauso real wie unsere. Konfrontation wäre unwürdig und sinnlos.",
+        source: "10 Validation nach Nicole Richard",
+      },
+      {
+        question: "Welches ist KEIN Bedürfnis der Kitwood-Blume?",
+        options: [
+          "Trost",
+          "Einbeziehung",
+          "Ernährung",
+          "Identität",
+        ],
+        answer: "C",
+        explanation:
+          "Die fünf Bedürfnisse sind Trost, Bindung, Einbeziehung, Beschäftigung und Identität – Ernährung gehört nicht dazu.",
+        source: "06 Bedürfnisblume Kitwood",
+      },
+      {
+        question: "Was sind Antriebe im Sinne der IVA?",
+        options: [
+          "Medikamentöse Wirkungen",
+          "Lebenslang stabile Charaktereigenschaften (z.B. Fürsorge, Ordnungssinn)",
+          "Physische Reflexe",
+          "Pflegeziele",
+        ],
+        answer: "B",
+        explanation:
+          "Antriebe sind lebenslang stabile Charaktereigenschaften, die bei Demenz wieder stärker sichtbar werden.",
+        source: "10 Validation nach Nicole Richard",
+      },
+      {
+        question: "Was beschreibt personzentrierte Pflege nach Kitwood?",
+        options: [
+          "Pflege nach einem standardisierten Schema",
+          "Pflege, die sich an den individuellen Bedürfnissen des Betroffenen orientiert",
+          "Pflege nur durch Angehörige",
+          "Ausschließlich medikamentöse Behandlung",
+        ],
+        answer: "B",
+        explanation:
+          "Personzentrierte Pflege nach Kitwood orientiert sich an den fünf psychischen Grundbedürfnissen des individuellen Menschen.",
+        source: "07 Text zur Kitwood Blume",
+      },
+    ],
+  },
+  {
+    title: "Biographiearbeit",
+    description: "Biographie, Methoden, Ziele und Grenzen der Biographiearbeit.",
+    questions: [
+      {
+        question: "Was unterscheidet Biographie vom Lebenslauf?",
+        options: [
+          "Beides ist das Gleiche",
+          "Der Lebenslauf enthält nur zeitliche Daten; die Biographie ist die Lebensgeschichte mit Gefühlen",
+          "Die Biographie enthält nur berufliche Daten",
+          "Der Lebenslauf ist ausführlicher als die Biographie",
+        ],
+        answer: "B",
+        explanation:
+          "Der Lebenslauf enthält zeitliche Daten und berufliche Laufbahn. Die Biographie ist die Lebensgeschichte mit Gefühlen und Bedeutungszuschreibungen.",
+        source: "03b Lebenslauf vs. Biographie Zusammenfassung",
+      },
+      {
+        question: "Welches ist KEINE Methode der Biographiearbeit?",
+        options: [
+          "Erinnerungskoffer",
+          "Blutdruckmessung",
+          "Fotos und Fotoalben",
+          "Musik und Singen",
+        ],
+        answer: "B",
+        explanation:
+          "Blutdruckmessung ist eine pflegerische Maßnahme, keine Methode der Biographiearbeit.",
+        source: "05b Methoden und Ziele der Biografiearbeit",
+      },
+      {
+        question: "Welcher Themenschwerpunkt gehört zur Biographiearbeit?",
+        options: [
+          "Laborwerte",
+          "Beruf und Lebensleistung",
+          "Medikamentenspiegel",
+          "Pflegediagnosen",
+        ],
+        answer: "B",
+        explanation:
+          "Beruf und Lebensleistung ist einer der sechs Themenschwerpunkte. Fragen z.B.: 'Welchen Beruf haben Sie erlernt?'",
+        source: "05a Themenschwerpunkte der Biographiearbeit",
+      },
+      {
+        question: "Was ist eine wichtige Grenze der Biographiearbeit?",
+        options: [
+          "Sie darf nur bei Demenz eingesetzt werden",
+          "Man muss alle Fragen beantworten lassen",
+          "Freiwilligkeit und Respekt vor dem Nicht-Erzählen-Wollen",
+          "Nur Psychologen dürfen sie durchführen",
+        ],
+        answer: "C",
+        explanation:
+          "Biographiearbeit braucht Freiwilligkeit. Sie darf kein Verhör sein und muss die Intimsphäre respektieren.",
+        source: "02 Missverständnis bei falsch verstandener Biographiearbeit",
+      },
+      {
+        question: "Was ist ein Ziel der Biographiearbeit?",
+        options: [
+          "Medikamentöse Therapie optimieren",
+          "Sinnstiftung und Identitätsbildung fördern",
+          "Pflegepersonal entlasten",
+          "Diagnosen stellen",
+        ],
+        answer: "B",
+        explanation:
+          "Die Biographiearbeit fördert Sinnstiftung, Identitätsbildung und gibt dem Erlebten eine Bedeutung.",
+        source: "05b Methoden und Ziele der Biografiearbeit",
+      },
+      {
+        question: "Gelungene Biographiearbeit verbindet …",
+        options: [
+          "Nur die Vergangenheit mit der Gegenwart",
+          "Vergangenheit, Gegenwart und Zukunft",
+          "Nur die Zukunft mit Pflegezielen",
+          "Nur die Kindheit mit dem Alter",
+        ],
+        answer: "B",
+        explanation:
+          "Gelungene Biographiearbeit verbindet Vergangenheit, Gegenwart und Zukunft und steigert Wohlbefinden.",
+        source: "03b Lebenslauf vs. Biographie Zusammenfassung",
+      },
+    ],
+  },
 ]
 function shuffle<T>(array: T[]): T[] {
   const copy = [...array]

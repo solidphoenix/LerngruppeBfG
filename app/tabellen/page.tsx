@@ -172,6 +172,60 @@ const overviewTables = [
       ["BESD", "Fremdeinschätzung: Mimik, Körpersprache, Lautäußerung", "Menschen mit Demenz"],
     ],
   },
+  {
+    title: "Delegation – Vollständige Übersicht",
+    description: "Verantwortungsbereiche, delegierbare und nicht-delegierbare Tätigkeiten.",
+    headers: ["Aspekt", "Details", "Rechtsgrundlage/Hinweis"],
+    rows: [
+      ["Definition", "Übertragung von Aufgaben an andere Personen", "SGB V, Pflegeberufegesetz"],
+      ["Delegationsverantwortung", "PFK prüft Delegierbarkeit, korrekte Anordnung, Fähigkeit der PFA", "Liegt bei der delegierenden Person"],
+      ["Überwachungspflicht", "PFK überzeugt sich regelmäßig von korrekter Ausführung", "Instruktion und Kontrolle"],
+      ["Übernahmeverantwortung", "PFA prüft eigene Kompetenz, Remonstrationspflicht", "Recht und Pflicht zur Ablehnung"],
+      ["Durchführungsverantwortung", "PFA führt Maßnahme korrekt durch", "Haftung bei Fehlern"],
+      ["Delegierbar", "Grundpflege, Tabletten, s.c. Injektionen, Augentropfen, Microclist", "Nach Anweisung durch PFK"],
+      ["Nicht delegierbar", "Medikamente stellen, i.m./i.v. Injektionen, Blutentnahmen, Wundversorgung", "Nur PFK oder Arzt"],
+    ],
+  },
+  {
+    title: "Integrative Validation (IVA) nach Nicole Richard",
+    description: "Übersicht über Grundprinzipien und Umsetzung der IVA bei Demenz.",
+    headers: ["Prinzip", "Beschreibung", "Praxisbeispiel"],
+    rows: [
+      ["Validieren", "Annehmen, Wertschätzen, Akzeptieren", "Gefühle des Betroffenen bestätigen"],
+      ["Nicht konfrontieren", "Erlebniswelt akzeptieren, nicht korrigieren", "'Ihr Bus kommt gleich' statt 'Sie sind im Pflegeheim'"],
+      ["Antriebe nutzen", "Lebenslange Charaktereigenschaften ansprechen", "Bei Ordnungssinn: Servietten falten lassen"],
+      ["Gefühle spiegeln", "Momentane Empfindungen ernst nehmen", "Bei Angst: 'Ich sehe, dass Sie sich sorgen'"],
+      ["Sicherheit geben", "Vertrautheit und Routine anbieten", "Rituale beibehalten, Bezugspflege"],
+    ],
+  },
+  {
+    title: "Kitwood-Bedürfnisblume – Ausführlich",
+    description: "Die fünf psychischen Grundbedürfnisse nach Tom Kitwood mit Pflegemaßnahmen.",
+    headers: ["Bedürfnis", "Erklärung", "Pflegerische Umsetzung", "Gefahr bei Vernachlässigung"],
+    rows: [
+      ["Trost", "Sicherheit und Nähe geben", "Beruhigende Pflege, Körperkontakt, ruhige Umgebung", "Angst, Unruhe, Agitation"],
+      ["Bindung", "Vertraute Beziehungen pflegen", "Bezugspflege, Angehörige einbeziehen, Fotos", "Isolation, Rückzug"],
+      ["Einbeziehung", "Teilhabe am sozialen Leben", "Gemeinschaftsaktivitäten, Gespräche, Gruppenangebote", "Einsamkeit, Depression"],
+      ["Beschäftigung", "Sinnvolle Aktivität ermöglichen", "Biografisch orientierte Angebote, Alltagstätigkeiten", "Langeweile, Unruhe"],
+      ["Identität", "Das eigene Selbst erhalten", "Namen verwenden, Gewohnheiten bewahren, Biographiearbeit", "Identitätsverlust, Verzweiflung"],
+    ],
+  },
+  {
+    title: "Biographiearbeit – Themenschwerpunkte, Methoden & Ziele",
+    description: "Umfassende Übersicht zur Biographiearbeit in der Altenpflege.",
+    headers: ["Bereich", "Inhalt", "Beispiele/Fragen"],
+    rows: [
+      ["Themenschwerpunkt 1", "Elternhaus und frühe Jugend", "Geschwister? Schule? Strenge Eltern?"],
+      ["Themenschwerpunkt 2", "Beruf und Lebensleistung", "Welchen Beruf erlernt? Stolz auf was?"],
+      ["Themenschwerpunkt 3", "Normen, Werte, Interessen", "Religion? Hobbys? Traditionen?"],
+      ["Themenschwerpunkt 4", "Rituale und Gewohnheiten", "Aufsteh-Rituale? Mahlzeiten? Zubettgehen?"],
+      ["Themenschwerpunkt 5", "Soziale Bedürfnisse", "Wichtige Menschen? Lieber allein oder in Gesellschaft?"],
+      ["Themenschwerpunkt 6", "Bedeutsame Lebensereignisse", "Wertvolle Erinnerungen? Heimatgegenstände?"],
+      ["Methoden", "Zugangswege", "Fotos, Musik, Erinnerungskoffer, Erzählungen, Stammbaum"],
+      ["Ziele", "Ergebnisse", "Sicherheit, Identität, Sinnstiftung, Kommunikation, Wohlbefinden"],
+      ["Grenzen", "Vorsicht", "Freiwilligkeit, kein Verhör, Datenschutz, Sensibilität"],
+    ],
+  },
 ]
 
 const workflowNotes = [

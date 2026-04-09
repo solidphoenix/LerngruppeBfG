@@ -19,7 +19,10 @@ const studyTopics = [
   { id: "ernaehrung", label: "Ernährung / DGE-Regeln", emoji: "🥗" },
   { id: "fieber", label: "Fieber & Beobachtung", emoji: "🌡️" },
   { id: "schmerz", label: "Schmerzmanagement", emoji: "💊" },
-  { id: "fallbeispiel", label: "Fallbeispiel Herr Winterhaus", emoji: "📋" },
+  { id: "delegation", label: "Delegation in der Pflege", emoji: "📋" },
+  { id: "demenz", label: "Demenz & Validation", emoji: "🧠" },
+  { id: "biographie", label: "Biographiearbeit", emoji: "📖" },
+  { id: "fallbeispiel", label: "Fallbeispiel Herr Winterhaus", emoji: "🏥" },
 ]
 
 function getMotivation(percent: number): string {

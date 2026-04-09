@@ -435,6 +435,8 @@ const dataBacktests = [
     source: "02 Missverständnis bei falsch verstandener Biographiearbeit",
   },
 ]
+
+const flashcards = [
   {
     title: "Wundheilung in 3 Phasen",
     question: "Welche Phasen der Wundheilung musst du nennen können?",
